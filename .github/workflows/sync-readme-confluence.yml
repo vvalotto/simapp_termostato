@@ -1,0 +1,34 @@
+# Sync README.md to Confluence
+# Este workflow sincroniza el README.md con una página de Confluence
+# cada vez que se hace push a main con cambios en el README.
+
+name: Sync README to Confluence
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+  workflow_dispatch:  # Permite ejecución manual
+
+jobs:
+  sync-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync README to Confluence
+        uses: markdown-confluence/sync-action@v1
+        with:
+          # Archivo Markdown a sincronizar
+          markdown-file: README.md
+
+          # Configuración de Confluence
+          confluence-url: ${{ secrets.CONFLUENCE_URL }}
+          confluence-username: ${{ secrets.CONFLUENCE_USERNAME }}
+          confluence-api-token: ${{ secrets.CONFLUENCE_API_TOKEN }}
+          confluence-space-key: ${{ secrets.CONFLUENCE_SPACE_KEY }}
+          confluence-page-id: ${{ secrets.CONFLUENCE_PAGE_ID }}
