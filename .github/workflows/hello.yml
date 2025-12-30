@@ -1,0 +1,20 @@
+name: Hello World
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # permite ejecución manual
+
+jobs:
+  saludo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mostrar saludo
+        run: echo "¡Hola desde GitHub Actions!"
+
+      - name: Mostrar info del evento
+        run: |
+          echo "Repositorio: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
