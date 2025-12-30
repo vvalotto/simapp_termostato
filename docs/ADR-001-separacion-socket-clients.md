@@ -1,7 +1,7 @@
 # ADR-001: Separación de BaseSocketClient en clases cohesivas
 
 **Estado:** Aceptado
-**Fecha:** 2024-12-30
+**Fecha:** 2025-12-30
 **Autores:** Equipo ISSE_Simuladores
 
 ---
