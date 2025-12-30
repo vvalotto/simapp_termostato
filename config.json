@@ -1,0 +1,38 @@
+{
+    "raspberry_pi": {
+        "ip": "192.168.1.100",
+        "descripcion": "Dirección IP del Raspberry Pi con ISSE_Termostato"
+    },
+    "puertos": {
+        "temperatura": 14001,
+        "bateria": 14002,
+        "visualizador": 14003,
+        "control": 14004
+    },
+    "simulador_temperatura": {
+        "intervalo_envio_ms": 1000,
+        "temperatura_minima": -10.0,
+        "temperatura_maxima": 50.0,
+        "temperatura_inicial": 20.0,
+        "ruido_amplitud": 0.5,
+        "paso_variacion": 0.1
+    },
+    "simulador_bateria": {
+        "intervalo_envio_ms": 1000,
+        "voltaje_maximo": 4.2,
+        "voltaje_minimo": 3.0,
+        "voltaje_inicial": 3.7,
+        "tasa_descarga": 0.001,
+        "tasa_carga": 0.005,
+        "porcentaje_inicial": 75.0
+    },
+    "ux_termostato": {
+        "intervalo_recepcion_ms": 500,
+        "intervalo_actualizacion_ui_ms": 100,
+        "temperatura_minima_setpoint": 15.0,
+        "temperatura_maxima_setpoint": 30.0,
+        "temperatura_setpoint_inicial": 22.0,
+        "historial_max_puntos": 100
+    },
+    "debug": false
+}
