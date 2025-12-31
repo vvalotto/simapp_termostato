@@ -1,0 +1,30 @@
+{
+  "metrics_file": "quality/reports/quality_20251231_162529.json",
+  "gates": [
+    {
+      "gate": "cyclomatic_complexity",
+      "value": 1.8,
+      "threshold": 10,
+      "operator": "<=",
+      "status": "PASS"
+    },
+    {
+      "gate": "maintainability_index",
+      "value": 86.73614454789895,
+      "threshold": 20,
+      "operator": ">",
+      "status": "PASS"
+    },
+    {
+      "gate": "pylint_score",
+      "value": 10.0,
+      "threshold": 8.0,
+      "operator": ">=",
+      "status": "PASS"
+    }
+  ],
+  "passed": 3,
+  "failed": 0,
+  "total": 3,
+  "grade": "A"
+}

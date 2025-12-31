@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-12-31T16:25:29.152339",
+  "source_path": "../compartido/estilos",
+  "loc": {
+    "total_loc": 1295,
+    "total_sloc": 798,
+    "total_comments": 22,
+    "total_blank": 260,
+    "file_count": 7
+  },
+  "complexity": {
+    "average_cc": 1.8,
+    "max_cc": 3,
+    "total_functions": 20
+  },
+  "maintainability": {
+    "average_mi": 86.73614454789895,
+    "min_mi": 60.13045374642167,
+    "file_count": 7
+  },
+  "pylint_score": 10.0
+}
