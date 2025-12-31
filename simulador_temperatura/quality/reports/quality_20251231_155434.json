@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-12-31T15:54:34.427881",
+  "source_path": "compartido/widgets",
+  "loc": {
+    "total_loc": 1489,
+    "total_sloc": 630,
+    "total_comments": 67,
+    "total_blank": 300,
+    "file_count": 10
+  },
+  "complexity": {
+    "average_cc": 1.3482142857142858,
+    "max_cc": 5,
+    "total_functions": 112
+  },
+  "maintainability": {
+    "average_mi": 83.67469707505019,
+    "min_mi": 48.135208422424455,
+    "file_count": 10
+  },
+  "pylint_score": 10.0
+}
