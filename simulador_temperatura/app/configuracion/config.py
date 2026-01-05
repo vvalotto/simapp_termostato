@@ -14,6 +14,8 @@ from .constantes import (
     DEFAULT_TEMP_INICIAL,
     DEFAULT_RUIDO_AMPLITUD,
     DEFAULT_PASO_VARIACION,
+    DEFAULT_VARIACION_AMPLITUD,
+    DEFAULT_VARIACION_PERIODO,
 )
 
 
@@ -29,6 +31,8 @@ class ConfigSimuladorTemperatura:
     temperatura_inicial: float
     ruido_amplitud: float
     paso_variacion: float
+    variacion_amplitud: float
+    variacion_periodo_segundos: float
 
     @classmethod
     def desde_defaults(cls) -> "ConfigSimuladorTemperatura":
@@ -42,6 +46,8 @@ class ConfigSimuladorTemperatura:
             temperatura_inicial=DEFAULT_TEMP_INICIAL,
             ruido_amplitud=DEFAULT_RUIDO_AMPLITUD,
             paso_variacion=DEFAULT_PASO_VARIACION,
+            variacion_amplitud=DEFAULT_VARIACION_AMPLITUD,
+            variacion_periodo_segundos=DEFAULT_VARIACION_PERIODO,
         )
 
 
@@ -118,6 +124,10 @@ class ConfigManager:
             temperatura_inicial=simulador.get("temperatura_inicial", DEFAULT_TEMP_INICIAL),
             ruido_amplitud=simulador.get("ruido_amplitud", DEFAULT_RUIDO_AMPLITUD),
             paso_variacion=simulador.get("paso_variacion", DEFAULT_PASO_VARIACION),
+            variacion_amplitud=simulador.get("variacion_amplitud", DEFAULT_VARIACION_AMPLITUD),
+            variacion_periodo_segundos=simulador.get(
+                "variacion_periodo_segundos", DEFAULT_VARIACION_PERIODO
+            ),
         )
 
     @property

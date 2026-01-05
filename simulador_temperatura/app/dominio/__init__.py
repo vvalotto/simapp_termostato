@@ -1,12 +1,17 @@
 """
 Modulo de logica de negocio del Simulador de Temperatura.
 
-Contendra:
-    - GeneradorTemperatura: Genera valores simulados con variacion senoidal y ruido
+Contiene:
+    - EstadoTemperatura: Modelo de datos para el estado de temperatura
+    - VariacionSenoidal: Logica de variacion senoidal de temperatura
+    - GeneradorTemperatura: Genera valores simulados con variacion senoidal
 """
-# Exports futuros (HU-3.3):
-# from .generador_temperatura import GeneradorTemperatura
+from .estado_temperatura import EstadoTemperatura
+from .variacion_senoidal import VariacionSenoidal
+from .generador_temperatura import GeneradorTemperatura
 
 __all__ = [
-    # "GeneradorTemperatura",
+    "EstadoTemperatura",
+    "VariacionSenoidal",
+    "GeneradorTemperatura",
 ]
