@@ -186,7 +186,7 @@ class TestBaseSocketServerClientConnection:
         """Verifica soporte para múltiples clientes."""
         clients = []
 
-        for i in range(3):
+        for _ in range(3):
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client.connect(("127.0.0.1", started_server.port))
             clients.append(client)

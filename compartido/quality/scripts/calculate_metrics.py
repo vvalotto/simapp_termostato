@@ -161,7 +161,7 @@ def main():
         json.dump(metrics, f, indent=2)
 
     print(f"\nResultados guardados en: {output_file}")
-    print(f"\nResumen:")
+    print("\nResumen:")
     print(f"  LOC total: {loc_metrics['total_loc']}")
     print(f"  SLOC: {loc_metrics['total_sloc']}")
     print(f"  Archivos: {loc_metrics['file_count']}")

@@ -16,9 +16,9 @@ class TestVariacionSenoidalCreacion:
             periodo_segundos=60.0
         )
 
-        assert variacion.temperatura_base == 20.0
-        assert variacion.amplitud == 5.0
-        assert variacion.periodo_segundos == 60.0
+        assert variacion.temperatura_base == pytest.approx(20.0)
+        assert variacion.amplitud == pytest.approx(5.0)
+        assert variacion.periodo_segundos == pytest.approx(60.0)
 
     def test_temperatura_maxima_property(self):
         """Verifica cálculo de temperatura máxima."""
@@ -28,7 +28,7 @@ class TestVariacionSenoidalCreacion:
             periodo_segundos=60.0
         )
 
-        assert variacion.temperatura_maxima == 25.0
+        assert variacion.temperatura_maxima == pytest.approx(25.0)
 
     def test_temperatura_minima_property(self):
         """Verifica cálculo de temperatura mínima."""
@@ -38,7 +38,7 @@ class TestVariacionSenoidalCreacion:
             periodo_segundos=60.0
         )
 
-        assert variacion.temperatura_minima == 15.0
+        assert variacion.temperatura_minima == pytest.approx(15.0)
 
 
 class TestVariacionSenoidalCalculoTemperatura:
@@ -124,7 +124,7 @@ class TestVariacionSenoidalCasosEspeciales:
         )
 
         for tiempo in [0, 15, 30, 45, 60]:
-            assert variacion.calcular_temperatura(tiempo) == 25.0
+            assert variacion.calcular_temperatura(tiempo) == pytest.approx(25.0)
 
     def test_periodo_largo_ciclo_dia_noche(self):
         """Simula ciclo día/noche con período de 24 horas."""

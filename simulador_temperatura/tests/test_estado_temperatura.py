@@ -12,7 +12,7 @@ class TestEstadoTemperaturaCreacion:
         """Verifica creación con valores mínimos."""
         estado = EstadoTemperatura(temperatura=25.0)
 
-        assert estado.temperatura == 25.0
+        assert estado.temperatura == pytest.approx(25.0)
         assert estado.en_rango is True
         assert isinstance(estado.timestamp, datetime)
 
@@ -25,7 +25,7 @@ class TestEstadoTemperaturaCreacion:
             en_rango=False
         )
 
-        assert estado.temperatura == 30.5
+        assert estado.temperatura == pytest.approx(30.5)
         assert estado.timestamp == ts
         assert estado.en_rango is False
 
