@@ -96,13 +96,13 @@ class TestGeneradorTemperaturaModoManual:
 
         estado = generador.generar_valor()
 
-        assert estado.temperatura == 30.0
+        assert estado.temperatura == pytest.approx(30.0)
 
     def test_temperatura_actual_en_modo_manual(self, generador):
         """Verifica temperatura_actual en modo manual."""
         generador.set_temperatura_manual(35.0)
 
-        assert generador.temperatura_actual == 35.0
+        assert generador.temperatura_actual == pytest.approx(35.0)
 
     def test_set_modo_automatico(self, generador):
         """Verifica retorno a modo automático."""
@@ -119,7 +119,7 @@ class TestGeneradorTemperaturaModoManual:
 
         estado = generador.generar_valor()
 
-        assert estado.temperatura == 100.0
+        assert estado.temperatura == pytest.approx(100.0)
         assert estado.en_rango is False
 
 
@@ -138,7 +138,7 @@ class TestGeneradorTemperaturaSignals:
         with qtbot.waitSignal(generador.temperatura_cambiada, timeout=1000) as blocker:
             generador.set_temperatura_manual(25.0)
 
-        assert blocker.args[0] == 25.0
+        assert blocker.args[0] == pytest.approx(25.0)
 
     def test_signal_temperatura_cambiada_al_generar(self, generador, qtbot):
         """Verifica emisión de señal cuando cambia la temperatura."""

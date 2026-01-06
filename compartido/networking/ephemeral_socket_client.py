@@ -69,7 +69,7 @@ class EphemeralSocketClient(SocketClientBase):
                 self.data_sent.emit()
                 return True
 
-        except (socket.timeout, ConnectionRefusedError, OSError) as e:
+        except OSError as e:
             self._handle_connection_error(e)
             return False
 

@@ -87,7 +87,7 @@ class PersistentSocketClient(SocketClientBase):
 
             self.connected.emit()
 
-        except (socket.timeout, ConnectionRefusedError, OSError) as e:
+        except OSError as e:
             self._cleanup_socket()
             self._handle_connection_error(e)
 
@@ -112,7 +112,7 @@ class PersistentSocketClient(SocketClientBase):
                 self._socket.sendall(data.encode(self.ENCODING))
                 return True
 
-            except (OSError, socket.error) as e:
+            except OSError as e:
                 self._connected = False
                 self.error_occurred.emit(f"Error al enviar: {e}")
                 self.disconnected.emit()
@@ -171,7 +171,7 @@ class PersistentSocketClient(SocketClientBase):
             except socket.timeout:
                 return None
 
-            except (OSError, socket.error) as e:
+            except OSError as e:
                 self._connected = False
                 self.error_occurred.emit(f"Error al recibir: {e}")
                 self.disconnected.emit()
