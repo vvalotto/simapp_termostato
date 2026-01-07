@@ -14,6 +14,7 @@ from .control_temperatura import (
     ParametrosSenoidal,
     RangosControl,
 )
+from .grafico_temperatura import GraficoTemperatura, ConfigGrafico
 
 __all__ = [
     "ControlTemperatura",
@@ -22,4 +23,6 @@ __all__ = [
     "PanelTemperaturaManual",
     "ParametrosSenoidal",
     "RangosControl",
+    "GraficoTemperatura",
+    "ConfigGrafico",
 ]
