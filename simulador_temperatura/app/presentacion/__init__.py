@@ -15,6 +15,13 @@ from .control_temperatura import (
     RangosControl,
 )
 from .grafico_temperatura import GraficoTemperatura, ConfigGrafico
+from .ui_principal import (
+    UIPrincipal,
+    ConfigVentana,
+    PanelEstado,
+    ConfigPanelEstado,
+    ConfigTemaOscuro,
+)
 
 __all__ = [
     "ControlTemperatura",
@@ -25,4 +32,9 @@ __all__ = [
     "RangosControl",
     "GraficoTemperatura",
     "ConfigGrafico",
+    "UIPrincipal",
+    "ConfigVentana",
+    "PanelEstado",
+    "ConfigPanelEstado",
+    "ConfigTemaOscuro",
 ]
