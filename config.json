@@ -1,13 +1,15 @@
 {
     "raspberry_pi": {
-        "ip": "192.168.1.100",
-        "descripcion": "Dirección IP del Raspberry Pi con ISSE_Termostato"
+        "ip": "127.0.0.1",
+        "descripcion": "Dirección IP del Raspberry Pi con ISSE_Termostato (localhost para pruebas)"
     },
     "puertos": {
-        "temperatura": 14001,
-        "bateria": 14002,
-        "visualizador": 14003,
-        "control": 14004
+        "temperatura": 12000,
+        "bateria": 11000,
+        "seteo_temperatura": 13000,
+        "selector_temperatura": 14000,
+        "visualizador_temperatura": 14001,
+        "visualizador_bateria": 14002
     },
     "simulador_temperatura": {
         "intervalo_envio_ms": 1000,
