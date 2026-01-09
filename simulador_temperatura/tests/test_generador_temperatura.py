@@ -123,6 +123,65 @@ class TestGeneradorTemperaturaModoManual:
         assert estado.en_rango is False
 
 
+class TestGeneradorTemperaturaActualizarVariacion:
+    """Tests del método actualizar_variacion."""
+
+    def test_actualizar_variacion_cambia_temperatura_base(self, generador):
+        """Verifica que actualizar_variacion cambia la temperatura base."""
+        generador.actualizar_variacion(
+            temperatura_base=30.0,
+            amplitud=5.0,
+            periodo_segundos=60.0
+        )
+
+        # En t=0, debería estar cerca de la nueva temperatura base
+        temp = generador.temperatura_actual
+        assert 25.0 <= temp <= 35.0
+
+    def test_actualizar_variacion_cambia_amplitud(self, generador):
+        """Verifica que actualizar_variacion cambia la amplitud."""
+        generador.actualizar_variacion(
+            temperatura_base=20.0,
+            amplitud=10.0,
+            periodo_segundos=60.0
+        )
+
+        # Con amplitud 10 y base 20, el rango es 10-30
+        temp = generador.temperatura_actual
+        assert 10.0 <= temp <= 30.0
+
+    def test_actualizar_variacion_mantiene_modo_automatico(self, generador):
+        """Verifica que actualizar_variacion no cambia el modo."""
+        assert generador.modo_manual is False
+
+        generador.actualizar_variacion(
+            temperatura_base=25.0,
+            amplitud=3.0,
+            periodo_segundos=30.0
+        )
+
+        assert generador.modo_manual is False
+
+    def test_actualizar_variacion_despues_de_modo_manual(self, generador):
+        """Verifica que actualizar_variacion funciona después de modo manual."""
+        generador.set_temperatura_manual(40.0)
+        assert generador.modo_manual is True
+
+        generador.actualizar_variacion(
+            temperatura_base=22.0,
+            amplitud=2.0,
+            periodo_segundos=120.0
+        )
+
+        # Sigue en modo manual, pero la variación está actualizada
+        assert generador.modo_manual is True
+
+        # Al cambiar a automático, usa los nuevos parámetros
+        generador.set_modo_automatico()
+        temp = generador.temperatura_actual
+        assert 20.0 <= temp <= 24.0
+
+
 class TestGeneradorTemperaturaSignals:
     """Tests de señales Qt."""
 
