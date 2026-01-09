@@ -18,6 +18,7 @@ from .grafico_temperatura import GraficoTemperatura, ConfigGrafico
 from .ui_principal import (
     UIPrincipal,
     ConfigVentana,
+    ConfigConexion,
     PanelEstado,
     ConfigPanelEstado,
     ConfigTemaOscuro,
@@ -34,6 +35,7 @@ __all__ = [
     "ConfigGrafico",
     "UIPrincipal",
     "ConfigVentana",
+    "ConfigConexion",
     "PanelEstado",
     "ConfigPanelEstado",
     "ConfigTemaOscuro",
