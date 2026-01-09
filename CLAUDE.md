@@ -133,6 +133,36 @@ compartido/
 - MVC pattern for presentation panels
 - Factory and Coordinator patterns for orchestration
 
+## Estado Actual (actualizar frecuentemente)
+
+### Branch activo
+- `update/refactorizacion-arquitectura`
+
+### Trabajo completado
+- **Fase 1** (ST-50, ST-51): Método público `actualizar_variacion`, eliminado anti-patrón
+- **Fase 2** (ST-52, ST-53, ST-54): Estructura MVC base, Panel Estado migrado
+- **Fase 3** (ST-55, ST-56, ST-57): Paneles Control Temperatura, Gráfico, Conexión migrados a MVC
+
+### Trabajo pendiente - Fase 4
+- ST-58: UIPrincipal como Compositor (usar controladores MVC)
+- ST-59: Factory para crear paneles
+- ST-60: Coordinator para comunicación entre paneles
+- ST-61: Simplificar AplicacionSimulador
+
+### Estructura MVC creada
+```
+app/presentacion/paneles/
+├── base.py                    # ModeloBase, VistaBase, ControladorBase
+├── estado/                    # EstadoSimulacion, PanelEstadoVista, PanelEstadoControlador
+├── control_temperatura/       # ParametrosControl, ControlTemperaturaVista, ControlTemperaturaControlador
+├── grafico/                   # DatosGrafico, GraficoTemperaturaVista, GraficoControlador
+└── conexion/                  # ConfiguracionConexion, PanelConexionVista, PanelConexionControlador
+```
+
+### Tests
+- 283 tests pasando
+- Pylint: 9.50/10
+
 ## Integration
 
 - **Atlassian MCP:** Configured in `.mcp.json` for Jira/Confluence integration
