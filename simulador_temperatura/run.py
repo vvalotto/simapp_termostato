@@ -18,7 +18,6 @@ from app.configuracion.config import ConfigManager
 from app.presentacion import UIPrincipal, ConfigConexion
 from app.presentacion.control_temperatura import ParametrosSenoidal
 from app.dominio.generador_temperatura import GeneradorTemperatura
-from app.dominio.variacion_senoidal import VariacionSenoidal
 from app.comunicacion.cliente_temperatura import ClienteTemperatura
 from app.comunicacion.servicio_envio import ServicioEnvioTemperatura
 
@@ -152,8 +151,7 @@ class AplicacionSimulador:
 
     def _on_parametros_cambiados(self, parametros: ParametrosSenoidal):
         """Callback cuando cambian los parámetros senoidales."""
-        # Actualizar la variación senoidal del generador
-        self._generador._variacion = VariacionSenoidal(
+        self._generador.actualizar_variacion(
             temperatura_base=parametros.temperatura_base,
             amplitud=parametros.amplitud,
             periodo_segundos=parametros.periodo,
