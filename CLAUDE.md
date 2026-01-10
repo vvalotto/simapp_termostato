@@ -87,17 +87,22 @@ Grades: A (3/3 gates), B (2/3), C (1/3), F (0/3)
 
 ## Product Module Structure
 
-**simulador_temperatura** (refactored architecture):
+**simulador_temperatura** (v1.0.0 - arquitectura MVC):
 ```
 simulador_temperatura/
-├── run.py                      # Entry point + AplicacionSimulador orchestrator
+├── run.py                      # Entry point + AplicacionSimulador (lifecycle)
 ├── app/
+│   ├── factory.py              # ComponenteFactory (creacion de componentes)
+│   ├── coordinator.py          # SimuladorCoordinator (conexion de senales)
 │   ├── configuracion/          # ConfigManager, ConfigSimuladorTemperatura
 │   ├── dominio/                # GeneradorTemperatura, VariacionSenoidal, EstadoTemperatura
 │   ├── comunicacion/           # ClienteTemperatura, ServicioEnvioTemperatura
-│   └── presentacion/           # UIPrincipal, ControlTemperatura, GraficoTemperatura
-├── tests/
-└── quality/scripts/
+│   └── presentacion/           # UI + paneles MVC
+│       ├── ui_compositor.py    # UIPrincipalCompositor (layout)
+│       └── paneles/            # MVC: estado/, control_temperatura/, grafico/, conexion/
+├── tests/                      # 283 tests
+├── quality/                    # Scripts e informes de calidad
+└── docs/                       # arquitectura.md
 ```
 
 **simulador_bateria, ux_termostato** (original architecture):
@@ -126,42 +131,43 @@ compartido/
 - `config.json`: Network settings, simulation parameters (committed)
 - `.env`: Environment overrides for IP/ports (not committed, copy from `.env.example`)
 
-## Ongoing Refactoring
+## Estado Actual
 
-`simulador_temperatura` is undergoing architectural refactoring. See `simulador_temperatura/docs/plan_refactorizacion.md` for the 5-phase plan focusing on:
-- Eliminating anti-patterns (private member access)
-- MVC pattern for presentation panels
-- Factory and Coordinator patterns for orchestration
+### simulador_temperatura - v1.0.0 (Completado)
 
-## Estado Actual (actualizar frecuentemente)
+**Branch:** `main`
+**Fecha:** 2026-01-10
 
-### Branch activo
-- `update/refactorizacion-arquitectura`
-
-### Trabajo completado
-- **Fase 1** (ST-50, ST-51): Método público `actualizar_variacion`, eliminado anti-patrón
+Refactorizacion arquitectonica completada con exito:
+- **Fase 1** (ST-50, ST-51): Metodo publico `actualizar_variacion`, eliminado anti-patron
 - **Fase 2** (ST-52, ST-53, ST-54): Estructura MVC base, Panel Estado migrado
-- **Fase 3** (ST-55, ST-56, ST-57): Paneles Control Temperatura, Gráfico, Conexión migrados a MVC
+- **Fase 3** (ST-55, ST-56, ST-57): Paneles Control, Grafico, Conexion migrados a MVC
+- **Fase 4** (ST-58, ST-59, ST-60, ST-61): Factory, Coordinator, UIPrincipalCompositor
 
-### Trabajo pendiente - Fase 4
-- ST-58: UIPrincipal como Compositor (usar controladores MVC)
-- ST-59: Factory para crear paneles
-- ST-60: Coordinator para comunicación entre paneles
-- ST-61: Simplificar AplicacionSimulador
+### Metricas de Calidad
+| Metrica | Valor | Umbral |
+|---------|-------|--------|
+| Tests | 283 | - |
+| Pylint | 9.52/10 | >= 8.0 |
+| Complejidad Ciclomatica | 1.36 | <= 10 |
+| Indice Mantenibilidad | 70.10 | > 20 |
+| Grade | A | - |
 
-### Estructura MVC creada
-```
-app/presentacion/paneles/
-├── base.py                    # ModeloBase, VistaBase, ControladorBase
-├── estado/                    # EstadoSimulacion, PanelEstadoVista, PanelEstadoControlador
-├── control_temperatura/       # ParametrosControl, ControlTemperaturaVista, ControlTemperaturaControlador
-├── grafico/                   # DatosGrafico, GraficoTemperaturaVista, GraficoControlador
-└── conexion/                  # ConfiguracionConexion, PanelConexionVista, PanelConexionControlador
-```
+### Patrones Implementados
+- **MVC:** `app/presentacion/paneles/` (4 paneles)
+- **Factory:** `app/factory.py` (ComponenteFactory)
+- **Coordinator:** `app/coordinator.py` (SimuladorCoordinator)
+- **Compositor:** `app/presentacion/ui_compositor.py`
 
-### Tests
-- 283 tests pasando
-- Pylint: 9.50/10
+### Documentacion
+- `README.md`: Documentacion principal
+- `CHANGELOG.md`: Historial de versiones
+- `docs/arquitectura.md`: Diagramas y patrones
+- `quality/reports/informe_calidad_diseno.md`: Analisis SOLID
+
+### Proximos Pasos (otros productos)
+- Aplicar misma arquitectura a `simulador_bateria`
+- Aplicar misma arquitectura a `ux_termostato`
 
 ## Integration
 
