@@ -80,6 +80,25 @@ class GeneradorTemperatura(QObject):
         self._modo_manual = False
         self._tiempo_inicio = time.time()
 
+    def actualizar_variacion(
+        self,
+        temperatura_base: float,
+        amplitud: float,
+        periodo_segundos: float
+    ) -> None:
+        """Actualiza los parámetros de variación senoidal.
+
+        Args:
+            temperatura_base: Temperatura central de la onda (°C).
+            amplitud: Amplitud de variación en grados.
+            periodo_segundos: Periodo de la onda senoidal.
+        """
+        self._variacion = VariacionSenoidal(
+            temperatura_base=temperatura_base,
+            amplitud=amplitud,
+            periodo_segundos=periodo_segundos,
+        )
+
     def generar_valor(self) -> EstadoTemperatura:
         """Genera un nuevo valor de temperatura.
 

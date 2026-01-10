@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-ISSE_Simuladores is a Hardware-in-the-Loop (HIL) testing system comprising three PyQt6 desktop applications that communicate with the ISSE_Termostato embedded system running on Raspberry Pi. Currently in design/planning phase.
+ISSE_Simuladores is a Hardware-in-the-Loop (HIL) testing system comprising three PyQt6 desktop applications that communicate with the ISSE_Termostato embedded system running on Raspberry Pi.
 
 ## Architecture
 
@@ -12,9 +12,9 @@ ISSE_Simuladores is a Hardware-in-the-Loop (HIL) testing system comprising three
 Desktop Simulators (Mac/PC) ←→ TCP/IP ←→ Raspberry Pi (ISSE_Termostato)
 
 Three Products:
-├── simulador_temperatura/ → Client TCP port 14001 (sends float values)
-├── simulador_bateria/     → Client TCP port 14002 (sends float values)
-└── ux_termostato/         → Server 14003 (receives JSON state), Client 14004 (sends JSON commands)
+├── simulador_temperatura/ → Client TCP (sends float values)
+├── simulador_bateria/     → Client TCP (sends float values)
+└── ux_termostato/         → Server (receives JSON state), Client (sends JSON commands)
 
 Shared code:
 └── compartido/            → Base socket classes, PyQt6 widgets, dark theme styles
@@ -25,6 +25,10 @@ Shared code:
 - Raspberry → UX: JSON state object (temp_actual, temp_deseada, estado_climatizador, nivel_bateria)
 - UX → Raspberry: JSON commands (set_temp_deseada, power on/off, set_modo_display)
 
+**Ports (configured in config.json and .env):**
+- 12000: temperatura, 11000: bateria, 13000: seteo_temperatura
+- 14000: selector_temperatura, 14001: visualizador_temperatura, 14002: visualizador_bateria
+
 ## Commands
 
 ### Installation
@@ -32,6 +36,7 @@ Shared code:
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+cp .env.example .env  # Edit with your Raspberry Pi IP
 ```
 
 ### Running Applications
@@ -41,10 +46,18 @@ python simulador_bateria/run.py
 python ux_termostato/run.py
 ```
 
-### Testing (per product)
+### Testing
 ```bash
-cd simulador_temperatura
-pytest tests/ -v
+# Run all tests for a product
+cd simulador_temperatura && pytest tests/ -v
+
+# Run single test file
+pytest tests/test_generador_temperatura.py -v
+
+# Run single test function
+pytest tests/test_generador_temperatura.py::test_generar_valor -v
+
+# With coverage
 pytest tests/ --cov=app --cov-report=html
 ```
 
@@ -74,18 +87,81 @@ Grades: A (3/3 gates), B (2/3), C (1/3), F (0/3)
 
 ## Product Module Structure
 
-Each product follows this pattern:
+**simulador_temperatura** (refactored architecture):
+```
+simulador_temperatura/
+├── run.py                      # Entry point + AplicacionSimulador orchestrator
+├── app/
+│   ├── configuracion/          # ConfigManager, ConfigSimuladorTemperatura
+│   ├── dominio/                # GeneradorTemperatura, VariacionSenoidal, EstadoTemperatura
+│   ├── comunicacion/           # ClienteTemperatura, ServicioEnvioTemperatura
+│   └── presentacion/           # UIPrincipal, ControlTemperatura, GraficoTemperatura
+├── tests/
+└── quality/scripts/
+```
+
+**simulador_bateria, ux_termostato** (original architecture):
 ```
 <product>/
-├── run.py                    # Entry point
+├── run.py
 ├── app/
-│   ├── configuracion/        # Config singleton, settings
-│   ├── servicios/            # Main UI window (ui_principal.py)
-│   ├── general/              # Business logic
-│   └── datos/                # Socket client/server
+│   ├── configuracion/          # Config singleton
+│   ├── servicios/              # Main UI window
+│   ├── general/                # Business logic
+│   └── datos/                  # Socket client/server
 ├── tests/
-└── quality/scripts/          # Metrics calculation and validation
+└── quality/scripts/
 ```
+
+**compartido** (shared library):
+```
+compartido/
+├── networking/                 # BaseSocketClient, BaseSocketServer, EphemeralSocketClient
+├── widgets/                    # ConfigPanel, LedIndicator, LogViewer, StatusIndicator
+└── estilos/                    # ThemeProvider, QSS generation, dark theme
+```
+
+## Configuration
+
+- `config.json`: Network settings, simulation parameters (committed)
+- `.env`: Environment overrides for IP/ports (not committed, copy from `.env.example`)
+
+## Ongoing Refactoring
+
+`simulador_temperatura` is undergoing architectural refactoring. See `simulador_temperatura/docs/plan_refactorizacion.md` for the 5-phase plan focusing on:
+- Eliminating anti-patterns (private member access)
+- MVC pattern for presentation panels
+- Factory and Coordinator patterns for orchestration
+
+## Estado Actual (actualizar frecuentemente)
+
+### Branch activo
+- `update/refactorizacion-arquitectura`
+
+### Trabajo completado
+- **Fase 1** (ST-50, ST-51): Método público `actualizar_variacion`, eliminado anti-patrón
+- **Fase 2** (ST-52, ST-53, ST-54): Estructura MVC base, Panel Estado migrado
+- **Fase 3** (ST-55, ST-56, ST-57): Paneles Control Temperatura, Gráfico, Conexión migrados a MVC
+
+### Trabajo pendiente - Fase 4
+- ST-58: UIPrincipal como Compositor (usar controladores MVC)
+- ST-59: Factory para crear paneles
+- ST-60: Coordinator para comunicación entre paneles
+- ST-61: Simplificar AplicacionSimulador
+
+### Estructura MVC creada
+```
+app/presentacion/paneles/
+├── base.py                    # ModeloBase, VistaBase, ControladorBase
+├── estado/                    # EstadoSimulacion, PanelEstadoVista, PanelEstadoControlador
+├── control_temperatura/       # ParametrosControl, ControlTemperaturaVista, ControlTemperaturaControlador
+├── grafico/                   # DatosGrafico, GraficoTemperaturaVista, GraficoControlador
+└── conexion/                  # ConfiguracionConexion, PanelConexionVista, PanelConexionControlador
+```
+
+### Tests
+- 283 tests pasando
+- Pylint: 9.50/10
 
 ## Integration
 
