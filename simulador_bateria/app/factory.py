@@ -3,10 +3,12 @@
 Centraliza la creación de todos los componentes, permitiendo
 configuración consistente y facilitando testing con mocks.
 """
-
 from typing import Dict, Optional
 
 from app.configuracion.config import ConfigSimuladorBateria
+from app.dominio.generador_bateria import GeneradorBateria
+from app.comunicacion.cliente_bateria import ClienteBateria
+from app.comunicacion.servicio_envio import ServicioEnvioBateria
 
 
 class ComponenteFactory:
@@ -27,20 +29,19 @@ class ComponenteFactory:
         """
         self._config = config
 
-    def crear_generador(self):
+    def crear_generador(self) -> GeneradorBateria:
         """Crea una instancia de GeneradorBateria.
 
         Returns:
             GeneradorBateria configurado.
         """
-        from app.dominio.generador_bateria import GeneradorBateria
         return GeneradorBateria(self._config)
 
     def crear_cliente(
         self,
         host: Optional[str] = None,
         port: Optional[int] = None
-    ):
+    ) -> ClienteBateria:
         """Crea una instancia de ClienteBateria.
 
         Args:
@@ -50,13 +51,16 @@ class ComponenteFactory:
         Returns:
             ClienteBateria configurado.
         """
-        from app.comunicacion.cliente_bateria import ClienteBateria
         return ClienteBateria(
             host=host or self._config.host,
             port=port or self._config.puerto
         )
 
-    def crear_servicio(self, generador, cliente):
+    def crear_servicio(
+        self,
+        generador: GeneradorBateria,
+        cliente: ClienteBateria
+    ) -> ServicioEnvioBateria:
         """Crea una instancia de ServicioEnvioBateria.
 
         Args:
@@ -66,11 +70,9 @@ class ComponenteFactory:
         Returns:
             ServicioEnvioBateria configurado.
         """
-        from app.comunicacion.servicio_envio import ServicioEnvioBateria
         return ServicioEnvioBateria(
             generador=generador,
-            cliente=cliente,
-            intervalo_ms=self._config.intervalo_envio_ms
+            cliente=cliente
         )
 
     def crear_controladores(self) -> Dict[str, object]:
@@ -82,6 +84,8 @@ class ComponenteFactory:
             - 'control': ControlBateriaControlador
             - 'conexion': PanelConexionControlador
         """
+        # Imports locales para evitar dependencias circulares
+        # (los controladores importan componentes de dominio)
         from app.presentacion.paneles.estado.controlador import (
             PanelEstadoControlador
         )
