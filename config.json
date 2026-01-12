@@ -21,12 +21,9 @@
     },
     "simulador_bateria": {
         "intervalo_envio_ms": 1000,
-        "voltaje_maximo": 4.2,
-        "voltaje_minimo": 3.0,
-        "voltaje_inicial": 3.7,
-        "tasa_descarga": 0.001,
-        "tasa_carga": 0.005,
-        "porcentaje_inicial": 75.0
+        "voltaje_minimo": 0.0,
+        "voltaje_maximo": 5.0,
+        "voltaje_inicial": 2.5
     },
     "ux_termostato": {
         "intervalo_recepcion_ms": 500,
