@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-01-12T07:37:02.589032",
+  "source_path": "app",
+  "loc": {
+    "total_loc": 462,
+    "total_sloc": 174,
+    "total_comments": 10,
+    "total_blank": 97,
+    "file_count": 13
+  },
+  "complexity": {
+    "average_cc": 1.2413793103448276,
+    "max_cc": 3,
+    "total_functions": 29
+  },
+  "maintainability": {
+    "average_mi": 96.93413981969556,
+    "min_mi": 60.14381765604226,
+    "file_count": 13
+  },
+  "pylint_score": 0.0
+}
