@@ -5,7 +5,9 @@ Contiene los componentes de red:
 - ServicioEnvioBateria: Integración generador + cliente
 """
 from .cliente_bateria import ClienteBateria
+from .servicio_envio import ServicioEnvioBateria
 
 __all__ = [
     "ClienteBateria",
+    "ServicioEnvioBateria",
 ]
