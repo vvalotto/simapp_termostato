@@ -2,6 +2,7 @@
 
 **Proyecto:** Simuladores Termostato (ST)
 **Fecha de creación:** 2025-12-29
+**Última actualización:** 2026-01-12
 **Formato:** Historias de Usuario
 
 ---
@@ -61,21 +62,46 @@
 
 ## EPIC 4: Simulador de Batería (ST-3)
 
-**Descripción:** Desarrollar el simulador de sensor de batería con modos de carga/descarga y comunicación TCP al puerto 14002.
+**Descripción:** Desarrollar el simulador de sensor de batería con interfaz simple (slider manual) y comunicación TCP al puerto 11000. Arquitectura MVC siguiendo el patrón del simulador de temperatura.
 
-### Historias de Usuario:
+### Fase 1: Dominio y Configuración
 
 | ID | Historia de Usuario |
 |----|---------------------|
-| HU-4.1 | Como desarrollador, quiero tener la estructura de carpetas del simulador_bateria para organizar configuración, servicios, lógica y datos. |
-| HU-4.2 | Como desarrollador, quiero tener un módulo de configuración con parámetros de voltaje y tasas de carga/descarga. |
-| HU-4.3 | Como tester HIL, quiero poder simular la descarga exponencial de batería para probar el comportamiento del termostato con batería baja. |
-| HU-4.4 | Como tester HIL, quiero poder simular la carga de batería con curva Li-ion para probar la recuperación del sistema. |
-| HU-4.5 | Como tester HIL, quiero que el simulador envíe valores de voltaje por TCP al puerto 14002 para que el termostato los reciba. |
-| HU-4.6 | Como usuario, quiero una interfaz gráfica con selector de modo (carga/descarga), barra de nivel y gráfico para controlar la simulación. |
-| HU-4.7 | Como usuario, quiero poder conectar/desconectar el simulador al termostato con un botón para controlar cuándo se envían datos. |
-| HU-4.8 | Como desarrollador, quiero tener tests unitarios del simulador y socket para asegurar el correcto funcionamiento. |
-| HU-4.9 | Como desarrollador, quiero validar que el código cumple los quality gates para mantener la calidad del producto. |
+| SB-1 | Como desarrollador, quiero tener la estructura MVC del simulador_bateria (dominio/, comunicacion/, presentacion/paneles/, factory.py, coordinator.py) para mantener consistencia arquitectónica con simulador_temperatura. |
+| SB-2 | Como desarrollador, quiero tener ConfigSimuladorBateria con parámetros (voltaje_min=0, voltaje_max=5, voltaje_inicial=4.2, intervalo_envio_ms) para configurar el simulador. |
+| SB-3 | Como desarrollador, quiero tener GeneradorBateria que genere valores de voltaje en rango 0-5V controlado por slider para simular el sensor ADC. |
+| SB-4 | Como desarrollador, quiero tener EstadoBateria (dataclass) con voltaje, timestamp y porcentaje_calculado para representar el estado actual. |
+
+### Fase 2: Comunicación
+
+| ID | Historia de Usuario |
+|----|---------------------|
+| SB-5 | Como desarrollador, quiero tener ClienteBateria que envíe voltaje al puerto 11000 usando EphemeralSocketClient para comunicar con el termostato. |
+| SB-6 | Como desarrollador, quiero tener ServicioEnvioBateria que conecte GeneradorBateria con ClienteBateria para automatizar el envío periódico. |
+
+### Fase 3: Presentación MVC
+
+| ID | Historia de Usuario |
+|----|---------------------|
+| SB-7 | Como usuario, quiero un Panel Estado que muestre el voltaje actual (ej: "3.7V") y porcentaje equivalente para ver el estado de la batería simulada. |
+| SB-8 | Como usuario, quiero un Panel Control con slider de voltaje (0-5V) para controlar manualmente el nivel de batería. |
+| SB-9 | Como usuario, quiero un Panel Conexión con campos IP/Puerto y botón Conectar/Desconectar para controlar la comunicación TCP. |
+
+### Fase 4: Orquestación
+
+| ID | Historia de Usuario |
+|----|---------------------|
+| SB-10 | Como desarrollador, quiero ComponenteFactory que cree GeneradorBateria, ClienteBateria, ServicioEnvio y controladores MVC para centralizar la creación de componentes. |
+| SB-11 | Como desarrollador, quiero SimuladorCoordinator que conecte señales entre Generador ↔ Controladores ↔ Servicio para desacoplar el ciclo de vida del wiring. |
+| SB-12 | Como desarrollador, quiero UIPrincipalCompositor que componga los 3 paneles en la ventana principal para separar layout de lógica. |
+
+### Fase 5: Calidad
+
+| ID | Historia de Usuario |
+|----|---------------------|
+| SB-13 | Como desarrollador, quiero tests unitarios para dominio, comunicación y controladores MVC para asegurar funcionamiento correcto. |
+| SB-14 | Como desarrollador, quiero validar quality gates (pylint ≥8.0, CC ≤10, MI >20) para mantener calidad del código.
 
 ---
 
@@ -130,10 +156,10 @@
 | EPIC 1 | ST-1 | Setup y Configuración del Proyecto | 6 |
 | EPIC 2 | ST-6 | Componentes Compartidos | 6 |
 | EPIC 3 | ST-2 | Simulador de Temperatura | 8 |
-| EPIC 4 | ST-3 | Simulador de Batería | 9 |
+| EPIC 4 | ST-3 | Simulador de Batería | 14 |
 | EPIC 5 | ST-4 | UX Termostato | 12 |
 | EPIC 6 | ST-5 | Integración y Refinamiento | 10 |
-| **TOTAL** | | | **51 historias** |
+| **TOTAL** | | | **56 historias** |
 
 ---
 
@@ -180,3 +206,12 @@ Cada historia debe cumplir:
 2. Tests unitarios pasando (si aplica)
 3. Quality gates en grado A o B
 4. Código documentado
+
+---
+
+## Historial de Cambios
+
+| Fecha | Cambio |
+|-------|--------|
+| 2025-12-29 | Versión inicial con 51 historias |
+| 2026-01-12 | EPIC 4 (Simulador Batería): Rediseño completo con arquitectura MVC. Eliminadas HU-4.3 y HU-4.4 (modos automáticos). Agregadas 14 historias organizadas en 5 fases (SB-1 a SB-14). UI simplificada a slider manual + panel estado + panel conexión. Puerto corregido de 14002 a 11000. |

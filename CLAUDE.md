@@ -11,13 +11,13 @@ ISSE_Simuladores is a Hardware-in-the-Loop (HIL) testing system comprising three
 ```
 Desktop Simulators (Mac/PC) ←→ TCP/IP ←→ Raspberry Pi (ISSE_Termostato)
 
-Three Products:
-├── simulador_temperatura/ → Client TCP (sends float values)
-├── simulador_bateria/     → Client TCP (sends float values)
-└── ux_termostato/         → Server (receives JSON state), Client (sends JSON commands)
+Products:
+├── simulador_temperatura/ → Client TCP (sends float values to :12000)
+├── simulador_bateria/     → Client TCP (sends float values to :11000)
+└── ux_termostato/         → Server + Client (receives state, sends commands)
 
 Shared code:
-└── compartido/            → Base socket classes, PyQt6 widgets, dark theme styles
+└── compartido/            → Base socket classes, PyQt6 widgets, dark theme
 ```
 
 **Communication Protocol:**
@@ -25,7 +25,7 @@ Shared code:
 - Raspberry → UX: JSON state object (temp_actual, temp_deseada, estado_climatizador, nivel_bateria)
 - UX → Raspberry: JSON commands (set_temp_deseada, power on/off, set_modo_display)
 
-**Ports (configured in config.json and .env):**
+**Ports:**
 - 12000: temperatura, 11000: bateria, 13000: seteo_temperatura
 - 14000: selector_temperatura, 14001: visualizador_temperatura, 14002: visualizador_bateria
 
@@ -48,7 +48,7 @@ python ux_termostato/run.py
 
 ### Testing
 ```bash
-# Run all tests for a product
+# Run all tests for a product (must cd into product directory)
 cd simulador_temperatura && pytest tests/ -v
 
 # Run single test file
@@ -59,6 +59,12 @@ pytest tests/test_generador_temperatura.py::test_generar_valor -v
 
 # With coverage
 pytest tests/ --cov=app --cov-report=html
+```
+
+### Linting
+```bash
+cd <product>
+pylint app/
 ```
 
 ### Quality Analysis (per product)
@@ -85,45 +91,53 @@ Grades: A (3/3 gates), B (2/3), C (1/3), F (0/3)
 - **Testing:** pytest 8.0.0, pytest-qt 4.2.0
 - **Quality:** radon, pylint, pytest-cov
 
-## Product Module Structure
+## Product Architectures
 
-**simulador_temperatura** (v1.0.0 - arquitectura MVC):
-```
-simulador_temperatura/
-├── run.py                      # Entry point + AplicacionSimulador (lifecycle)
-├── app/
-│   ├── factory.py              # ComponenteFactory (creacion de componentes)
-│   ├── coordinator.py          # SimuladorCoordinator (conexion de senales)
-│   ├── configuracion/          # ConfigManager, ConfigSimuladorTemperatura
-│   ├── dominio/                # GeneradorTemperatura, VariacionSenoidal, EstadoTemperatura
-│   ├── comunicacion/           # ClienteTemperatura, ServicioEnvioTemperatura
-│   └── presentacion/           # UI + paneles MVC
-│       ├── ui_compositor.py    # UIPrincipalCompositor (layout)
-│       └── paneles/            # MVC: estado/, control_temperatura/, grafico/, conexion/
-├── tests/                      # 283 tests
-├── quality/                    # Scripts e informes de calidad
-└── docs/                       # arquitectura.md
-```
+### simulador_temperatura (v1.0.0 - MVC architecture)
 
-**simulador_bateria, ux_termostato** (original architecture):
+Uses Factory, Coordinator, and Compositor patterns with MVC panels:
+
 ```
-<product>/
-├── run.py
-├── app/
-│   ├── configuracion/          # Config singleton
-│   ├── servicios/              # Main UI window
-│   ├── general/                # Business logic
-│   └── datos/                  # Socket client/server
-├── tests/
-└── quality/scripts/
+run.py                          # Entry point + AplicacionSimulador (lifecycle)
+app/
+├── factory.py                  # ComponenteFactory (creates all components)
+├── coordinator.py              # SimuladorCoordinator (connects PyQt signals)
+├── configuracion/              # ConfigManager, ConfigSimuladorTemperatura
+├── dominio/                    # GeneradorTemperatura, VariacionSenoidal, EstadoTemperatura
+├── comunicacion/               # ClienteTemperatura, ServicioEnvioTemperatura
+└── presentacion/
+    ├── ui_compositor.py        # UIPrincipalCompositor (layout composition)
+    └── paneles/                # MVC pattern: modelo.py, vista.py, controlador.py
+        ├── base.py             # ModeloBase, VistaBase, ControladorBase
+        ├── estado/             # Temperature display panel
+        ├── control_temperatura/# Sliders and mode controls
+        ├── grafico/            # Real-time temperature graph
+        └── conexion/           # Connection settings panel
 ```
 
-**compartido** (shared library):
+Key classes:
+- `ComponenteFactory`: Creates GeneradorTemperatura, ClienteTemperatura, ServicioEnvio, and all MVC controllers
+- `SimuladorCoordinator`: Connects signals between Generador ↔ Controllers ↔ Servicio
+- `UIPrincipalCompositor`: Composes controller views into main window layout
+
+### simulador_bateria, ux_termostato (original architecture)
+
+```
+run.py
+app/
+├── configuracion/          # Config singleton
+├── servicios/              # Main UI window
+├── general/                # Business logic
+└── datos/                  # Socket client/server
+```
+
+### compartido (shared library)
+
 ```
 compartido/
-├── networking/                 # BaseSocketClient, BaseSocketServer, EphemeralSocketClient
-├── widgets/                    # ConfigPanel, LedIndicator, LogViewer, StatusIndicator
-└── estilos/                    # ThemeProvider, QSS generation, dark theme
+├── networking/             # BaseSocketClient, BaseSocketServer, EphemeralSocketClient
+├── widgets/                # ConfigPanel, LedIndicator, LogViewer, StatusIndicator
+└── estilos/                # ThemeProvider, QSS generation, dark theme
 ```
 
 ## Configuration
@@ -131,43 +145,12 @@ compartido/
 - `config.json`: Network settings, simulation parameters (committed)
 - `.env`: Environment overrides for IP/ports (not committed, copy from `.env.example`)
 
-## Estado Actual
+## Key Patterns (simulador_temperatura)
 
-### simulador_temperatura - v1.0.0 (Completado)
-
-**Branch:** `main`
-**Fecha:** 2026-01-10
-
-Refactorizacion arquitectonica completada con exito:
-- **Fase 1** (ST-50, ST-51): Metodo publico `actualizar_variacion`, eliminado anti-patron
-- **Fase 2** (ST-52, ST-53, ST-54): Estructura MVC base, Panel Estado migrado
-- **Fase 3** (ST-55, ST-56, ST-57): Paneles Control, Grafico, Conexion migrados a MVC
-- **Fase 4** (ST-58, ST-59, ST-60, ST-61): Factory, Coordinator, UIPrincipalCompositor
-
-### Metricas de Calidad
-| Metrica | Valor | Umbral |
-|---------|-------|--------|
-| Tests | 283 | - |
-| Pylint | 9.52/10 | >= 8.0 |
-| Complejidad Ciclomatica | 1.36 | <= 10 |
-| Indice Mantenibilidad | 70.10 | > 20 |
-| Grade | A | - |
-
-### Patrones Implementados
-- **MVC:** `app/presentacion/paneles/` (4 paneles)
-- **Factory:** `app/factory.py` (ComponenteFactory)
-- **Coordinator:** `app/coordinator.py` (SimuladorCoordinator)
-- **Compositor:** `app/presentacion/ui_compositor.py`
-
-### Documentacion
-- `README.md`: Documentacion principal
-- `CHANGELOG.md`: Historial de versiones
-- `docs/arquitectura.md`: Diagramas y patrones
-- `quality/reports/informe_calidad_diseno.md`: Analisis SOLID
-
-### Proximos Pasos (otros productos)
-- Aplicar misma arquitectura a `simulador_bateria`
-- Aplicar misma arquitectura a `ux_termostato`
+1. **MVC per panel**: Each panel has modelo.py (dataclass), vista.py (QWidget), controlador.py (QObject with signals)
+2. **Factory**: `ComponenteFactory` creates all components with consistent configuration
+3. **Coordinator**: `SimuladorCoordinator` manages all PyQt signal connections, decoupling lifecycle from wiring
+4. **Compositor**: `UIPrincipalCompositor` only handles layout, receives pre-configured controllers
 
 ## Integration
 
