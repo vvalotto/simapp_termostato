@@ -1,0 +1,16 @@
+[MASTER]
+# Extensiones para cargar
+extension-pkg-allow-list=PyQt6
+
+[MESSAGES CONTROL]
+# Deshabilitar falsos positivos
+disable=no-name-in-module,
+        import-error,
+        import-outside-toplevel,
+        too-few-public-methods,
+        too-many-arguments,
+        too-many-positional-arguments
+
+[DESIGN]
+# Permitir mas atributos en widgets UI
+max-attributes=15

@@ -35,14 +35,6 @@ class VistaBase(QWidget, metaclass=VistaBaseMeta):
     visual, sin lógica de negocio.
     """
 
-    def __init__(self, parent: Optional[QWidget] = None) -> None:
-        """Inicializa la vista base.
-
-        Args:
-            parent: Widget padre opcional.
-        """
-        super().__init__(parent)
-
     @abstractmethod
     def actualizar(self, modelo: ModeloBase) -> None:
         """Actualiza la vista con datos del modelo.
@@ -50,7 +42,6 @@ class VistaBase(QWidget, metaclass=VistaBaseMeta):
         Args:
             modelo: Instancia del modelo con los datos a mostrar.
         """
-        pass
 
 
 class ControladorBaseMeta(ABCMeta, type(QObject)):
@@ -104,7 +95,6 @@ class ControladorBase(QObject, Generic[M, V], metaclass=ControladorBaseMeta):
         Las subclases deben implementar este método para
         establecer las conexiones específicas del panel.
         """
-        pass
 
     def _actualizar_vista(self) -> None:
         """Actualiza la vista con el estado actual del modelo."""
