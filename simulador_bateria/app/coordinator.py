@@ -12,8 +12,8 @@ from app.comunicacion.servicio_envio import ServicioEnvioBateria
 
 if TYPE_CHECKING:
     from app.presentacion.paneles.estado.controlador import PanelEstadoControlador
-    from app.presentacion.paneles.control.controlador import ControlBateriaControlador
-    from app.presentacion.paneles.conexion.controlador import PanelConexionControlador
+    from app.presentacion.paneles.control.controlador import ControlPanelControlador
+    from app.presentacion.paneles.conexion.controlador import ConexionPanelControlador
 
 
 class SimuladorCoordinator(QObject):
@@ -37,8 +37,8 @@ class SimuladorCoordinator(QObject):
         self,
         generador: GeneradorBateria,
         ctrl_estado: "PanelEstadoControlador",
-        ctrl_control: "ControlBateriaControlador",
-        ctrl_conexion: "PanelConexionControlador",
+        ctrl_control: "ControlPanelControlador",
+        ctrl_conexion: "ConexionPanelControlador",
         parent: Optional[QObject] = None
     ) -> None:
         """Inicializa el coordinator y conecta señales.
@@ -46,8 +46,8 @@ class SimuladorCoordinator(QObject):
         Args:
             generador: GeneradorBateria.
             ctrl_estado: PanelEstadoControlador.
-            ctrl_control: ControlBateriaControlador.
-            ctrl_conexion: PanelConexionControlador.
+            ctrl_control: ControlPanelControlador.
+            ctrl_conexion: ConexionPanelControlador.
             parent: QObject padre opcional.
         """
         super().__init__(parent)
@@ -64,7 +64,7 @@ class SimuladorCoordinator(QObject):
     def _conectar_generador(self) -> None:
         """Conecta señales del generador a los controladores."""
         self._generador.valor_generado.connect(
-            self._ctrl_estado.actualizar_estado
+            lambda estado: self._ctrl_estado.actualizar_voltaje(estado.voltaje)
         )
 
     def _conectar_control(self) -> None:
@@ -91,13 +91,13 @@ class SimuladorCoordinator(QObject):
         self._servicio = servicio
 
         self._servicio.servicio_iniciado.connect(
-            lambda: self._ctrl_estado.set_conectado(True)
+            lambda: self._ctrl_estado.actualizar_conexion(True)
         )
         self._servicio.servicio_detenido.connect(
-            lambda: self._ctrl_estado.set_conectado(False)
+            lambda: self._ctrl_estado.actualizar_conexion(False)
         )
         self._servicio.envio_exitoso.connect(
-            self._ctrl_estado.registrar_envio
+            self._ctrl_estado.registrar_envio_exitoso
         )
 
     @property
