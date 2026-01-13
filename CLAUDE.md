@@ -102,7 +102,7 @@ Arquitectura mas simple sin Factory/Coordinator.
 ## Estado de Desarrollo - Simulador Batería
 
 ### Branch Activo
-`development/simulador-bateria-fase3`
+`development/simulador-bateria-fase5`
 
 ### Fases Completadas
 
@@ -111,23 +111,60 @@ Arquitectura mas simple sin Factory/Coordinator.
 | Fase 1: Dominio y Configuración | SB-1 a SB-4 | ✅ Completada |
 | Fase 2: Comunicación | SB-5, SB-6 | ✅ Completada |
 | Fase 3: Presentación MVC | SB-7, SB-8, SB-9 | ✅ Completada |
-| Fase 4: Orquestación | SB-10, SB-11, SB-12 | ⏳ Pendiente |
-| Fase 5: Calidad | SB-13, SB-14 | ⏳ Pendiente |
+| Fase 4: Orquestación | SB-10, SB-11, SB-12 | ✅ Completada (con bugs corregidos) |
+| Fase 5: Calidad - Tests Fase 1 | SB-13/ST-65 | ✅ Completada |
+| Fase 5: Calidad - Tests Fase 2-4 | SB-13/ST-65 (cont.) | ⏳ Siguiente |
+| Fase 5: Quality Gates | SB-14/ST-66 | ⏳ Pendiente |
 
-### Próximos Tickets (Fase 4)
-- **SB-10/ST-65**: ComponenteFactory - crear todos los componentes
-- **SB-11/ST-66**: SimuladorCoordinator - conectar signals
-- **SB-12/ST-67**: UIPrincipalCompositor - componer paneles
+### Última Sesión (2026-01-13)
 
-### Revisión de Diseño Pendiente
-Hallazgos de revisión de cohesión/acoplamiento/SOLID en capa presentación:
+**Completado:**
+- ✅ Implementados 84 tests unitarios Fase 1 (100% passing)
+- ✅ Coverage ~96% en componentes testeados (dominio, comunicación, configuración)
+- ✅ Corregidos 3 bugs críticos en código producción:
+  - Error handling en `ClienteBateria` (enviar_voltaje sync/async)
+  - Error handling en `ServicioEnvioBateria` (_on_valor_generado)
+  - Voltage clamping en `GeneradorBateria` (previene valores fuera de rango [0.0-5.0])
+- ✅ Documentación completa en `simulador_bateria/docs/`:
+  - `fase1_completada.md` - Resumen con métricas
+  - `fase1_resultados_tests.md` - Análisis de fallas y fixes
+  - `plan_tests_unitarios.md` - Plan 4 fases completo
 
-1. `PanelEstadoControlador` maneja contadores de envío (considerar extraer a capa comunicación)
-2. `ConexionPanelVista` tiene acoplamiento concreto con `compartido.widgets`
-3. `UIPrincipalCompositor` sin type hints para controladores
-4. Vistas con métodos no definidos en `VistaBase` (ISP)
+**Tests creados (7 archivos, 84 tests):**
+- `tests/conftest.py` - Fixtures globales (5 niveles)
+- `tests/test_config.py` - ConfigSimuladorBateria y ConfigManager (8 tests)
+- `tests/test_estado_bateria.py` - EstadoBateria dataclass (15 tests)
+- `tests/test_generador_bateria.py` - GeneradorBateria core (20 tests)
+- `tests/test_cliente_bateria.py` - ClienteBateria TCP (20 tests)
+- `tests/test_servicio_envio.py` - ServicioEnvioBateria integración (21 tests)
 
-Calificación general: 8/10 - Mejoras para Fase 5.
+### Próxima Sesión: Tests Unitarios Fase 2
 
-### Referencia Jira
-Tickets detallados en `jira_estructura_proyecto.md` y en Jira proyecto ST (Simuladores Termostato).
+**Objetivo:** Implementar tests para modelos MVC y factory (~50 tests adicionales)
+
+**Archivos a crear:**
+1. `tests/test_estado_bateria_panel_modelo.py` - Contadores, tasa_exito, porcentaje
+2. `tests/test_control_panel_modelo.py` - Conversión voltaje ↔ paso slider (CRÍTICO)
+3. `tests/test_conexion_panel_modelo.py` - Validación IP/puerto
+4. `tests/test_panel_estado_controlador.py` - Actualización estado, signals
+5. `tests/test_factory.py` - Creación de 4 componentes (CRÍTICO)
+
+**Coverage objetivo:** +15-20% (de 34% a ~50%)
+
+**Comandos útiles:**
+```bash
+cd simulador_bateria
+pytest tests/ -v                                    # Ejecutar todos los tests
+pytest tests/ --cov=app --cov-report=html          # Ver coverage
+pytest tests/test_generador_bateria.py -v          # Test específico
+```
+
+**Patrón a seguir:**
+- Usar fixtures de `conftest.py` como base
+- Agrupar tests por clases (Creacion, Metodos, Signals, Integracion)
+- Tests de conversión bidireccional en ControlPanelModelo son críticos
+- Factory tests deben verificar creación de todos los componentes
+
+### Referencia
+- Plan detallado: `simulador_bateria/docs/plan_tests_unitarios.md`
+- Tickets Jira: `jira_estructura_proyecto.md` y proyecto ST (Simuladores Termostato)
