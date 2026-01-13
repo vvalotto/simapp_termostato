@@ -4,13 +4,18 @@ Compone el layout visual a partir de controladores ya configurados.
 Solo responsable del layout, sin lógica de negocio.
 """
 
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from PyQt6.QtWidgets import (
     QMainWindow,
     QWidget,
     QVBoxLayout,
 )
+
+if TYPE_CHECKING:
+    from app.presentacion.paneles.estado.controlador import PanelEstadoControlador
+    from app.presentacion.paneles.control.controlador import ControlPanelControlador
+    from app.presentacion.paneles.conexion.controlador import ConexionPanelControlador
 
 
 class UIPrincipalCompositor(QMainWindow):
@@ -34,17 +39,17 @@ class UIPrincipalCompositor(QMainWindow):
 
     def __init__(
         self,
-        ctrl_estado,
-        ctrl_control,
-        ctrl_conexion,
+        ctrl_estado: "PanelEstadoControlador",
+        ctrl_control: "ControlPanelControlador",
+        ctrl_conexion: "ConexionPanelControlador",
         parent: Optional[QWidget] = None
     ) -> None:
         """Inicializa el compositor con controladores.
 
         Args:
             ctrl_estado: PanelEstadoControlador con vista de estado.
-            ctrl_control: ControlBateriaControlador con vista de control.
-            ctrl_conexion: PanelConexionControlador con vista de conexión.
+            ctrl_control: ControlPanelControlador con vista de control.
+            ctrl_conexion: ConexionPanelControlador con vista de conexión.
             parent: Widget padre opcional.
         """
         super().__init__(parent)

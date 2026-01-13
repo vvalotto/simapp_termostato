@@ -81,8 +81,8 @@ class ComponenteFactory:
         Returns:
             Diccionario con controladores:
             - 'estado': PanelEstadoControlador
-            - 'control': ControlBateriaControlador
-            - 'conexion': PanelConexionControlador
+            - 'control': ControlPanelControlador
+            - 'conexion': ConexionPanelControlador
         """
         # Imports locales para evitar dependencias circulares
         # (los controladores importan componentes de dominio)
@@ -90,17 +90,22 @@ class ComponenteFactory:
             PanelEstadoControlador
         )
         from app.presentacion.paneles.control.controlador import (
-            ControlBateriaControlador
+            ControlPanelControlador
         )
         from app.presentacion.paneles.conexion.controlador import (
-            PanelConexionControlador
+            ConexionPanelControlador
+        )
+
+        # Crear modelo de conexión con config inicial
+        from app.presentacion.paneles.conexion.modelo import ConexionPanelModelo
+
+        modelo_conexion = ConexionPanelModelo(
+            ip=self._config.host,
+            puerto=self._config.puerto
         )
 
         return {
             'estado': PanelEstadoControlador(),
-            'control': ControlBateriaControlador(),
-            'conexion': PanelConexionControlador(
-                ip_inicial=self._config.host,
-                puerto_inicial=self._config.puerto
-            ),
+            'control': ControlPanelControlador(),
+            'conexion': ConexionPanelControlador(modelo=modelo_conexion),
         }
