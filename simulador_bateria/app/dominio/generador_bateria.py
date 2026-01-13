@@ -47,11 +47,18 @@ class GeneradorBateria(QObject):
     def set_voltaje(self, voltaje: float) -> None:
         """Establece el voltaje actual.
 
+        El voltaje se clampea al rango [voltaje_minimo, voltaje_maximo]
+        definido en la configuración.
+
         Args:
             voltaje: Voltaje a establecer (V).
         """
-        self._voltaje_actual = voltaje
-        self.voltaje_cambiado.emit(voltaje)
+        voltaje_clamped = max(
+            self._config.voltaje_minimo,
+            min(voltaje, self._config.voltaje_maximo)
+        )
+        self._voltaje_actual = voltaje_clamped
+        self.voltaje_cambiado.emit(voltaje_clamped)
 
     def generar_valor(self) -> EstadoBateria:
         """Genera un nuevo valor de voltaje.
