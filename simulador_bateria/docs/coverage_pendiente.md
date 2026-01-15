@@ -1,8 +1,12 @@
 # Coverage Pendiente - Simulador Batería
 
-**Coverage actual:** 75% (739 statements, 182 sin cubrir)
-**Tests:** 192 passing
+**Coverage actual:** 81% (739 statements, 139 sin cubrir) ✅
+**Tests:** 239 passing
 **Generado:** 2026-01-15
+
+## Objetivo alcanzado
+
+El coverage supera el objetivo de ≥80%.
 
 ## Completados (100%)
 
@@ -15,21 +19,16 @@
 | `configuracion/config.py` | 88% |
 | `configuracion/constantes.py` | 100% |
 | `factory.py` | 100% |
+| `coordinator.py` | 100% |
 | `presentacion/paneles/base.py` | 100% |
 | `presentacion/paneles/estado/modelo.py` | 100% |
 | `presentacion/paneles/estado/controlador.py` | 100% |
 | `presentacion/paneles/control/modelo.py` | 100% |
+| `presentacion/paneles/control/controlador.py` | 100% |
 | `presentacion/paneles/conexion/modelo.py` | 100% |
+| `presentacion/paneles/conexion/controlador.py` | 100% |
 
-## Pendiente - Fase 3 (Controladores)
-
-| Módulo | Coverage | Líneas faltantes |
-|--------|----------|------------------|
-| `coordinator.py` | 46% | 53-62, 66, 72, 78-81, 91-99, 110, 119 |
-| `presentacion/paneles/control/controlador.py` | 71% | 9 líneas |
-| `presentacion/paneles/conexion/controlador.py` | 64% | 15 líneas |
-
-## Pendiente - Fase 4 (Vistas)
+## Pendiente - Fase 4 (Vistas - opcional)
 
 | Módulo | Coverage | Líneas faltantes |
 |--------|----------|------------------|
@@ -38,11 +37,19 @@
 | `presentacion/paneles/conexion/vista.py` | 47% | 29 líneas |
 | `presentacion/ui_compositor.py` | 24% | 16 líneas |
 
+Las vistas requieren tests de UI con qtbot widgets reales, más complejos de mantener.
+
 ## Progreso
 
 | Fase | Tests | Coverage | Estado |
 |------|-------|----------|--------|
 | Fase 1 | 84 | 34% | ✅ Completada |
 | Fase 2 | +108 | 75% | ✅ Completada |
-| Fase 3 | ~30 | ~85% | ⏳ Siguiente |
-| Fase 4 | ~20 | ≥80% | Pendiente |
+| Fase 3 | +47 | 81% | ✅ Completada |
+| Fase 4 | ~20 | ~85% | Opcional |
+
+## Resumen
+
+- **239 tests** totales
+- **81% coverage** (objetivo ≥80% ✅)
+- **0 fallos**
