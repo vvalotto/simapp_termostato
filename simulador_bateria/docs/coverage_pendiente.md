@@ -1,55 +1,40 @@
-# Coverage Pendiente - Simulador Batería
+# Coverage Final - Simulador Batería
 
-**Coverage actual:** 81% (739 statements, 139 sin cubrir) ✅
-**Tests:** 239 passing
+**Coverage final:** 96% (739 statements, 28 sin cubrir) 🎉
+**Tests:** 275 passing
 **Generado:** 2026-01-15
 
-## Objetivo alcanzado
+## Resumen
 
-El coverage supera el objetivo de ≥80%.
+Todos los módulos con 100% coverage excepto:
+- `config.py` - 88% (paths de archivo no testeados)
+- `ui_compositor.py` - 24% (composición de UI, difícil de testear aislado)
+- `cliente_bateria.py` - 96%
+- `servicio_envio.py` - 95%
 
-## Completados (100%)
-
-| Módulo | Coverage |
-|--------|----------|
-| `dominio/generador_bateria.py` | 100% |
-| `dominio/estado_bateria.py` | 100% |
-| `comunicacion/cliente_bateria.py` | 96% |
-| `comunicacion/servicio_envio.py` | 95% |
-| `configuracion/config.py` | 88% |
-| `configuracion/constantes.py` | 100% |
-| `factory.py` | 100% |
-| `coordinator.py` | 100% |
-| `presentacion/paneles/base.py` | 100% |
-| `presentacion/paneles/estado/modelo.py` | 100% |
-| `presentacion/paneles/estado/controlador.py` | 100% |
-| `presentacion/paneles/control/modelo.py` | 100% |
-| `presentacion/paneles/control/controlador.py` | 100% |
-| `presentacion/paneles/conexion/modelo.py` | 100% |
-| `presentacion/paneles/conexion/controlador.py` | 100% |
-
-## Pendiente - Fase 4 (Vistas - opcional)
-
-| Módulo | Coverage | Líneas faltantes |
-|--------|----------|------------------|
-| `presentacion/paneles/estado/vista.py` | 38% | 40 líneas |
-| `presentacion/paneles/control/vista.py` | 34% | 42 líneas |
-| `presentacion/paneles/conexion/vista.py` | 47% | 29 líneas |
-| `presentacion/ui_compositor.py` | 24% | 16 líneas |
-
-Las vistas requieren tests de UI con qtbot widgets reales, más complejos de mantener.
-
-## Progreso
+## Progreso Completado
 
 | Fase | Tests | Coverage | Estado |
 |------|-------|----------|--------|
 | Fase 1 | 84 | 34% | ✅ Completada |
 | Fase 2 | +108 | 75% | ✅ Completada |
 | Fase 3 | +47 | 81% | ✅ Completada |
-| Fase 4 | ~20 | ~85% | Opcional |
+| Fase 4 | +36 | 96% | ✅ Completada |
 
-## Resumen
+## Módulos 100% Coverage
 
-- **239 tests** totales
-- **81% coverage** (objetivo ≥80% ✅)
+- `dominio/generador_bateria.py`
+- `dominio/estado_bateria.py`
+- `coordinator.py`
+- `factory.py`
+- `presentacion/paneles/base.py`
+- `presentacion/paneles/estado/*` (modelo, vista, controlador)
+- `presentacion/paneles/control/*` (modelo, vista, controlador)
+- `presentacion/paneles/conexion/*` (modelo, vista, controlador)
+
+## Ticket SB-13/ST-65 Completado
+
+- **275 tests** totales
+- **96% coverage** (objetivo ≥80% ✅)
 - **0 fallos**
+- **4 fases** implementadas
