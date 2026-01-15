@@ -83,11 +83,16 @@ class ClienteBateria(QObject):
         Returns:
             True si el envío fue exitoso, False en caso contrario.
         """
-        self._ultimo_valor = voltaje
-        mensaje = f"{voltaje:.2f}"
+        try:
+            self._ultimo_valor = voltaje
+            mensaje = f"{voltaje:.2f}"
 
-        logger.debug("Enviando voltaje: %s", mensaje)
-        return self._cliente.send(mensaje)
+            logger.debug("Enviando voltaje: %s", mensaje)
+            return self._cliente.send(mensaje)
+        except Exception as e:
+            logger.error("Error al enviar voltaje: %s", str(e))
+            self.error_conexion.emit(str(e))
+            return False
 
     def enviar_voltaje_async(self, voltaje: float) -> None:
         """Envía un valor de voltaje de forma asíncrona.
@@ -98,11 +103,15 @@ class ClienteBateria(QObject):
         Args:
             voltaje: Valor de voltaje en Volts.
         """
-        self._ultimo_valor = voltaje
-        mensaje = f"{voltaje:.2f}"
+        try:
+            self._ultimo_valor = voltaje
+            mensaje = f"{voltaje:.2f}"
 
-        logger.debug("Enviando voltaje (async): %s", mensaje)
-        self._cliente.send_async(mensaje)
+            logger.debug("Enviando voltaje (async): %s", mensaje)
+            self._cliente.send_async(mensaje)
+        except Exception as e:
+            logger.error("Error al enviar voltaje async: %s", str(e))
+            self.error_conexion.emit(str(e))
 
     def enviar_estado(self, estado: EstadoBateria) -> bool:
         """Envía un EstadoBateria al servidor.

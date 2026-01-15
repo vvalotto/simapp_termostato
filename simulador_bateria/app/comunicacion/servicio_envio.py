@@ -108,7 +108,11 @@ class ServicioEnvioBateria(QObject):
 
     def _on_valor_generado(self, estado: EstadoBateria) -> None:
         """Callback cuando el generador produce un nuevo valor."""
-        self._cliente.enviar_estado_async(estado)
+        try:
+            self._cliente.enviar_estado_async(estado)
+        except Exception as e:
+            logger.error("Error al procesar valor generado: %s", str(e))
+            self.envio_fallido.emit(str(e))
 
     def _on_dato_enviado(self, voltaje: float) -> None:
         """Callback cuando el cliente envía exitosamente."""

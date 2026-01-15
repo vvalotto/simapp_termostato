@@ -29,14 +29,15 @@ python simulador_temperatura/run.py
 python simulador_bateria/run.py
 python ux_termostato/run.py
 
-# Testing (desde directorio del producto)
-cd simulador_temperatura
-pytest tests/ -v                                                   # Todos
-pytest tests/test_generador_temperatura.py -v                      # Archivo
-pytest tests/test_generador_temperatura.py::test_generar_valor -v  # Funcion
-pytest tests/ --cov=app --cov-report=html                          # Coverage
+# Testing (ejecutar desde directorio del producto)
+cd simulador_bateria  # o simulador_temperatura
+pytest tests/ -v                                                   # Todos los tests
+pytest tests/test_generador_bateria.py -v                          # Un archivo
+pytest tests/test_generador_bateria.py::TestGeneradorBateria -v    # Una clase
+pytest tests/test_generador_bateria.py::test_generar_valor -v      # Una funcion
+pytest tests/ --cov=app --cov-report=html                          # Coverage HTML
 
-# Quality (desde directorio del producto)
+# Quality (ejecutar desde directorio del producto)
 pylint app/
 python quality/scripts/calculate_metrics.py app
 python quality/scripts/validate_gates.py quality/reports/quality_*.json
@@ -50,84 +51,65 @@ Cada producto debe cumplir: CC promedio ≤ 10, MI promedio > 20, Pylint ≥ 8.0
 
 ### Simuladores (temperatura y bateria) - MVC + Factory/Coordinator
 
-Ambos usan la misma arquitectura:
+Ambos simuladores usan arquitectura identica:
 
 ```
 run.py                      # AplicacionSimulador (lifecycle)
 app/
 ├── factory.py              # ComponenteFactory - crea todos los componentes
 ├── coordinator.py          # SimuladorCoordinator - conecta signals PyQt
-├── configuracion/          # ConfigManager, ConfigSimulador*
-├── dominio/                # Generador*, Estado* (logica de negocio)
-├── comunicacion/           # Cliente*, ServicioEnvio* (TCP con EphemeralSocketClient)
+├── configuracion/          # ConfigManager, ConfigSimulador*, constantes
+├── dominio/                # Generador*, Estado* (logica de negocio pura)
+├── comunicacion/           # Cliente*, ServicioEnvio* (TCP via EphemeralSocketClient)
 └── presentacion/
-    ├── ui_compositor.py    # Composicion del layout
-    └── paneles/            # MVC: modelo.py, vista.py, controlador.py
+    ├── ui_compositor.py    # Composicion del layout principal
+    └── paneles/            # Cada panel tiene: modelo.py, vista.py, controlador.py
+        ├── conexion/       # Config IP/puerto
+        ├── control/        # Slider voltaje/temperatura
+        └── estado/         # Contadores envios exitosos/fallidos
 ```
 
-**Flujo de signals:**
+**Flujo de signals PyQt:**
 ```
-Generador ──signal──► Controladores ──signal──► ServicioEnvio ──TCP──► Raspberry
-                           │
-                           ▼
-                      Vista (UI)
+Generador ──valor_generado──► Controladores ──signal──► ServicioEnvio ──TCP──► RPi
+                                    │
+                                    ▼
+                               Vista (UI)
 ```
+
+**Patron Factory/Coordinator:** `factory.py` crea componentes independientes, `coordinator.py` los conecta via signals evitando dependencias circulares.
 
 ### ux_termostato
 
-Arquitectura mas simple sin Factory/Coordinator.
+Arquitectura mas simple: widgets directos sin Factory/Coordinator.
 
 ### compartido/
 
-- `networking/`: BaseSocketClient, BaseSocketServer, EphemeralSocketClient
+Codigo reutilizable entre productos:
+- `networking/`: EphemeralSocketClient (conexion-por-mensaje), BaseSocketServer
 - `widgets/`: ConfigPanel, LedIndicator, LogViewer, StatusIndicator
-- `estilos/`: ThemeProvider, dark theme
+- `estilos/`: ThemeProvider con dark theme
+- `quality/scripts/`: calculate_metrics.py, validate_gates.py (copiados a cada producto)
 
 ## Communication Protocol
 
 | Puerto | Direccion | Formato | Uso |
 |--------|-----------|---------|-----|
-| 12000 | Sim → RPi | `<float>\n` | Temperatura |
-| 11000 | Sim → RPi | `<float>\n` | Bateria (voltaje) |
-| 13000 | UX → RPi | `aumentar\|disminuir` | Seteo temperatura |
-| 14000 | UX → RPi | `ambiente\|deseada` | Selector display |
-| 14001 | RPi → UX | `<etiqueta>: <valor>` | Visualizador temp |
-| 14002 | RPi → UX | `<float>` | Visualizador bateria |
+| 12000 | Desktop → RPi | `<float>\n` | Temperatura simulada |
+| 11000 | Desktop → RPi | `<float>\n` | Voltaje bateria [0.0-5.0] |
+| 13000 | Desktop → RPi | `aumentar\|disminuir` | Seteo temperatura |
+| 14000 | Desktop → RPi | `ambiente\|deseada` | Selector display |
+| 14001 | RPi → Desktop | `<etiqueta>: <valor>` | Visualizador temperatura |
+| 14002 | RPi → Desktop | `<float>` | Visualizador bateria |
 
 ## Configuration
 
-- `config.json`: Parametros de red y simulacion (committed)
-- `.env`: Override de IP/puertos (not committed)
+- `config.json`: Parametros de red y simulacion (committed, valores por defecto)
+- `.env`: Override de IP/puertos para entorno local (not committed)
 
-## Estado de Desarrollo - Simulador Batería
+## Testing Patterns
 
-### Branch Activo
-`development/simulador-bateria-fase3`
-
-### Fases Completadas
-
-| Fase | Tickets | Estado |
-|------|---------|--------|
-| Fase 1: Dominio y Configuración | SB-1 a SB-4 | ✅ Completada |
-| Fase 2: Comunicación | SB-5, SB-6 | ✅ Completada |
-| Fase 3: Presentación MVC | SB-7, SB-8, SB-9 | ✅ Completada |
-| Fase 4: Orquestación | SB-10, SB-11, SB-12 | ⏳ Pendiente |
-| Fase 5: Calidad | SB-13, SB-14 | ⏳ Pendiente |
-
-### Próximos Tickets (Fase 4)
-- **SB-10/ST-65**: ComponenteFactory - crear todos los componentes
-- **SB-11/ST-66**: SimuladorCoordinator - conectar signals
-- **SB-12/ST-67**: UIPrincipalCompositor - componer paneles
-
-### Revisión de Diseño Pendiente
-Hallazgos de revisión de cohesión/acoplamiento/SOLID en capa presentación:
-
-1. `PanelEstadoControlador` maneja contadores de envío (considerar extraer a capa comunicación)
-2. `ConexionPanelVista` tiene acoplamiento concreto con `compartido.widgets`
-3. `UIPrincipalCompositor` sin type hints para controladores
-4. Vistas con métodos no definidos en `VistaBase` (ISP)
-
-Calificación general: 8/10 - Mejoras para Fase 5.
-
-### Referencia Jira
-Tickets detallados en `jira_estructura_proyecto.md` y en Jira proyecto ST (Simuladores Termostato).
+Los tests usan pytest con fixtures en `conftest.py`:
+- Agrupar tests por clase: `TestCreacion`, `TestMetodos`, `TestSignals`, `TestIntegracion`
+- Fixtures por nivel: config → modelo → componente
+- Mock de conexiones TCP con `unittest.mock`
