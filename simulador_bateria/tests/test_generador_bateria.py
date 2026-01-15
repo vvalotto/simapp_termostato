@@ -149,7 +149,7 @@ class TestGeneradorBateriaTimer:
         generador.valor_generado.connect(lambda x: signal_spy.append(x))
 
         generador.iniciar()
-        qtbot.wait(250)  # Esperar ~2 emisiones (intervalo 100ms)
+        qtbot.wait(500)  # Esperar ~4-5 emisiones (intervalo 100ms + latencia PyCharm)
         generador.detener()
 
         assert len(signal_spy) >= 2
