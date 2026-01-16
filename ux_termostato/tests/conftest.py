@@ -11,6 +11,9 @@ from PyQt6.QtWidgets import QApplication
 from app.presentacion.paneles.display.modelo import DisplayModelo
 from app.presentacion.paneles.display.vista import DisplayVista
 from app.presentacion.paneles.display.controlador import DisplayControlador
+from app.presentacion.paneles.climatizador.modelo import ClimatizadorModelo
+from app.presentacion.paneles.climatizador.vista import ClimatizadorVista
+from app.presentacion.paneles.climatizador.controlador import ClimatizadorControlador
 
 
 @pytest.fixture(scope="session")
@@ -133,4 +136,107 @@ def display_controlador_custom(qapp):
         if vista is None:
             vista = DisplayVista()
         return DisplayControlador(modelo, vista)
+    return _crear_controlador
+
+
+# ========== Fixtures para Panel Climatizador ==========
+
+@pytest.fixture
+def climatizador_modelo():
+    """
+    Fixture para crear un ClimatizadorModelo con valores por defecto.
+
+    Returns:
+        ClimatizadorModelo: Instancia con modo="reposo", encendido=True
+    """
+    return ClimatizadorModelo(
+        modo="reposo",
+        encendido=True
+    )
+
+
+@pytest.fixture
+def climatizador_modelo_custom():
+    """
+    Fixture factory para crear ClimatizadorModelo con valores personalizados.
+
+    Returns:
+        callable: Función que crea ClimatizadorModelo con parámetros custom
+    """
+    def _crear_modelo(**kwargs):
+        """
+        Crea ClimatizadorModelo con valores personalizados.
+
+        Args:
+            **kwargs: Parámetros para ClimatizadorModelo
+
+        Returns:
+            ClimatizadorModelo: Instancia con valores custom
+        """
+        defaults = {
+            "modo": "reposo",
+            "encendido": True
+        }
+        defaults.update(kwargs)
+        return ClimatizadorModelo(**defaults)
+    return _crear_modelo
+
+
+@pytest.fixture
+def climatizador_vista(qapp):
+    """
+    Fixture para crear un ClimatizadorVista.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        ClimatizadorVista: Instancia de la vista del climatizador
+    """
+    return ClimatizadorVista()
+
+
+@pytest.fixture
+def climatizador_controlador(qapp, climatizador_modelo, climatizador_vista):
+    """
+    Fixture para crear un ClimatizadorControlador completo.
+
+    Args:
+        qapp: Fixture de QApplication
+        climatizador_modelo: Fixture de ClimatizadorModelo
+        climatizador_vista: Fixture de ClimatizadorVista
+
+    Returns:
+        ClimatizadorControlador: Controlador completamente configurado
+    """
+    return ClimatizadorControlador(climatizador_modelo, climatizador_vista)
+
+
+@pytest.fixture
+def climatizador_controlador_custom(qapp):
+    """
+    Fixture factory para crear ClimatizadorControlador con configuración custom.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        callable: Función que crea ClimatizadorControlador con parámetros custom
+    """
+    def _crear_controlador(modelo=None, vista=None):
+        """
+        Crea ClimatizadorControlador con componentes personalizados.
+
+        Args:
+            modelo: ClimatizadorModelo opcional (crea uno por defecto si None)
+            vista: ClimatizadorVista opcional (crea una por defecto si None)
+
+        Returns:
+            ClimatizadorControlador: Controlador configurado
+        """
+        if modelo is None:
+            modelo = ClimatizadorModelo()
+        if vista is None:
+            vista = ClimatizadorVista()
+        return ClimatizadorControlador(modelo, vista)
     return _crear_controlador
