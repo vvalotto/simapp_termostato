@@ -14,6 +14,9 @@ from app.presentacion.paneles.display.controlador import DisplayControlador
 from app.presentacion.paneles.climatizador.modelo import ClimatizadorModelo
 from app.presentacion.paneles.climatizador.vista import ClimatizadorVista
 from app.presentacion.paneles.climatizador.controlador import ClimatizadorControlador
+from app.presentacion.paneles.indicadores.modelo import IndicadoresModelo
+from app.presentacion.paneles.indicadores.vista import IndicadoresVista
+from app.presentacion.paneles.indicadores.controlador import IndicadoresControlador
 
 
 @pytest.fixture(scope="session")
@@ -239,4 +242,107 @@ def climatizador_controlador_custom(qapp):
         if vista is None:
             vista = ClimatizadorVista()
         return ClimatizadorControlador(modelo, vista)
+    return _crear_controlador
+
+
+# ========== Fixtures para Panel Indicadores ==========
+
+@pytest.fixture
+def indicadores_modelo():
+    """
+    Fixture para crear un IndicadoresModelo con valores por defecto.
+
+    Returns:
+        IndicadoresModelo: Instancia con falla_sensor=False, bateria_baja=False
+    """
+    return IndicadoresModelo(
+        falla_sensor=False,
+        bateria_baja=False
+    )
+
+
+@pytest.fixture
+def indicadores_modelo_custom():
+    """
+    Fixture factory para crear IndicadoresModelo con valores personalizados.
+
+    Returns:
+        callable: Función que crea IndicadoresModelo con parámetros custom
+    """
+    def _crear_modelo(**kwargs):
+        """
+        Crea IndicadoresModelo con valores personalizados.
+
+        Args:
+            **kwargs: Parámetros para IndicadoresModelo
+
+        Returns:
+            IndicadoresModelo: Instancia con valores custom
+        """
+        defaults = {
+            "falla_sensor": False,
+            "bateria_baja": False
+        }
+        defaults.update(kwargs)
+        return IndicadoresModelo(**defaults)
+    return _crear_modelo
+
+
+@pytest.fixture
+def indicadores_vista(qapp):
+    """
+    Fixture para crear un IndicadoresVista.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        IndicadoresVista: Instancia de la vista de indicadores
+    """
+    return IndicadoresVista()
+
+
+@pytest.fixture
+def indicadores_controlador(qapp, indicadores_modelo, indicadores_vista):
+    """
+    Fixture para crear un IndicadoresControlador completo.
+
+    Args:
+        qapp: Fixture de QApplication
+        indicadores_modelo: Fixture de IndicadoresModelo
+        indicadores_vista: Fixture de IndicadoresVista
+
+    Returns:
+        IndicadoresControlador: Controlador completamente configurado
+    """
+    return IndicadoresControlador(indicadores_modelo, indicadores_vista)
+
+
+@pytest.fixture
+def indicadores_controlador_custom(qapp):
+    """
+    Fixture factory para crear IndicadoresControlador con configuración custom.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        callable: Función que crea IndicadoresControlador con parámetros custom
+    """
+    def _crear_controlador(modelo=None, vista=None):
+        """
+        Crea IndicadoresControlador con componentes personalizados.
+
+        Args:
+            modelo: IndicadoresModelo opcional (crea uno por defecto si None)
+            vista: IndicadoresVista opcional (crea una por defecto si None)
+
+        Returns:
+            IndicadoresControlador: Controlador configurado
+        """
+        if modelo is None:
+            modelo = IndicadoresModelo()
+        if vista is None:
+            vista = IndicadoresVista()
+        return IndicadoresControlador(modelo, vista)
     return _crear_controlador
