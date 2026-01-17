@@ -18,6 +18,13 @@ Desktop (Mac/PC)                         Raspberry Pi
 
 ## Commands
 
+### Skills Personalizados
+
+**`/implement-us US-XXX`** - Implementar Historia de Usuario
+- Proceso completo en `.claude/skills/implement-us.md`
+- Incluye: BDD → Plan → MVC → Tests → Quality → Docs
+- Usar cuando el usuario solicite "implementa US-XXX"
+
 ```bash
 # Setup
 python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
@@ -215,9 +222,178 @@ class TestIntegracion:
 
 5. **Observer**: PyQt signals/slots para desacoplamiento
 
+## Workflow: Implementación de Historias de Usuario
+
+**IMPORTANTE:** Para ux_termostato, seguir este proceso estricto para cada Historia de Usuario.
+
+### Invocación del Skill /implement-us
+
+**Cuando el usuario escriba:** `/implement-us US-XXX` o `implementa US-XXX`
+
+**Claude debe:**
+1. Reconocer esto como solicitud de implementación de Historia de Usuario
+2. Leer el proceso completo de `.claude/skills/implement-us.md`
+3. Ejecutar las 9 fases documentadas paso a paso
+4. Seguir la configuración de `.claude/skills/implement-us-config.json`
+
+**Archivos clave del skill:**
+- `.claude/skills/implement-us.md` - Proceso completo (9 fases)
+- `.claude/skills/implement-us-config.json` - Configuración (quality gates, paths)
+- `.claude/templates/` - Templates para BDD, plan, tests, reportes
+
+### Proceso de Implementación (9 Fases)
+
+Las fases están detalladas en `.claude/skills/implement-us.md`. Resumen:
+
+**Estructura de archivos:**
+```
+ux_termostato/
+├── docs/plans/US-XXX-plan.md           # Plan detallado con checklist
+├── docs/reports/US-XXX-report.md       # Reporte final (opcional)
+└── tests/features/US-XXX-*.feature     # Escenarios BDD (Gherkin)
+```
+
+### Paso 1: Escenarios BDD (Gherkin)
+- Crear archivo `tests/features/US-XXX-nombre.feature`
+- Definir escenarios que validen criterios de aceptación
+- Formato Gherkin: Given/When/Then
+- Referencia: `tests/features/US-001-ver-temperatura-ambiente.feature`
+
+### Paso 2: Plan Detallado
+- Crear archivo `docs/plans/US-XXX-plan.md`
+- Incluir:
+  - Info de la HU (título, puntos, prioridad)
+  - Componentes a implementar (MVC completo)
+  - Tasks con estimaciones (modelo, vista, controlador, tests)
+  - Checklist de progreso actualizable
+  - Quality gates
+  - Lecciones aprendidas (post-implementación)
+- Referencia: `docs/plans/US-001-plan.md`
+
+### Paso 3: Implementación MVC
+**Orden recomendado:**
+1. Modelo (dataclass inmutable)
+2. Vista (QWidget puro, sin lógica)
+3. Controlador (QObject, conecta modelo↔vista)
+4. `__init__.py` (exports)
+
+**Actualizar plan:** Marcar cada tarea completada ✅
+
+### Paso 4: Tests Unitarios
+Para cada componente MVC:
+- `tests/test_{panel}_modelo.py`
+  - TestCreacion, TestInmutabilidad, TestValidacion
+- `tests/test_{panel}_vista.py`
+  - TestCreacion, TestActualizacion, TestEstilos
+- `tests/test_{panel}_controlador.py`
+  - TestCreacion, TestMetodos, TestSignals
+
+**Actualizar conftest.py:** Agregar fixtures reutilizables
+
+### Paso 5: Tests de Integración
+- `tests/test_{panel}_integracion.py`
+- Validar flujo completo: modelo → controlador → vista
+- Simular recepción de datos desde servidor
+
+### Paso 6: Implementar Steps BDD
+- Implementar steps con pytest-bdd
+- Ejecutar escenarios: `pytest tests/features/US-XXX-*.feature`
+- Validar que todos los escenarios pasan
+
+### Paso 7: Quality Gates
+Validar que se cumple:
+- **Coverage:** ≥ 95% (`pytest --cov=app --cov-report=html`)
+- **Pylint:** ≥ 8.0 (`pylint app/presentacion/paneles/{panel}/`)
+- **CC:** ≤ 10 promedio (`radon cc ...`)
+- **MI:** > 20 (`radon mi ...`)
+
+Generar reporte: `quality/reports/US-XXX-quality.json`
+
+### Paso 8: Git Workflow
+```bash
+# Crear rama
+git checkout -b development/simulador-ux-US-XXX
+
+# Commits incrementales
+git commit -m "feat(US-XXX): implementar modelo {Panel}"
+git commit -m "feat(US-XXX): implementar vista {Panel}"
+git commit -m "feat(US-XXX): implementar controlador {Panel}"
+git commit -m "test(US-XXX): agregar tests unitarios"
+git commit -m "test(US-XXX): agregar tests BDD"
+
+# Push y PR
+git push origin development/simulador-ux-US-XXX
+# Crear PR → main
+```
+
+### Paso 9: Finalización
+- Actualizar plan con resultados finales
+- Documentar lecciones aprendidas
+- Actualizar `CLAUDE.md` sección "Development Status"
+- Merge PR a main
+
+### Ejemplo de Referencia Completo
+
+**US-001** (Display LCD) y **US-002** (Climatizador) son implementaciones de referencia:
+- 100% coverage
+- Pylint 10.00/10
+- CC < 2, MI > 80
+- Ratio tests/código: ~5:1
+
+Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
+
+## Development Status
+
+### ux_termostato - En Desarrollo Activo
+
+**Arquitectura:** MVC + Factory/Coordinator (siguiendo ADR-003)
+**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md`
+
+**Sprint 1 - MVP Básico (35 puntos)**
+
+Semana 1 - Completado: 10/15 puntos
+- ✅ US-001: Ver temperatura ambiente (3 pts) - Panel Display con 100% coverage
+- ✅ US-002: Ver estado climatizador (5 pts) - Panel Climatizador con 100% coverage
+- ✅ US-003: Ver indicadores de alerta (2 pts) - Panel Indicadores con 99% coverage
+- ⏭️ **PRÓXIMO: US-007: Encender termostato (3 pts)** - Panel Power
+- 🔲 US-008: Apagar termostato (2 pts)
+
+Semana 2 - Pendiente: 0/16 puntos
+- 🔲 US-004: Aumentar temperatura (3 pts)
+- 🔲 US-005: Disminuir temperatura (3 pts)
+- 🔲 US-009: Alerta falla sensor (2 pts)
+- 🔲 US-011: Cambiar vista (3 pts)
+- 🔲 US-013: Configurar IP (3 pts)
+- 🔲 US-015: Estado conexión (2 pts)
+
+**Paneles implementados:**
+- `presentacion/paneles/display/` - Display LCD principal
+- `presentacion/paneles/climatizador/` - Indicadores calor/reposo/frío
+- `presentacion/paneles/indicadores/` - LEDs de alerta (sensor, batería)
+
+**Paneles pendientes:**
+- `control_temp/` - Botones subir/bajar temperatura
+- `selector_vista/` - Toggle ambiente/deseada
+- `power/` - Botón encender/apagar
+- `estado_footer/` - Info de estado
+- `conexion/` - Config IP/puerto
+
+**Capas pendientes:**
+- `app/dominio/` - EstadoTermostato, ComandoTermostato
+- `app/comunicacion/` - ServidorEstado, ClienteComandos
+- `app/factory.py` - ComponenteFactoryUX
+- `app/coordinator.py` - UXCoordinator
+
+### simulador_temperatura - Completo ✅
+Coverage: ~95%+, Quality gates: ✅
+
+### simulador_bateria - Completo ✅
+Coverage: 96%, Quality gates: ✅
+
 ## Important Notes
 
 - **Siempre leer CLAUDE.md cuando cambies de producto** - simulador_temperatura, simulador_bateria y ux_termostato tienen sutiles diferencias
+- **ux_termostato en desarrollo:** Revisar "Development Status" arriba para conocer el estado actual y próximas tareas
 - **Tests requieren PyQt6** - configurado en pytest.ini con `qt_api = pyqt6`
 - **Venv en .venv** (no venv) - ya está en .gitignore
 - **Documentación detallada** en `{producto}/docs/arquitectura.md` para cada simulador
