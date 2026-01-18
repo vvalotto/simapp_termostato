@@ -8,7 +8,9 @@
     "plans_dir": "docs/plans",
     "reports_dir": "docs/reports",
     "features_dir": "tests/features",
-    "quality_reports_dir": "quality/reports"
+    "quality_reports_dir": "quality/reports",
+    "tracking_dir": ".claude/tracking",
+    "metrics_dir": ".claude/metrics"
   },
 
   "quality_gates": {
@@ -16,6 +18,17 @@
     "cc_max": 10,
     "mi_min": 20,
     "coverage_min": 95.0
+  },
+
+  "tracking": {
+    "enabled": true,
+    "auto_start": true,
+    "auto_pause_on_error": true,
+    "track_user_approval_time": true,
+    "storage_path": ".claude/tracking",
+    "metrics_path": ".claude/metrics",
+    "generate_reports": true,
+    "report_formats": ["markdown", "json"]
   },
 
   "workflow": {
