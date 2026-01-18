@@ -1,0 +1,231 @@
+{
+  "metadata": {
+    "us_id": "US-007",
+    "us_title": "Encender el termostato",
+    "us_points": 3,
+    "producto": "ux_termostato",
+    "tracking_version": "1.0"
+  },
+  "timeline": {
+    "started_at": "2026-01-18T17:46:38.610938+00:00",
+    "completed_at": null,
+    "total_elapsed_seconds": 1603,
+    "effective_seconds": 1603,
+    "paused_seconds": 0
+  },
+  "phases": [
+    {
+      "phase_number": 0,
+      "phase_name": "Validación de Contexto",
+      "started_at": "2026-01-18T17:46:38.613310+00:00",
+      "completed_at": "2026-01-18T17:50:22.876631+00:00",
+      "elapsed_seconds": 120,
+      "status": "completed",
+      "tasks": [],
+      "auto_approved": true,
+      "user_approval_time_seconds": 0
+    },
+    {
+      "phase_number": 1,
+      "phase_name": "Generación de Escenarios BDD",
+      "started_at": "2026-01-18T17:50:22.878308+00:00",
+      "completed_at": "2026-01-18T17:51:27.532716+00:00",
+      "elapsed_seconds": 300,
+      "status": "completed",
+      "tasks": [
+        {
+          "task_id": "task_001",
+          "task_name": "Generar escenarios BDD para US-007",
+          "task_type": "bdd",
+          "estimated_minutes": 15.0,
+          "started_at": "2026-01-18T17:50:22.878308+00:00",
+          "completed_at": "2026-01-18T17:51:27.531349+00:00",
+          "elapsed_seconds": 300,
+          "file_created": "ux_termostato/tests/features/US-007-encender-termostato.feature",
+          "status": "completed"
+        }
+      ],
+      "auto_approved": false,
+      "user_approval_time_seconds": 0
+    },
+    {
+      "phase_number": 2,
+      "phase_name": "Generación del Plan de Implementación",
+      "started_at": "2026-01-18T17:51:27.532738+00:00",
+      "completed_at": "2026-01-18T17:53:36.866572+00:00",
+      "elapsed_seconds": 600,
+      "status": "completed",
+      "tasks": [
+        {
+          "task_id": "task_002",
+          "task_name": "Generar plan de implementación detallado",
+          "task_type": "plan",
+          "estimated_minutes": 20.0,
+          "started_at": "2026-01-18T17:51:27.532738+00:00",
+          "completed_at": "2026-01-18T17:53:36.863692+00:00",
+          "elapsed_seconds": 600,
+          "file_created": "ux_termostato/docs/plans/US-007-plan.md",
+          "status": "completed"
+        }
+      ],
+      "auto_approved": false,
+      "user_approval_time_seconds": 0
+    },
+    {
+      "phase_number": 3,
+      "phase_name": "Implementación MVC del Panel Power",
+      "started_at": "2026-01-18T17:56:40.333927+00:00",
+      "completed_at": "2026-01-18T18:00:10.076554+00:00",
+      "elapsed_seconds": 209,
+      "status": "completed",
+      "tasks": [
+        {
+          "task_id": "task_003",
+          "task_name": "Implementar PowerModelo",
+          "task_type": "modelo",
+          "estimated_minutes": 10.0,
+          "started_at": "2026-01-18T17:56:40.333927+00:00",
+          "completed_at": "2026-01-18T17:57:49.715076+00:00",
+          "elapsed_seconds": 180,
+          "file_created": "app/presentacion/paneles/power/modelo.py",
+          "status": "completed"
+        },
+        {
+          "task_id": "task_004",
+          "task_name": "Implementar PowerVista",
+          "task_type": "vista",
+          "estimated_minutes": 30.0,
+          "started_at": "2026-01-18T17:57:49.715076+00:00",
+          "completed_at": "2026-01-18T17:58:47.120297+00:00",
+          "elapsed_seconds": 420,
+          "file_created": "app/presentacion/paneles/power/vista.py",
+          "status": "completed"
+        },
+        {
+          "task_id": "task_005",
+          "task_name": "Implementar PowerControlador",
+          "task_type": "controlador",
+          "estimated_minutes": 40.0,
+          "started_at": "2026-01-18T17:58:47.120297+00:00",
+          "completed_at": "2026-01-18T17:59:38.611631+00:00",
+          "elapsed_seconds": 480,
+          "file_created": "app/presentacion/paneles/power/controlador.py",
+          "status": "completed"
+        },
+        {
+          "task_id": "task_006",
+          "task_name": "Configurar __init__.py",
+          "task_type": "config",
+          "estimated_minutes": 5.0,
+          "started_at": "2026-01-18T17:59:38.611631+00:00",
+          "completed_at": "2026-01-18T18:00:10.075267+00:00",
+          "elapsed_seconds": 60,
+          "file_created": "app/presentacion/paneles/power/__init__.py",
+          "status": "completed"
+        }
+      ],
+      "auto_approved": true,
+      "user_approval_time_seconds": 0
+    },
+    {
+      "phase_number": 4,
+      "phase_name": "Tests Unitarios",
+      "started_at": "2026-01-18T18:01:56.113240+00:00",
+      "completed_at": "2026-01-18T18:08:03.043907+00:00",
+      "elapsed_seconds": 366,
+      "status": "completed",
+      "tasks": [
+        {
+          "task_id": "task_007",
+          "task_name": "Tests del PowerModelo",
+          "task_type": "test",
+          "estimated_minutes": 30.0,
+          "started_at": "2026-01-18T18:01:56.113240+00:00",
+          "completed_at": "2026-01-18T18:03:26.383146+00:00",
+          "elapsed_seconds": 240,
+          "file_created": "tests/test_power_modelo.py",
+          "status": "completed"
+        },
+        {
+          "task_id": "task_008",
+          "task_name": "Tests de la PowerVista",
+          "task_type": "test",
+          "estimated_minutes": 60.0,
+          "started_at": "2026-01-18T18:03:26.383146+00:00",
+          "completed_at": "2026-01-18T18:05:01.942757+00:00",
+          "elapsed_seconds": 300,
+          "file_created": "tests/test_power_vista.py",
+          "status": "completed"
+        },
+        {
+          "task_id": "task_009",
+          "task_name": "Tests del PowerControlador",
+          "task_type": "test",
+          "estimated_minutes": 70.0,
+          "started_at": "2026-01-18T18:05:01.942757+00:00",
+          "completed_at": "2026-01-18T18:06:34.238483+00:00",
+          "elapsed_seconds": 360,
+          "file_created": "tests/test_power_controlador.py",
+          "status": "completed"
+        },
+        {
+          "task_id": "task_010",
+          "task_name": "Actualizar conftest.py con fixtures",
+          "task_type": "test",
+          "estimated_minutes": 20.0,
+          "started_at": "2026-01-18T18:06:34.238483+00:00",
+          "completed_at": "2026-01-18T18:08:03.042970+00:00",
+          "elapsed_seconds": 180,
+          "file_created": "tests/conftest.py",
+          "status": "completed"
+        }
+      ],
+      "auto_approved": true,
+      "user_approval_time_seconds": 0
+    },
+    {
+      "phase_number": 5,
+      "phase_name": "Tests de Integración",
+      "started_at": "2026-01-18T18:09:18.011908+00:00",
+      "completed_at": "2026-01-18T18:13:21.761542+00:00",
+      "elapsed_seconds": 243,
+      "status": "completed",
+      "tasks": [
+        {
+          "task_id": "task_011",
+          "task_name": "Test de Integración Completo",
+          "task_type": "test",
+          "estimated_minutes": 90.0,
+          "started_at": "2026-01-18T18:09:18.011908+00:00",
+          "completed_at": "2026-01-18T18:13:21.760752+00:00",
+          "elapsed_seconds": 480,
+          "file_created": "tests/test_power_integracion.py",
+          "status": "completed"
+        }
+      ],
+      "auto_approved": true,
+      "user_approval_time_seconds": 0
+    },
+    {
+      "phase_number": 6,
+      "phase_name": "Validación BDD",
+      "started_at": "2026-01-18T18:14:43.194414+00:00",
+      "completed_at": null,
+      "elapsed_seconds": 0,
+      "status": "in_progress",
+      "tasks": [],
+      "auto_approved": true,
+      "user_approval_time_seconds": 0
+    }
+  ],
+  "pauses": [],
+  "summary": {
+    "total_tasks": 11,
+    "completed_tasks": 11,
+    "total_phases": 7,
+    "estimated_total_minutes": 390.0,
+    "actual_total_minutes": 60.0,
+    "variance_minutes": -330.0,
+    "variance_percent": -84.61538461538461
+  }
+}

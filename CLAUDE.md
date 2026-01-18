@@ -351,12 +351,12 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 **Sprint 1 - MVP Básico (35 puntos)**
 
-Semana 1 - Completado: 10/15 puntos
+Semana 1 - Completado: 13/15 puntos
 - ✅ US-001: Ver temperatura ambiente (3 pts) - Panel Display con 100% coverage
 - ✅ US-002: Ver estado climatizador (5 pts) - Panel Climatizador con 100% coverage
 - ✅ US-003: Ver indicadores de alerta (2 pts) - Panel Indicadores con 99% coverage
-- ⏭️ **PRÓXIMO: US-007: Encender termostato (3 pts)** - Panel Power
-- 🔲 US-008: Apagar termostato (2 pts)
+- ✅ US-007: Encender termostato (3 pts) - Panel Power con 100% coverage, Pylint 10.00/10
+- ⏭️ **PRÓXIMO: US-008: Apagar termostato (2 pts)**
 
 Semana 2 - Pendiente: 0/16 puntos
 - 🔲 US-004: Aumentar temperatura (3 pts)
@@ -370,11 +370,11 @@ Semana 2 - Pendiente: 0/16 puntos
 - `presentacion/paneles/display/` - Display LCD principal
 - `presentacion/paneles/climatizador/` - Indicadores calor/reposo/frío
 - `presentacion/paneles/indicadores/` - LEDs de alerta (sensor, batería)
+- `presentacion/paneles/power/` - Botón encender/apagar (100% coverage, Pylint 10/10)
 
 **Paneles pendientes:**
 - `control_temp/` - Botones subir/bajar temperatura
 - `selector_vista/` - Toggle ambiente/deseada
-- `power/` - Botón encender/apagar
 - `estado_footer/` - Info de estado
 - `conexion/` - Config IP/puerto
 
@@ -389,6 +389,235 @@ Coverage: ~95%+, Quality gates: ✅
 
 ### simulador_bateria - Completo ✅
 Coverage: 96%, Quality gates: ✅
+
+---
+
+## Tracking de Tiempo
+
+El sistema de tracking automático mide el tiempo real de implementación de Historias de Usuario durante la ejecución del skill `/implement-us`.
+
+### Sistema Automático
+
+El tracking se inicia y finaliza automáticamente:
+- **Inicio:** Al invocar `/implement-us US-XXX`
+- **Fin:** Al completar la Fase 9 (Reporte Final)
+- **Granularidad:** Por tarea individual (modelo, vista, controlador, tests)
+- **Almacenamiento:** `.claude/tracking/US-XXX-tracking.json`
+
+### Comandos Manuales
+
+#### `/track-pause [razón]`
+
+Pausa el tracking actual. Útil durante reuniones o interrupciones.
+
+```bash
+/track-pause Reunión de equipo
+/track-pause Almuerzo
+/track-pause
+```
+
+**Respuesta:**
+```
+⏸️  Tracking pausado
+   Duración actual: 1h 25min
+```
+
+---
+
+#### `/track-resume`
+
+Reanuda el tracking después de una pausa.
+
+```bash
+/track-resume
+```
+
+**Respuesta:**
+```
+▶️  Tracking reanudado
+   Pausa: 20min
+```
+
+---
+
+#### `/track-status`
+
+Muestra el estado actual del tracking.
+
+```bash
+/track-status
+```
+
+**Respuesta:**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏱️  TRACKING STATUS - US-004
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Progreso: Fase 3/9 (Implementación)
+📋 Tarea actual: DisplayControlador (tarea 3/12)
+
+⏰ Tiempos:
+   • Inicio:       14:00:00
+   • Transcurrido: 2h 15min
+   • Efectivo:     2h 00min
+   • Pausado:      15min
+   • Estado:       ▶️  EN CURSO
+
+✅ Completadas: 2/12 tareas
+```
+
+---
+
+#### `/track-report [us_id]`
+
+Genera un reporte inmediato de una US específica o de la activa.
+
+```bash
+/track-report              # Reporte de la US activa
+/track-report US-001       # Reporte de US-001
+```
+
+**Respuesta:**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 REPORTE DE TRACKING - US-001
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 Historia: Ver temperatura ambiente
+🎯 Puntos: 3
+📦 Producto: ux_termostato
+⏱️  Estado: ✅ COMPLETADO
+
+━━━ Tiempos ━━━
+
+• Total:     3h 25min
+• Efectivo:  3h 05min
+• Pausado:   20min
+
+━━━ Progreso ━━━
+
+• Fases completadas: 9/9
+• Tareas completadas: 12/12
+
+━━━ Estimaciones ━━━
+
+• Estimado: 135 min
+• Real:     205 min
+• Varianza: +51.9%
+
+━━━ Archivos ━━━
+
+• Tracking: .claude/tracking/US-001-tracking.json
+• Reporte:  docs/reports/US-001-tracking-report.md (generado al finalizar)
+```
+
+---
+
+#### `/track-history [--last N] [--producto X] [--desde YYYY-MM-DD]`
+
+Muestra historial de todas las USs trackeadas con filtros opcionales.
+
+```bash
+/track-history                           # Todas las USs
+/track-history --last 5                  # Últimas 5 USs
+/track-history --producto ux_termostato  # Solo ux_termostato
+/track-history --desde 2026-01-01        # Desde fecha
+```
+
+**Respuesta:**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 HISTORIAL DE TRACKING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ US-003 | Ver indicadores de alerta      | 2pts |   2h 41min |   +19% | 2026-01-16
+✅ US-002 | Ver estado climatizador        | 5pts |   5h 06min |   +27% | 2026-01-17
+✅ US-001 | Ver temperatura ambiente       | 3pts |   3h 25min |   +52% | 2026-01-18
+🔄 US-004 | Aumentar temperatura           | 3pts |   1h 30min |    +0% | 2026-01-18
+
+📈 Promedios:
+   • Tiempo por punto: 1.1h
+   • Varianza promedio: +33%
+   • Total USs: 4
+   • Total puntos: 13
+```
+
+---
+
+### Archivos Generados
+
+Al finalizar la implementación de una US, se generan automáticamente:
+
+1. **Tracking JSON** (`.claude/tracking/US-XXX-tracking.json`)
+   - Datos raw con timestamps de cada fase y tarea
+   - Pausas registradas
+   - Métricas de calidad
+
+2. **Reporte Markdown** (`docs/reports/US-XXX-tracking-report.md`)
+   - Resumen ejecutivo
+   - Timeline de fases con gráficos ASCII
+   - Breakdown por tarea
+   - Análisis de varianzas (estimado vs real)
+   - Insights y recomendaciones
+
+3. **Dashboard JSON** (`.claude/metrics/summary.json`)
+   - Agregación de todas las USs implementadas
+   - Métricas por fase y tipo de tarea
+   - Velocity (puntos/día, horas/punto)
+   - Tendencias de calidad
+
+### Uso con Python
+
+Los comandos pueden invocarse programáticamente:
+
+```python
+from .claude.tracking.commands import (
+    track_pause,
+    track_resume,
+    track_status,
+    track_report,
+    track_history
+)
+
+# Pausar
+result = track_pause("Reunión")
+print(result["message"])
+
+# Consultar estado
+result = track_status()
+print(result["message"])
+
+# Resumir
+result = track_resume()
+print(result["message"])
+
+# Generar reporte
+result = track_report("US-001")
+print(result["message"])
+
+# Ver historial
+result = track_history(last=5, producto="ux_termostato")
+print(result["message"])
+```
+
+### Configuración
+
+El tracking se configura en `.claude/skills/implement-us-config.json`:
+
+```json
+{
+  "tracking": {
+    "enabled": true,
+    "auto_start": true,
+    "track_user_approval_time": true,
+    "generate_reports": true,
+    "report_formats": ["markdown", "json"]
+  }
+}
+```
+
+---
 
 ## Important Notes
 

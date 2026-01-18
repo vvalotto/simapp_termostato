@@ -31,6 +31,16 @@ Este skill guía paso a paso la implementación de una Historia de Usuario (US) 
 
 ### Fase 0: Validación de Contexto
 
+**TRACKING:** Al inicio de la fase:
+```python
+from .tracking.time_tracker import TimeTracker
+
+# Inicializar tracker
+tracker = TimeTracker(us_id, us_title, us_points, producto)
+tracker.start_tracking()
+tracker.start_phase(0, "Validación de Contexto")
+```
+
 1. **Verificar que existe la historia de usuario**
    - Buscar en `{producto}/docs/HISTORIAS-USUARIO-*.md`
    - Extraer: título, criterios de aceptación, puntos, prioridad
@@ -45,9 +55,19 @@ Este skill guía paso a paso la implementación de una Historia de Usuario (US) 
 
 **Output Fase 0:** Resumen de contexto validado
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(0, auto_approved=True)
+```
+
 ---
 
 ### Fase 1: Generación de Escenarios BDD
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(1, "Generación de Escenarios BDD")
+```
 
 **Acción:** Analizar la US y generar escenarios BDD en formato Gherkin
 
@@ -75,9 +95,19 @@ Feature: Ver temperatura ambiente actual (US-001)
 
 **Punto de aprobación:** Usuario revisa y aprueba escenarios BDD
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(1, auto_approved=False)  # Requiere aprobación del usuario
+```
+
 ---
 
 ### Fase 2: Generación del Plan de Implementación
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(2, "Generación del Plan de Implementación")
+```
 
 **Acción:** Crear plan detallado basado en arquitectura MVC
 
@@ -124,27 +154,62 @@ Feature: Ver temperatura ambiente actual (US-001)
 
 **Punto de aprobación:** Usuario revisa y aprueba el plan
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(2, auto_approved=False)  # Requiere aprobación del usuario
+```
+
 ---
 
 ### Fase 3: Implementación Guiada por Tareas
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(3, "Implementación Guiada por Tareas")
+```
 
 **Acción:** Por cada tarea del plan, guiar la implementación
 
 **Pasos:**
 1. **Seleccionar próxima tarea** del plan (primera no completada)
-2. **Mostrar contexto:**
+
+2. **TRACKING: Iniciar tarea**
+   ```python
+   tracker.start_task(
+       task_id=f"task_{task_number:03d}",
+       task_name="Implementar DisplayModelo",  # Nombre de la tarea
+       task_type="modelo",  # modelo, vista, controlador, test
+       estimated_minutes=10.0  # Del plan
+   )
+   ```
+
+3. **Mostrar contexto:**
    - Qué se va a implementar
    - Patrón arquitectónico a seguir
    - Ejemplo de código similar existente
-3. **Generar código base** usando templates
-4. **Presentar código** para revisión del usuario
-5. **Escribir archivo** si usuario aprueba
-6. **Ejecutar tests** de la tarea si corresponde
-7. **Actualizar plan INMEDIATAMENTE** después de completar la tarea:
+
+4. **Generar código base** usando templates
+
+5. **Presentar código** para revisión del usuario
+
+6. **Escribir archivo** si usuario aprueba
+
+7. **Ejecutar tests** de la tarea si corresponde
+
+8. **TRACKING: Finalizar tarea**
+   ```python
+   tracker.end_task(
+       task_id=f"task_{task_number:03d}",
+       file_created="app/presentacion/paneles/display/modelo.py"
+   )
+   ```
+
+9. **Actualizar plan INMEDIATAMENTE** después de completar la tarea:
    - Marcar checkbox `- [x]` de la tarea completada en el plan
    - Actualizar contador "Tareas completadas: X/Y"
    - Actualizar porcentaje de progreso
-8. **Continuar** con siguiente tarea
+
+10. **Continuar** con siguiente tarea
 
 **IMPORTANTE:** El plan debe actualizarse **después de cada tarea completada**, no al final de todas las tareas. Esto da visibilidad en tiempo real del progreso.
 
@@ -170,9 +235,19 @@ Feature: Ver temperatura ambiente actual (US-001)
 
 **Punto de aprobación:** Usuario aprueba cada tarea antes de continuar
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(3, auto_approved=True)  # Las tareas ya fueron aprobadas individualmente
+```
+
 ---
 
 ### Fase 4: Tests Unitarios
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(4, "Tests Unitarios")
+```
 
 **Acción:** Por cada componente, implementar tests
 
@@ -209,9 +284,19 @@ class TestCreacion:
 
 **Objetivo:** Coverage > 95% del nuevo código
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(4, auto_approved=True)
+```
+
 ---
 
 ### Fase 5: Tests de Integración
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(5, "Tests de Integración")
+```
 
 **Acción:** Validar que componentes funcionan juntos
 
@@ -247,9 +332,19 @@ def test_display_actualiza_desde_servidor(qapp, qtbot):
     assert "22.5" in controlador.vista.label_temp.text()
 ```
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(5, auto_approved=True)
+```
+
 ---
 
 ### Fase 6: Validación BDD
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(6, "Validación BDD")
+```
 
 **Acción:** Ejecutar escenarios BDD generados en Fase 1
 
@@ -271,9 +366,19 @@ tests/features/US-001-ver-temperatura.feature::Actualización tiempo real PASSED
 3 scenarios passed, 0 failed
 ```
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(6, auto_approved=True)
+```
+
 ---
 
 ### Fase 7: Quality Gates
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(7, "Quality Gates")
+```
 
 **Acción:** Validar métricas de calidad del código
 
@@ -320,9 +425,19 @@ tests/features/US-001-ver-temperatura.feature::Actualización tiempo real PASSED
 
 **Criterio de éxito:** Todas las métricas superan los umbrales
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(7, auto_approved=True)
+```
+
 ---
 
 ### Fase 8: Actualización de Documentación
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(8, "Actualización de Documentación")
+```
 
 **Acción:** Actualizar documentos relevantes
 
@@ -343,9 +458,19 @@ tests/features/US-001-ver-temperatura.feature::Actualización tiempo real PASSED
 4. **Actualizar README (si aplica):**
    - Si se agregó funcionalidad visible, actualizar screenshots/descripción
 
+**TRACKING:** Al finalizar la fase:
+```python
+tracker.end_phase(8, auto_approved=True)
+```
+
 ---
 
 ### Fase 9: Reporte Final
+
+**TRACKING:** Al inicio de la fase:
+```python
+tracker.start_phase(9, "Reporte Final")
+```
 
 **Acción:** Generar reporte de implementación
 
@@ -402,6 +527,12 @@ tests/features/US-001-ver-temperatura.feature::Actualización tiempo real PASSED
 ```
 
 **Archivo:** `{producto}/docs/reports/US-XXX-report.md`
+
+**TRACKING:** Al finalizar la fase y el tracking completo:
+```python
+tracker.end_phase(9, auto_approved=True)
+tracker.end_tracking()  # Finaliza tracking y genera reportes de tiempo
+```
 
 ---
 
