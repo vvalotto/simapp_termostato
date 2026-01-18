@@ -17,6 +17,9 @@ from app.presentacion.paneles.climatizador.controlador import ClimatizadorContro
 from app.presentacion.paneles.indicadores.modelo import IndicadoresModelo
 from app.presentacion.paneles.indicadores.vista import IndicadoresVista
 from app.presentacion.paneles.indicadores.controlador import IndicadoresControlador
+from app.presentacion.paneles.power.modelo import PowerModelo
+from app.presentacion.paneles.power.vista import PowerVista
+from app.presentacion.paneles.power.controlador import PowerControlador
 
 
 @pytest.fixture(scope="session")
@@ -345,4 +348,105 @@ def indicadores_controlador_custom(qapp):
         if vista is None:
             vista = IndicadoresVista()
         return IndicadoresControlador(modelo, vista)
+    return _crear_controlador
+
+
+# ========== Fixtures para Panel Power ==========
+
+@pytest.fixture
+def power_modelo():
+    """
+    Fixture para crear un PowerModelo con valores por defecto.
+
+    Returns:
+        PowerModelo: Instancia con encendido=False
+    """
+    return PowerModelo(
+        encendido=False
+    )
+
+
+@pytest.fixture
+def power_modelo_custom():
+    """
+    Fixture factory para crear PowerModelo con valores personalizados.
+
+    Returns:
+        callable: Función que crea PowerModelo con parámetros custom
+    """
+    def _crear_modelo(**kwargs):
+        """
+        Crea PowerModelo con valores personalizados.
+
+        Args:
+            **kwargs: Parámetros para PowerModelo
+
+        Returns:
+            PowerModelo: Instancia con valores custom
+        """
+        defaults = {
+            "encendido": False
+        }
+        defaults.update(kwargs)
+        return PowerModelo(**defaults)
+    return _crear_modelo
+
+
+@pytest.fixture
+def power_vista(qapp):
+    """
+    Fixture para crear un PowerVista.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        PowerVista: Instancia de la vista del panel power
+    """
+    return PowerVista()
+
+
+@pytest.fixture
+def power_controlador(qapp, power_modelo, power_vista):
+    """
+    Fixture para crear un PowerControlador completo.
+
+    Args:
+        qapp: Fixture de QApplication
+        power_modelo: Fixture de PowerModelo
+        power_vista: Fixture de PowerVista
+
+    Returns:
+        PowerControlador: Controlador completamente configurado
+    """
+    return PowerControlador(power_modelo, power_vista)
+
+
+@pytest.fixture
+def power_controlador_custom(qapp):
+    """
+    Fixture factory para crear PowerControlador con configuración custom.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        callable: Función que crea PowerControlador con parámetros custom
+    """
+    def _crear_controlador(modelo=None, vista=None):
+        """
+        Crea PowerControlador con componentes personalizados.
+
+        Args:
+            modelo: PowerModelo opcional (crea uno por defecto si None)
+            vista: PowerVista opcional (crea una por defecto si None)
+
+        Returns:
+            PowerControlador: Controlador configurado
+        """
+        if modelo is None:
+            modelo = PowerModelo()
+        if vista is None:
+            vista = PowerVista()
+        return PowerControlador(modelo, vista)
     return _crear_controlador
