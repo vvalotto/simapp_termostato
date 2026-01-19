@@ -499,3 +499,512 @@ class TestIntegracionFlujoCompleto:
         mock_cliente.enviar.assert_called_once()              # 4. Comando enviado
         comando2 = mock_cliente.enviar.call_args[0][0]
         assert comando2 == {"comando": "power", "estado": "off"}
+
+
+# ========== Tests específicos para US-008: Apagar el termostato ==========
+
+
+class TestUS008IntegracionDisplay:
+    """
+    Tests de integración Power + Display para US-008.
+
+    Criterio de aceptación US-008:
+    - El display muestra "---" al apagar el termostato
+    """
+
+    def test_display_muestra_guiones_al_apagar(self, qapp, display_controlador_custom,
+                                               power_controlador_custom):
+        """
+        Test: Display muestra "---" cuando se apaga el termostato.
+
+        Given: Termostato encendido con temperatura visible
+        When: Se presiona el botón APAGAR
+        Then: El display muestra "---"
+        """
+        from app.presentacion.paneles.display.modelo import DisplayModelo
+
+        # Setup: Power encendido
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=True)
+        )
+
+        # Setup: Display mostrando temperatura
+        display_ctrl = display_controlador_custom(
+            modelo=DisplayModelo(
+                temperatura=23.5,
+                modo_vista="ambiente",
+                encendido=True,
+                error_sensor=False
+            )
+        )
+
+        # Conectar señal: cuando power cambie, actualizar display
+        power_ctrl.power_cambiado.connect(display_ctrl.set_encendido)
+
+        # Verificar estado inicial (encendido)
+        assert "23.5" in display_ctrl.vista.label_temp.text()
+
+        # WHEN: Apagar el termostato
+        power_ctrl.cambiar_estado()
+
+        # THEN: Display debe mostrar "---"
+        assert "---" in display_ctrl.vista.label_temp.text()
+        assert "APAGADO" in display_ctrl.vista.label_modo.text()
+
+    def test_display_ciclo_completo_encender_apagar(self, qapp, display_controlador_custom,
+                                                     power_controlador_custom):
+        """
+        Test: Ciclo completo encender → apagar → encender del display.
+
+        Given: Sistema inicializado apagado
+        When: Se enciende, luego se apaga, luego se enciende nuevamente
+        Then: El display responde correctamente en cada transición
+        """
+        from app.presentacion.paneles.display.modelo import DisplayModelo
+
+        # Setup
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=False)
+        )
+
+        display_ctrl = display_controlador_custom(
+            modelo=DisplayModelo(
+                temperatura=21.0,
+                modo_vista="ambiente",
+                encendido=False,
+                error_sensor=False
+            )
+        )
+
+        # Conectar señal
+        power_ctrl.power_cambiado.connect(display_ctrl.set_encendido)
+
+        # Estado inicial: APAGADO
+        assert "---" in display_ctrl.vista.label_temp.text()
+
+        # Transición 1: APAGADO → ENCENDIDO
+        power_ctrl.cambiar_estado()
+        assert display_ctrl.modelo.encendido is True
+
+        # Transición 2: ENCENDIDO → APAGADO
+        power_ctrl.cambiar_estado()
+        assert display_ctrl.modelo.encendido is False
+        assert "---" in display_ctrl.vista.label_temp.text()
+
+        # Transición 3: APAGADO → ENCENDIDO
+        power_ctrl.cambiar_estado()
+        assert display_ctrl.modelo.encendido is True
+
+
+class TestUS008IntegracionClimatizador:
+    """
+    Tests de integración Power + Climatizador para US-008.
+
+    Criterio de aceptación US-008:
+    - El climatizador muestra estado "apagado" (todo gris) al apagar
+    """
+
+    def test_climatizador_se_apaga_con_termostato(self, qapp, climatizador_controlador_custom,
+                                                    power_controlador_custom):
+        """
+        Test: Climatizador se apaga cuando se apaga el termostato.
+
+        Given: Termostato encendido con climatizador activo
+        When: Se presiona el botón APAGAR
+        Then: El climatizador muestra estado "apagado"
+        """
+        from app.presentacion.paneles.climatizador.modelo import ClimatizadorModelo
+
+        # Setup: Power encendido
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=True)
+        )
+
+        # Setup: Climatizador en modo "calor"
+        climatizador_ctrl = climatizador_controlador_custom(
+            modelo=ClimatizadorModelo(
+                modo="calentando",
+                encendido=True
+            )
+        )
+
+        # Conectar señal
+        power_ctrl.power_cambiado.connect(climatizador_ctrl.set_encendido)
+
+        # Verificar estado inicial (calentando activo)
+        assert climatizador_ctrl.modelo.encendido is True
+        assert climatizador_ctrl.modelo.modo == "calentando"
+
+        # WHEN: Apagar el termostato
+        power_ctrl.cambiar_estado()
+
+        # THEN: Climatizador debe estar apagado
+        assert climatizador_ctrl.modelo.encendido is False
+
+    def test_climatizador_diferentes_modos_al_apagar(self, qapp, climatizador_controlador_custom,
+                                                      power_controlador_custom):
+        """
+        Test: Climatizador se apaga correctamente desde cualquier modo.
+
+        Given: Termostato encendido en diferentes modos (calor, frío, reposo)
+        When: Se apaga el termostato
+        Then: El climatizador siempre se apaga correctamente
+        """
+        from app.presentacion.paneles.climatizador.modelo import ClimatizadorModelo
+
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=True)
+        )
+
+        modos_test = ["calentando", "enfriando", "reposo"]
+
+        for modo in modos_test:
+            # Setup: Climatizador en modo específico
+            climatizador_ctrl = climatizador_controlador_custom(
+                modelo=ClimatizadorModelo(
+                    modo=modo,
+                    encendido=True
+                )
+            )
+
+            # Conectar señal
+            power_ctrl.power_cambiado.connect(climatizador_ctrl.set_encendido)
+
+            # Verificar estado inicial
+            assert climatizador_ctrl.modelo.encendido is True
+            assert climatizador_ctrl.modelo.modo == modo
+
+            # Apagar
+            power_ctrl.cambiar_estado()
+
+            # Verificar que se apagó correctamente
+            assert climatizador_ctrl.modelo.encendido is False
+
+            # Re-encender para próximo test
+            power_ctrl.cambiar_estado()
+
+    def test_climatizador_ciclo_completo(self, qapp, climatizador_controlador_custom,
+                                          power_controlador_custom):
+        """
+        Test: Ciclo completo encender → apagar → encender del climatizador.
+
+        Given: Sistema inicializado apagado
+        When: Se realizan múltiples toggles de power
+        Then: El climatizador responde correctamente a cada cambio
+        """
+        from app.presentacion.paneles.climatizador.modelo import ClimatizadorModelo
+
+        # Setup
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=False)
+        )
+
+        climatizador_ctrl = climatizador_controlador_custom(
+            modelo=ClimatizadorModelo(
+                modo="reposo",
+                encendido=False
+            )
+        )
+
+        # Conectar señal
+        power_ctrl.power_cambiado.connect(climatizador_ctrl.set_encendido)
+
+        # Estado inicial: APAGADO
+        assert climatizador_ctrl.modelo.encendido is False
+
+        # Transición 1: APAGADO → ENCENDIDO
+        power_ctrl.cambiar_estado()
+        assert climatizador_ctrl.modelo.encendido is True
+
+        # Transición 2: ENCENDIDO → APAGADO
+        power_ctrl.cambiar_estado()
+        assert climatizador_ctrl.modelo.encendido is False
+
+        # Transición 3: APAGADO → ENCENDIDO
+        power_ctrl.cambiar_estado()
+        assert climatizador_ctrl.modelo.encendido is True
+
+
+class TestUS008IntegracionIndicadores:
+    """
+    Tests de integración Power + Indicadores para US-008.
+
+    Los indicadores de alerta deben funcionar independientemente del estado power.
+    """
+
+    def test_indicadores_independientes_de_power(self, qapp, indicadores_controlador_custom,
+                                                   power_controlador_custom):
+        """
+        Test: Indicadores funcionan independientemente del estado power.
+
+        Given: Termostato apagado
+        When: Se activa una alerta (ej: falla de sensor)
+        Then: El indicador LED se enciende correctamente
+        """
+        from app.presentacion.paneles.indicadores.modelo import IndicadoresModelo
+
+        # Setup: Power apagado
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=False)
+        )
+
+        # Setup: Indicadores sin alertas
+        indicadores_ctrl = indicadores_controlador_custom(
+            modelo=IndicadoresModelo(
+                falla_sensor=False,
+                bateria_baja=False
+            )
+        )
+
+        # Verificar estado inicial
+        assert power_ctrl.modelo.encendido is False
+        assert indicadores_ctrl.modelo.falla_sensor is False
+
+        # WHEN: Activar alerta de sensor (incluso con termostato apagado)
+        indicadores_ctrl.actualizar_falla_sensor(True)
+
+        # THEN: El LED debe encenderse independientemente del estado power
+        assert indicadores_ctrl.modelo.falla_sensor is True
+
+    def test_apagar_no_afecta_alertas_activas(self, qapp, indicadores_controlador_custom,
+                                                power_controlador_custom):
+        """
+        Test: Apagar el termostato no desactiva indicadores de alerta activos.
+
+        Given: Termostato encendido con alerta de batería activa
+        When: Se apaga el termostato
+        Then: La alerta de batería permanece activa
+        """
+        from app.presentacion.paneles.indicadores.modelo import IndicadoresModelo
+
+        # Setup: Power encendido
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=True)
+        )
+
+        # Setup: Indicadores con batería baja
+        indicadores_ctrl = indicadores_controlador_custom(
+            modelo=IndicadoresModelo(
+                falla_sensor=False,
+                bateria_baja=True
+            )
+        )
+
+        # Verificar estado inicial
+        assert indicadores_ctrl.modelo.bateria_baja is True
+
+        # WHEN: Apagar el termostato
+        power_ctrl.cambiar_estado()
+
+        # THEN: La alerta de batería debe permanecer activa
+        assert indicadores_ctrl.modelo.bateria_baja is True
+
+
+class TestUS008ComandoApagar:
+    """
+    Tests del comando JSON de apagar para US-008.
+
+    Criterio de aceptación US-008:
+    - Envía comando {"comando": "power", "estado": "off"}
+    """
+
+    def test_comando_apagar_estructura_correcta(self, qapp, qtbot, power_controlador_custom):
+        """
+        Test: El comando de apagar tiene la estructura JSON correcta.
+
+        Given: Termostato encendido
+        When: Se presiona el botón APAGAR
+        Then: El comando enviado es {"comando": "power", "estado": "off"}
+        """
+        # Setup: Power encendido
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=True)
+        )
+
+        # Spy para capturar comando
+        comandos_enviados = []
+        power_ctrl.comando_enviado.connect(lambda cmd: comandos_enviados.append(cmd))
+
+        # WHEN: Apagar
+        power_ctrl.cambiar_estado()
+
+        # THEN: Comando debe ser correcto
+        assert len(comandos_enviados) == 1
+        comando = comandos_enviados[0]
+        assert comando == {"comando": "power", "estado": "off"}
+
+    def test_comando_apagar_inmediato(self, qapp, qtbot, power_controlador_custom):
+        """
+        Test: El comando de apagar se envía inmediatamente (fire and forget).
+
+        Given: Termostato encendido
+        When: Se presiona el botón APAGAR
+        Then: El comando se envía sin esperar confirmación
+        """
+        # Setup
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=True)
+        )
+
+        # Spy
+        mock_cliente = Mock()
+        mock_cliente.enviar = Mock()
+        power_ctrl.comando_enviado.connect(mock_cliente.enviar)
+
+        # WHEN: Click en botón APAGAR
+        with qtbot.waitSignal(power_ctrl.comando_enviado, timeout=1000):
+            qtbot.mouseClick(power_ctrl.vista.btn_power, Qt.MouseButton.LeftButton)
+
+        # THEN: Cliente debe haber recibido el comando inmediatamente
+        mock_cliente.enviar.assert_called_once()
+        comando = mock_cliente.enviar.call_args[0][0]
+        assert comando["estado"] == "off"
+
+
+class TestUS008FlujoCompletoApagar:
+    """
+    Test del flujo completo end-to-end al apagar el termostato (US-008).
+    """
+
+    def test_flujo_end_to_end_apagar_todos_paneles(self, qapp, qtbot,
+                                                     power_controlador_custom,
+                                                     display_controlador_custom,
+                                                     climatizador_controlador_custom):
+        """
+        Test: Flujo end-to-end completo al apagar el termostato.
+
+        Given: Sistema completo encendido (power, display, climatizador)
+        When: Usuario hace click en el botón APAGAR
+        Then:
+          - Power cambia a apagado
+          - Display muestra "---"
+          - Climatizador muestra estado apagado
+          - Comando JSON se envía al RPi
+        """
+        from app.presentacion.paneles.display.modelo import DisplayModelo
+        from app.presentacion.paneles.climatizador.modelo import ClimatizadorModelo
+
+        # Setup: Power encendido
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=True)
+        )
+        power_ctrl.vista.show()
+
+        # Setup: Display encendido
+        display_ctrl = display_controlador_custom(
+            modelo=DisplayModelo(
+                temperatura=24.0,
+                modo_vista="ambiente",
+                encendido=True,
+                error_sensor=False
+            )
+        )
+
+        # Setup: Climatizador encendido en modo calor
+        climatizador_ctrl = climatizador_controlador_custom(
+            modelo=ClimatizadorModelo(
+                modo="calentando",
+                encendido=True
+            )
+        )
+
+        # Setup: Cliente de comandos simulado
+        mock_cliente = Mock()
+        mock_cliente.enviar_comando = Mock()
+
+        # Conectar señales (simulando coordinador)
+        power_ctrl.power_cambiado.connect(display_ctrl.set_encendido)
+        power_ctrl.power_cambiado.connect(climatizador_ctrl.set_encendido)
+        power_ctrl.comando_enviado.connect(mock_cliente.enviar_comando)
+
+        # Verificar estado inicial (ENCENDIDO)
+        assert power_ctrl.modelo.encendido is True
+        assert display_ctrl.modelo.encendido is True
+        assert climatizador_ctrl.modelo.encendido is True
+        assert "APAGAR" in power_ctrl.vista.btn_power.text()
+
+        # WHEN: Usuario hace click en el botón APAGAR
+        with qtbot.waitSignal(power_ctrl.power_cambiado, timeout=1000) as blocker:
+            qtbot.mouseClick(power_ctrl.vista.btn_power, Qt.MouseButton.LeftButton)
+
+        # THEN: Verificar flujo completo
+
+        # 1. Power cambió a apagado
+        assert power_ctrl.modelo.encendido is False
+        assert blocker.args == [False]
+        assert "ENCENDER" in power_ctrl.vista.btn_power.text()
+
+        # 2. Display muestra "---"
+        assert display_ctrl.modelo.encendido is False
+        assert "---" in display_ctrl.vista.label_temp.text()
+
+        # 3. Climatizador está apagado
+        assert climatizador_ctrl.modelo.encendido is False
+
+        # 4. Comando JSON se envió al RPi
+        mock_cliente.enviar_comando.assert_called_once()
+        comando = mock_cliente.enviar_comando.call_args[0][0]
+        assert comando == {"comando": "power", "estado": "off"}
+
+    def test_ciclo_completo_multiples_paneles(self, qapp, qtbot,
+                                               power_controlador_custom,
+                                               display_controlador_custom,
+                                               climatizador_controlador_custom):
+        """
+        Test: Ciclo completo encender → apagar → encender con múltiples paneles.
+
+        Given: Sistema inicializado apagado
+        When: Se enciende, luego se apaga, luego se enciende nuevamente
+        Then: Todos los paneles responden correctamente en cada transición
+        """
+        from app.presentacion.paneles.display.modelo import DisplayModelo
+        from app.presentacion.paneles.climatizador.modelo import ClimatizadorModelo
+
+        # Setup todos los paneles (apagados)
+        power_ctrl = power_controlador_custom(
+            modelo=PowerModelo(encendido=False)
+        )
+        power_ctrl.vista.show()
+
+        display_ctrl = display_controlador_custom(
+            modelo=DisplayModelo(
+                temperatura=20.0,
+                modo_vista="ambiente",
+                encendido=False,
+                error_sensor=False
+            )
+        )
+
+        climatizador_ctrl = climatizador_controlador_custom(
+            modelo=ClimatizadorModelo(
+                modo="reposo",
+                encendido=False
+            )
+        )
+
+        # Conectar señales
+        power_ctrl.power_cambiado.connect(display_ctrl.set_encendido)
+        power_ctrl.power_cambiado.connect(climatizador_ctrl.set_encendido)
+
+        # Estado inicial: APAGADO
+        assert power_ctrl.modelo.encendido is False
+        assert display_ctrl.modelo.encendido is False
+        assert climatizador_ctrl.modelo.encendido is False
+
+        # CICLO 1: APAGADO → ENCENDIDO
+        qtbot.mouseClick(power_ctrl.vista.btn_power, Qt.MouseButton.LeftButton)
+        assert power_ctrl.modelo.encendido is True
+        assert display_ctrl.modelo.encendido is True
+        assert climatizador_ctrl.modelo.encendido is True
+
+        # CICLO 2: ENCENDIDO → APAGADO (US-008 focus)
+        qtbot.mouseClick(power_ctrl.vista.btn_power, Qt.MouseButton.LeftButton)
+        assert power_ctrl.modelo.encendido is False
+        assert display_ctrl.modelo.encendido is False
+        assert climatizador_ctrl.modelo.encendido is False
+
+        # CICLO 3: APAGADO → ENCENDIDO
+        qtbot.mouseClick(power_ctrl.vista.btn_power, Qt.MouseButton.LeftButton)
+        assert power_ctrl.modelo.encendido is True
+        assert display_ctrl.modelo.encendido is True
+        assert climatizador_ctrl.modelo.encendido is True
