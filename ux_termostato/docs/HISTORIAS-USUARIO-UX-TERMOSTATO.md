@@ -3,919 +3,1140 @@
 ## Información del Documento
 
 **Proyecto:** ISSE_Simuladores - UX Termostato Desktop
-**Fecha:** 2026-01-16
+**Fecha Inicial:** 2026-01-16
+**Última Actualización:** 2026-01-23
 **Autor:** Victor Valotto
-**Objetivo:** Definir historias de usuario para la implementación del simulador UX del termostato
+**Versión:** 2.0
+**Branch:** development/simulador-ux-refactorizacion-arquitectura
+
+---
+
+## ⚠️ IMPORTANTE: Replanificación 2026-01-23
+
+Este documento refleja la replanificación del proyecto tras:
+1. Completar 7 historias de paneles individuales (25 pts)
+2. Desestimar 10 historias redundantes o fuera de alcance (28 pts)
+3. Refactorizar arquitectura para alinear con simuladores de referencia
+4. Definir 6 nuevas historias de integración/arquitectura (28 pts)
+
+**Nuevo alcance:** 16 historias - 61 puntos total
 
 ---
 
 ## Tabla de Contenidos
 
-1. [Épica 1: Visualización de Estado](#épica-1-visualización-de-estado)
-2. [Épica 2: Control de Temperatura](#épica-2-control-de-temperatura)
-3. [Épica 3: Encendido y Apagado](#épica-3-encendido-y-apagado)
-4. [Épica 4: Alertas y Notificaciones](#épica-4-alertas-y-notificaciones)
-5. [Épica 5: Modos de Visualización](#épica-5-modos-de-visualización)
-6. [Épica 6: Configuración y Conectividad](#épica-6-configuración-y-conectividad)
-7. [Épica 7: Monitoreo del Sistema](#épica-7-monitoreo-del-sistema)
+1. [✅ Historias Completadas](#-historias-completadas)
+2. [❌ Historias Desestimadas](#-historias-desestimadas)
+3. [🔲 Paneles Pendientes](#-paneles-pendientes)
+4. [⭐ Nuevas Historias - Arquitectura](#-nuevas-historias---arquitectura)
+5. [📊 Resumen y Planificación](#-resumen-y-planificación)
 
 ---
 
-## Convenciones
+# ✅ HISTORIAS COMPLETADAS
 
-**Formato de Historia:**
-```
-US-XXX: Título descriptivo
-Prioridad: Alta | Media | Baja
-Puntos: 1, 2, 3, 5, 8, 13
-```
+## Épica 1: Visualización de Estado
 
-**Prioridades:**
-- **Alta (Must Have):** Funcionalidad crítica para MVP
-- **Media (Should Have):** Funcionalidad importante pero no bloqueante
-- **Baja (Nice to Have):** Mejoras deseables
+### US-001: Ver temperatura ambiente actual ✅
 
-**Estimación (Puntos de Historia):**
-- 1 punto: < 2 horas
-- 2 puntos: 2-4 horas
-- 3 puntos: 4-8 horas
-- 5 puntos: 1-2 días
-- 8 puntos: 2-3 días
-- 13 puntos: > 3 días (considerar dividir)
-
----
-
-# Épica 1: Visualización de Estado
-
-## US-001: Ver temperatura ambiente actual
-
-**Prioridad:** Alta
-**Puntos:** 3
+**Puntos:** 3 | **Panel:** `app/presentacion/paneles/display/`
+**Coverage:** 100% | **Pylint:** 10.00/10 | **Estado:** COMPLETADA
 
 **Como** usuario del termostato
 **Quiero** ver la temperatura ambiente actual en un display grande y claro
 **Para** conocer en todo momento las condiciones de mi hogar
 
-### Criterios de Aceptación
-
-- [ ] El display muestra la temperatura actual con formato X.X °C
-- [ ] La temperatura se actualiza automáticamente cuando llega nueva información del sistema
-- [ ] El display usa fuente grande y clara (mínimo 48px)
-- [ ] El fondo del display simula un LCD verde oscuro
-- [ ] El label superior indica "Temperatura Ambiente"
-- [ ] Cuando no hay conexión, el display muestra "---"
-
-### Notas Técnicas
-
-- Componente: Panel Display (MVC)
-- Recibe datos de: ServidorEstado (puerto 14001)
-- Actualización: En tiempo real al recibir JSON del RPi
-
-### Definición de Hecho
-
-- [ ] Tests unitarios del panel Display pasan
-- [ ] UI muestra temperatura correctamente
-- [ ] Manejo de errores implementado
-- [ ] Documentación actualizada
+**Implementación:**
+- Display LCD con temperatura en formato X.X °C
+- Fuente grande y clara, fondo LCD verde oscuro
+- Actualización automática desde JSON
+- Manejo de desconexión (muestra "---")
+- Patrón MVC completo: modelo, vista, controlador
 
 ---
 
-## US-002: Ver estado del climatizador
+### US-002: Ver estado del climatizador ✅
 
-**Prioridad:** Alta
-**Puntos:** 5
+**Puntos:** 5 | **Panel:** `app/presentacion/paneles/climatizador/`
+**Coverage:** 100% | **Pylint:** 10.00/10 | **Estado:** COMPLETADA
 
 **Como** usuario del termostato
 **Quiero** ver el estado actual del climatizador (calentando, enfriando, reposo)
 **Para** saber si el sistema está actuando para alcanzar la temperatura deseada
 
-### Criterios de Aceptación
-
-- [ ] El panel muestra 3 indicadores visuales: Calor (🔥), Reposo (🌬️), Frío (❄️)
-- [ ] Solo un indicador está activo a la vez
-- [ ] El indicador activo se destaca con:
-  - Borde de color (naranja para calor, verde para reposo, azul para frío)
-  - Animación pulsante (calor y frío)
-  - Icono en color brillante
-- [ ] Los indicadores inactivos aparecen en gris apagado
-- [ ] El estado se actualiza en tiempo real
-
-### Criterios de Diseño
-
-- [ ] Calefacción: Fondo naranja/20%, borde naranja-500, animación pulse
-- [ ] Reposo: Fondo verde/20%, borde verde-500, sin animación
-- [ ] Refrigeración: Fondo azul/20%, borde azul-500, animación pulse
-- [ ] Inactivo: Fondo slate-700/30%, borde slate-700
-
-### Definición de Hecho
-
-- [ ] Panel Climatizador implementado (MVC)
-- [ ] Tests con los 4 estados (calentando, enfriando, reposo, apagado)
-- [ ] Animaciones CSS funcionando
-- [ ] Actualización desde JSON del RPi
+**Implementación:**
+- 3 indicadores: Calor 🔥 (naranja), Reposo 🌬️ (verde), Frío ❄️ (azul)
+- Solo un indicador activo a la vez
+- Animaciones pulsantes para calor y frío
+- Actualización en tiempo real desde JSON
+- Colores apropiados por estado
 
 ---
 
-## US-003: Ver indicadores de alerta
+### US-003: Ver indicadores de alerta ✅
 
-**Prioridad:** Alta
-**Puntos:** 2
+**Puntos:** 2 | **Panel:** `app/presentacion/paneles/indicadores/`
+**Coverage:** 99% | **Estado:** COMPLETADA
 
 **Como** usuario del termostato
 **Quiero** ver indicadores LED que me alerten sobre fallas del sensor o batería baja
 **Para** tomar acción cuando haya problemas con el sistema
 
-### Criterios de Aceptación
-
-- [ ] LED izquierdo indica estado del sensor:
-  - Gris apagado: sensor normal
-  - Rojo pulsante: falla del sensor
-- [ ] LED derecho indica estado de batería:
-  - Gris apagado: batería normal
-  - Amarillo pulsante: batería baja (<30%)
-- [ ] Los LEDs están en la parte superior de la UI
-- [ ] Los LEDs tienen labels: "Sensor" y "Batería"
-- [ ] La animación pulsante atrae la atención
-
-### Notas de Implementación
-
-- Usar componente `LedIndicator` de `compartido/widgets`
-- Estados: "inactivo", "error", "warning"
-- Actualización desde campo `falla_sensor` y `bateria_baja` del JSON
-
-### Definición de Hecho
-
-- [ ] Panel Indicadores implementado
-- [ ] LEDs responden a cambios de estado
-- [ ] Animación pulsante funciona
-- [ ] Tests de los 4 estados posibles
+**Implementación:**
+- LED sensor: rojo pulsante cuando `falla_sensor=true`
+- LED batería: amarillo pulsante cuando `bateria_baja=true`
+- Componente `LedIndicator` de compartido/widgets
+- Señales PyQt: `alerta_activada`, `alerta_desactivada`
+- Actualización desde JSON del RPi
 
 ---
 
-# Épica 2: Control de Temperatura
+## Épica 2: Control de Temperatura
 
-## US-004: Aumentar temperatura deseada
+### US-004: Aumentar temperatura deseada ✅
 
-**Prioridad:** Alta
-**Puntos:** 3
+**Puntos:** 3 | **Panel:** `app/presentacion/paneles/control_temp/`
+**Coverage:** 100% | **Pylint:** 10.00/10 | **Estado:** COMPLETADA
 
 **Como** usuario del termostato
 **Quiero** poder aumentar la temperatura deseada presionando un botón
 **Para** ajustar la climatización de mi hogar según mis necesidades
 
-### Criterios de Aceptación
-
-- [ ] Botón "SUBIR" con icono de flecha arriba (▲)
-- [ ] Botón de color rojo (bg-red-600) para indicar calor
-- [ ] Al presionar, la temperatura deseada aumenta en 0.5°C
-- [ ] El rango máximo es 35°C
-- [ ] Al alcanzar el máximo, el botón se deshabilita
-- [ ] El botón solo está activo cuando el termostato está encendido
-- [ ] Feedback visual al presionar (scale-95)
-- [ ] El comando se envía inmediatamente al RPi
-
-### Comportamiento del Sistema
-
-- [ ] Envía comando JSON: `{"comando": "set_temp_deseada", "valor": X, "timestamp": T}`
-- [ ] Puerto de envío: 14000
-- [ ] No espera confirmación (fire and forget)
-- [ ] Log de comando enviado
-
-### Definición de Hecho
-
-- [ ] Panel Control Temp implementado
-- [ ] Botón responde al click
-- [ ] Validación de rango funciona
-- [ ] Comando enviado correctamente al RPi
-- [ ] Tests unitarios pasan
+**Implementación:**
+- Botón SUBIR (▲) en color rojo
+- Incremento de 0.5°C por click
+- Rango máximo: 35°C
+- Validación de rango
+- Envío de comando JSON al RPi (puerto 14000)
+- Solo activo cuando termostato encendido
 
 ---
 
-## US-005: Disminuir temperatura deseada
+### US-005: Disminuir temperatura deseada ✅
 
-**Prioridad:** Alta
-**Puntos:** 3
+**Puntos:** 3 | **Panel:** `app/presentacion/paneles/control_temp/`
+**Coverage:** 100% | **Estado:** COMPLETADA
 
 **Como** usuario del termostato
 **Quiero** poder disminuir la temperatura deseada presionando un botón
 **Para** reducir la climatización cuando hace demasiado calor o frío
 
-### Criterios de Aceptación
-
-- [ ] Botón "BAJAR" con icono de flecha abajo (▼)
-- [ ] Botón de color azul (bg-blue-600) para indicar enfriamiento
-- [ ] Al presionar, la temperatura deseada disminuye en 0.5°C
-- [ ] El rango mínimo es 15°C
-- [ ] Al alcanzar el mínimo, el botón se deshabilita
-- [ ] El botón solo está activo cuando el termostato está encendido
-- [ ] Feedback visual al presionar (scale-95)
-- [ ] El comando se envía inmediatamente al RPi
-
-### Layout
-
-- [ ] Botones SUBIR y BAJAR están uno al lado del otro
-- [ ] Mismo tamaño y altura
-- [ ] Espaciado consistente
-
-### Definición de Hecho
-
-- [ ] Botón funcional
-- [ ] Validación de rango
-- [ ] Comando JSON enviado
-- [ ] Tests con casos límite (mínimo, máximo)
+**Implementación:**
+- Botón BAJAR (▼) en color azul
+- Decremento de 0.5°C por click
+- Rango mínimo: 15°C
+- Botones SUBIR y BAJAR lado a lado
+- Mismo patrón que US-004
 
 ---
 
-## US-006: Ver diferencia entre temperatura actual y deseada
+## Épica 3: Encendido y Apagado
 
-**Prioridad:** Media
-**Puntos:** 2
+### US-007: Encender el termostato ✅
 
-**Como** usuario del termostato
-**Quiero** ver la diferencia entre la temperatura actual y la deseada
-**Para** saber qué tan lejos estoy del objetivo
-
-### Criterios de Aceptación
-
-- [ ] El panel footer muestra: "Estado: Calentando" cuando temp_actual < temp_deseada
-- [ ] Muestra: "Estado: Enfriando" cuando temp_actual > temp_deseada
-- [ ] Muestra: "Estado: Estable" cuando la diferencia es < 0.3°C
-- [ ] El texto usa color apropiado:
-  - Naranja para "Calentando"
-  - Azul para "Enfriando"
-  - Verde para "Estable"
-
-### Cálculo
-
-```python
-diff = temp_deseada - temp_actual
-if abs(diff) < 0.3:
-    estado = "Estable"
-elif diff > 0:
-    estado = "Calentando"
-else:
-    estado = "Enfriando"
-```
-
-### Definición de Hecho
-
-- [ ] Panel Estado Footer implementado
-- [ ] Cálculo correcto de diferencia
-- [ ] Colores apropiados
-- [ ] Actualización en tiempo real
-
----
-
-# Épica 3: Encendido y Apagado
-
-## US-007: Encender el termostato
-
-**Prioridad:** Alta
-**Puntos:** 3
+**Puntos:** 3 | **Panel:** `app/presentacion/paneles/power/`
+**Coverage:** 100% | **Pylint:** 10.00/10 | **Estado:** COMPLETADA
 
 **Como** usuario del termostato
 **Quiero** poder encender el sistema con un botón
 **Para** activar la climatización cuando lo necesite
 
-### Criterios de Aceptación
-
-- [ ] Botón "ENCENDER" con icono de power (⚡)
-- [ ] Color verde (bg-green-600) cuando está apagado
-- [ ] Al presionar, el termostato se enciende
-- [ ] El display muestra la temperatura actual
-- [ ] Los botones de control se habilitan
-- [ ] El botón cambia a "APAGAR" y color diferente
-- [ ] Envía comando al RPi: `{"comando": "power", "estado": "on"}`
-
-### Cambios en la UI al Encender
-
-- [ ] Display muestra temperatura (no "---")
-- [ ] Botones SUBIR/BAJAR se habilitan
-- [ ] Botón selector de vista se habilita
-- [ ] Estado del climatizador comienza a actualizarse
-
-### Definición de Hecho
-
-- [ ] Panel Power implementado
-- [ ] Toggle funciona correctamente
-- [ ] Comando enviado al RPi
-- [ ] UI actualiza todos los paneles
-- [ ] Tests de encendido/apagado
+**Implementación:**
+- Botón ENCENDER (⚡) en verde
+- Al encender:
+  - Display muestra temperatura
+  - Controles se habilitan
+  - Climatizador comienza a actualizarse
+- Envía comando: `{"comando": "power", "estado": "on"}`
+- Señal PyQt: `encendido_cambiado(bool)`
 
 ---
 
-## US-008: Apagar el termostato
+### US-008: Apagar el termostato ✅
 
-**Prioridad:** Alta
-**Puntos:** 2
+**Puntos:** 2 | **Panel:** `app/presentacion/paneles/power/`
+**Coverage:** 100% | **Estado:** COMPLETADA
 
 **Como** usuario del termostato
 **Quiero** poder apagar el sistema con un botón
 **Para** detener la climatización cuando no la necesite
 
-### Criterios de Aceptación
+**Implementación:**
+- Botón APAGAR (gris) integrado con US-007
+- Al apagar:
+  - Display muestra "---"
+  - Controles se deshabilitan
+  - Climatizador muestra estado apagado
+- Envía comando: `{"comando": "power", "estado": "off"}`
+- Toggle funcional on/off
 
-- [ ] Botón "APAGAR" con icono de power (⚡)
-- [ ] Color gris (bg-slate-700) cuando está encendido
-- [ ] Al presionar, el termostato se apaga
-- [ ] El display muestra "---"
-- [ ] Los botones de control se deshabilitan
-- [ ] El botón cambia a "ENCENDER" y color verde
-- [ ] Envía comando al RPi: `{"comando": "power", "estado": "off"}`
-
-### Cambios en la UI al Apagar
-
-- [ ] Display muestra "---" y label "APAGADO"
-- [ ] Botones SUBIR/BAJAR se deshabilitan (apariencia gris)
-- [ ] Botón selector de vista se deshabilita
-- [ ] Estado del climatizador muestra "apagado" (todo gris)
-
-### Definición de Hecho
-
-- [ ] Apagado funciona correctamente
-- [ ] UI refleja estado apagado
-- [ ] Comando enviado al RPi
-- [ ] Tests de transición on→off
+**Total Completadas:** 7 historias - 25 puntos (61% del proyecto)
 
 ---
 
-# Épica 4: Alertas y Notificaciones
+# ❌ HISTORIAS DESESTIMADAS
 
-## US-009: Recibir alerta de falla del sensor
+Las siguientes historias fueron desestimadas por las razones indicadas:
 
-**Prioridad:** Alta
-**Puntos:** 2
+## Desestimadas por Redundancia
 
-**Como** usuario del termostato
-**Quiero** ser notificado visualmente cuando hay una falla del sensor de temperatura
-**Para** saber que los datos mostrados pueden no ser confiables
+**US-009: Recibir alerta de falla del sensor** (2 pts)
+**Razón:** US-003 ya implementa el LED rojo de alerta. Mostrar "ERROR" en el display agrega complejidad sin valor significativo. El LED es suficiente alerta visual.
 
-### Criterios de Aceptación
+**US-010: Recibir alerta de batería baja** (2 pts)
+**Razón:** US-003 ya implementa el LED amarillo de alerta. El nivel de batería en footer no es crítico para una aplicación desktop que no depende de batería física.
 
-- [ ] LED "Sensor" se enciende en rojo con animación pulsante
-- [ ] El display principal muestra "ERROR" en lugar de temperatura
-- [ ] Se muestra icono de alerta (⚠️) junto a "ERROR"
-- [ ] El texto "ERROR" es de color rojo brillante
-- [ ] El estado persiste hasta que el sensor se recupere
-- [ ] La climatización se detiene automáticamente (si el RPi lo decide)
+**US-012: Ver modo actual en el footer** (1 pt)
+**Razón:** El estado on/off ya es visible en el botón power. Redundante con otros indicadores existentes.
 
-### Activación
+## Desestimadas por Baja Prioridad / Innecesarias
 
-- [ ] Se activa cuando `falla_sensor: true` en JSON del RPi
-- [ ] Se desactiva cuando `falla_sensor: false`
+**US-006: Ver diferencia entre temperatura actual y deseada** (2 pts)
+**Razón:** Funcionalidad "nice to have" que no aporta valor crítico. El panel climatizador ya indica si está calentando/enfriando.
 
-### Definición de Hecho
+**US-014: Configurar puertos de comunicación** (2 pts)
+**Razón:** Configuración avanzada innecesaria para usuarios típicos. Los puertos se definen en .env/config.json.
 
-- [ ] LED rojo funcionando
-- [ ] Display muestra ERROR
-- [ ] Respuesta a cambio de estado del JSON
-- [ ] Tests de falla simulada
+**US-016: Reconectar manualmente al Raspberry Pi** (2 pts)
+**Razón:** La reconexión automática es mejor UX. Un botón manual es redundante si la lógica de reconexión automática está bien implementada.
 
----
+**US-017: Ver información de estado en tiempo real** (3 pts)
+**Razón:** Parcialmente cubierta por US-002 (estado climatizador). El "tiempo en estado" es información secundaria sin valor crítico.
 
-## US-010: Recibir alerta de batería baja
+## Desestimadas por Responsabilidad del RPi
 
-**Prioridad:** Media
-**Puntos:** 2
+**US-018: Persistir configuración entre sesiones** (2 pts)
+**Razón:** La UX Desktop es un cliente sin estado. El estado del termostato (temperatura deseada, modos) debe persistir en el Raspberry Pi, no en el cliente. La única config local necesaria es IP/puertos en .env.
 
-**Como** usuario del termostato
-**Quiero** ser alertado cuando la batería del sistema está baja
-**Para** poder recargarla antes de que el sistema se apague
+**US-019: Ver historial de temperatura** (8 pts)
+**Razón:** El almacenamiento y análisis de datos históricos es responsabilidad del Raspberry Pi. Si el RPi provee un endpoint de historial, el cliente puede consumirlo. Pero el cliente no debe almacenar datos históricos.
 
-### Criterios de Aceptación
+**Total Desestimadas:** 10 historias - 28 puntos
 
-- [ ] LED "Batería" se enciende en amarillo con animación pulsante
-- [ ] Se activa cuando `bateria_baja: true` en JSON del RPi
-- [ ] El nivel de batería se muestra en el footer: "Batería: XX%"
-- [ ] Color del texto cambia a amarillo cuando < 30%
-- [ ] Color cambia a rojo cuando < 15%
-- [ ] El sistema continúa operando normalmente
-
-### Visual
-
-- [ ] LED amarillo pulsante
-- [ ] Footer muestra porcentaje
-- [ ] Iconos de batería (■■■□□) si es posible
-
-### Definición de Hecho
-
-- [ ] LED amarillo funcional
-- [ ] Footer muestra nivel de batería
-- [ ] Colores según nivel
-- [ ] Tests con diferentes niveles
+**Principio arquitectónico:** La UX Desktop es un **cliente de visualización y control**, no debe tener lógica de persistencia de estado ni almacenamiento de datos históricos.
 
 ---
 
-# Épica 5: Modos de Visualización
+# 🔲 PANELES PENDIENTES
 
-## US-011: Cambiar entre vista de temperatura ambiente y deseada
+## Épica 5: Modos de Visualización
 
-**Prioridad:** Alta
-**Puntos:** 3
+### US-011: Cambiar entre vista de temperatura ambiente y deseada
+
+**Prioridad:** Alta | **Puntos:** 3 | **Estado:** PENDIENTE
+**Panel:** `app/presentacion/paneles/selector_vista/`
 
 **Como** usuario del termostato
-**Quiero** poder alternar entre ver la temperatura ambiente actual y la temperatura deseada
+**Quiero** alternar entre ver temperatura ambiente y deseada
 **Para** comparar ambos valores fácilmente
 
-### Criterios de Aceptación
-
-- [ ] Botón "Ver Temperatura Deseada" cuando está en modo ambiente
-- [ ] Botón "Ver Temperatura Ambiente" cuando está en modo deseada
-- [ ] Al presionar, el display cambia a mostrar el otro valor
-- [ ] El label del display cambia:
+**Criterios de Aceptación:**
+- [ ] Botón toggle "Ambiente" / "Deseada"
+- [ ] Display cambia su label según modo:
   - "Temperatura Ambiente" en modo ambiente
   - "Temperatura Deseada" en modo deseada
-- [ ] El cambio es instantáneo (sin delay)
-- [ ] El botón solo está activo cuando el termostato está encendido
-
-### Comportamiento del Comando
-
+- [ ] Cambio instantáneo (sin delay)
 - [ ] Envía comando al RPi: `{"comando": "set_modo_display", "modo": "ambiente|deseada"}`
-- [ ] Puerto: 14000
-- [ ] El cambio es local primero (optimistic update)
+- [ ] Puerto de envío: 14000
+- [ ] Solo activo cuando termostato está encendido
+- [ ] Optimistic update (cambia local primero)
 
-### Definición de Hecho
+**Componentes MVC:**
+- **Modelo:** `SelectorVistaModelo(modo: str)`
+  - `modo` puede ser "ambiente" o "deseada"
+  - Validación de valores permitidos
 
-- [ ] Panel Selector Vista implementado
-- [ ] Toggle entre modos funciona
-- [ ] Display actualiza correctamente
-- [ ] Comando enviado al RPi
-- [ ] Tests de ambos modos
+- **Vista:** `SelectorVistaVista`
+  - Botón toggle con 2 estados
+  - Feedback visual del modo actual
+  - Estilos consistentes con otros paneles
 
----
+- **Controlador:** `SelectorVistaControlador`
+  - Señal: `modo_cambiado(str)` - emitida al cambiar modo
+  - Conecta con Display para actualizar label
+  - Conecta con ClienteComandos para enviar al RPi
 
-## US-012: Ver modo actual en el footer
-
-**Prioridad:** Baja
-**Puntos:** 1
-
-**Como** usuario del termostato
-**Quiero** ver en el footer si el sistema está activo o inactivo
-**Para** tener confirmación rápida del estado general
-
-### Criterios de Aceptación
-
-- [ ] Footer muestra: "Modo: Activo" cuando está encendido
-- [ ] Footer muestra: "Modo: Inactivo" cuando está apagado
-- [ ] Texto en tamaño pequeño (xs)
-- [ ] Color gris claro cuando activo
-- [ ] Color gris oscuro cuando inactivo
-
-### Definición de Hecho
-
-- [ ] Footer actualiza según estado power
-- [ ] Tests de visualización
+**Definición de Hecho:**
+- [ ] Panel MVC implementado
+- [ ] Tests unitarios (100% coverage)
+- [ ] Integración con panel Display
+- [ ] Comando JSON enviado correctamente
+- [ ] Tests de ambos modos (ambiente/deseada)
+- [ ] Pylint ≥ 8.0
 
 ---
 
-# Épica 6: Configuración y Conectividad
+## Épica 6: Configuración y Conectividad
 
-## US-013: Configurar dirección IP del Raspberry Pi
+### US-013: Configurar dirección IP del Raspberry Pi
 
-**Prioridad:** Alta
-**Puntos:** 3
+**Prioridad:** Alta | **Puntos:** 3 | **Estado:** PENDIENTE
+**Panel:** `app/presentacion/paneles/conexion/`
 
 **Como** usuario del termostato
-**Quiero** poder configurar la dirección IP del Raspberry Pi
-**Para** conectarme al sistema embebido en mi red local
+**Quiero** configurar la IP del Raspberry Pi
+**Para** conectarme al sistema en mi red local
 
-### Criterios de Aceptación
+**Criterios de Aceptación:**
+- [ ] Campo de texto para IP (formato xxx.xxx.xxx.xxx)
+- [ ] Validación de formato IP con regex
+- [ ] Feedback visual:
+  - Borde verde si válido
+  - Borde rojo si inválido
+  - Mensaje de error descriptivo
+- [ ] Botón "Aplicar" para guardar configuración
+- [ ] IP se persiste en config.json
+- [ ] IP se carga al iniciar la aplicación
+- [ ] Al cambiar IP, se reconecta automáticamente
+- [ ] Campos para puertos recv/send (read-only)
 
-- [ ] Panel de configuración con campo de texto para IP
-- [ ] Validación de formato IP (xxx.xxx.xxx.xxx)
-- [ ] Feedback visual si la IP es inválida (borde rojo)
-- [ ] Botón "Aplicar" para guardar la configuración
-- [ ] La IP se guarda en config.json
-- [ ] La IP se carga al iniciar la aplicación
-- [ ] Al cambiar la IP, el cliente se reconecta
-
-### Validación
-
+**Validación de IP:**
 ```python
-# IP válida: 192.168.1.50
-# IP inválida: 999.999.999.999
-# IP inválida: abc.def.ghi.jkl
+# Regex: ^(\d{1,3}\.){3}\d{1,3}$
+# Rango: 0-255 por octeto
+# Ejemplos válidos: 192.168.1.50, 127.0.0.1, 10.0.0.1
+# Ejemplos inválidos: 999.999.999.999, abc.def.ghi.jkl, 192.168.1
 ```
 
-### Definición de Hecho
+**Componentes MVC:**
+- **Modelo:** `ConexionModelo(ip: str, puerto_recv: int, puerto_send: int, valido: bool)`
+  - Validación de IP en el modelo
+  - Puertos por defecto: 14001 (recv), 14000 (send)
 
-- [ ] Panel Conexión implementado
-- [ ] Validación de IP funciona
-- [ ] Configuración se persiste
-- [ ] Reconexión automática
-- [ ] Tests de validación
+- **Vista:** `ConexionVista`
+  - Usa `ConfigPanel` de compartido/widgets (si existe)
+  - Layout vertical: IP, puertos, botón Aplicar
+  - Feedback visual con `ValidationFeedback`
 
----
+- **Controlador:** `ConexionControlador`
+  - Señal: `ip_cambiada(str)` - emitida al aplicar nueva IP
+  - Valida formato antes de aceptar
+  - Integra con ConfigManager para persistencia
 
-## US-014: Configurar puertos de comunicación
-
-**Prioridad:** Media
-**Puntos:** 2
-
-**Como** usuario avanzado del termostato
-**Quiero** poder configurar los puertos de recepción y envío
-**Para** adaptar la aplicación a diferentes configuraciones de red
-
-### Criterios de Aceptación
-
-- [ ] Campos para puerto de recepción (default: 14001)
-- [ ] Campo para puerto de envío (default: 14000)
-- [ ] Validación: puerto entre 1024 y 65535
-- [ ] Los puertos se guardan en config.json
-- [ ] Al cambiar puertos, la aplicación se reconecta
-- [ ] Botón "Restaurar valores por defecto"
-
-### Validación
-
-- [ ] Puerto válido: 1024-65535
-- [ ] Puerto inválido: < 1024 o > 65535
-
-### Definición de Hecho
-
-- [ ] Campos de puerto funcionales
-- [ ] Validación implementada
-- [ ] Configuración persistente
-- [ ] Tests de validación
+**Definición de Hecho:**
+- [ ] Panel MVC implementado
+- [ ] Validación de IP robusta
+- [ ] Tests unitarios (100% coverage)
+- [ ] Integración con ConfigManager
+- [ ] Persistencia en config.json funciona
+- [ ] Reconexión automática funcional
+- [ ] Pylint ≥ 8.0
 
 ---
 
-## US-015: Ver estado de conexión con el Raspberry Pi
+### US-015: Ver estado de conexión con el Raspberry Pi
 
-**Prioridad:** Alta
-**Puntos:** 2
+**Prioridad:** Alta | **Puntos:** 2 | **Estado:** PENDIENTE
+**Componente:** Header de `ui_principal.py`
 
 **Como** usuario del termostato
-**Quiero** ver si hay conexión activa con el Raspberry Pi
-**Para** saber si los datos mostrados son actuales
+**Quiero** ver si hay conexión activa con el RPi
+**Para** saber si los datos son actuales
 
-### Criterios de Aceptación
+**Criterios de Aceptación:**
+- [ ] Indicador en header: "Estado: ● Conectado"
+- [ ] 3 estados posibles:
+  - **Conectado:** LED verde, texto "Conectado"
+  - **Desconectado:** LED rojo, texto "Desconectado"
+  - **Conectando:** LED amarillo pulsante, texto "Conectando..."
+- [ ] Actualización en tiempo real
+- [ ] Timeout: 10 segundos sin datos = estado "Desconectado"
+- [ ] Detección automática de reconexión
 
-- [ ] Indicador visual en la parte superior: "Estado: ● Conectado"
-- [ ] LED verde cuando hay conexión
-- [ ] LED rojo cuando no hay conexión
-- [ ] Texto cambia a "Desconectado" cuando no hay conexión
-- [ ] El estado se actualiza en tiempo real
-- [ ] Timeout de conexión: 10 segundos sin datos = desconectado
+**Componentes:**
+- **Widget:** `EstadoConexionWidget`
+  - Usa `StatusIndicator` de compartido/widgets
+  - Layout horizontal: LED + texto
+  - Estados sincronizados con ServidorEstado
 
-### Estados
+- **Integración:**
+  - Conectado en `ui_principal.py` como parte del header
+  - Recibe señales de ServidorEstado:
+    - `conexion_establecida` → estado "Conectado"
+    - `conexion_perdida` → estado "Desconectado"
+    - `conectando` → estado "Conectando"
 
-- [ ] Conectado: LED verde, texto "Conectado"
-- [ ] Desconectado: LED rojo, texto "Desconectado"
-- [ ] Conectando: LED amarillo pulsante, texto "Conectando..."
+**Definición de Hecho:**
+- [ ] Widget implementado
+- [ ] 3 estados funcionan correctamente
+- [ ] Detección de timeout implementada
+- [ ] Tests de cambios de estado
+- [ ] Integración en UI principal
+- [ ] Animación pulsante en estado "Conectando"
 
-### Definición de Hecho
-
-- [ ] Indicador de conexión funcional
-- [ ] Detección de desconexión
-- [ ] Tests de estados de conexión
-
----
-
-## US-016: Reconectar manualmente al Raspberry Pi
-
-**Prioridad:** Media
-**Puntos:** 2
-
-**Como** usuario del termostato
-**Quiero** poder forzar una reconexión al Raspberry Pi
-**Para** restablecer la comunicación después de un problema de red
-
-### Criterios de Aceptación
-
-- [ ] Botón "Reconectar" en el panel de configuración
-- [ ] Al presionar, cierra conexiones existentes
-- [ ] Intenta establecer nueva conexión
-- [ ] Muestra feedback visual durante reconexión
-- [ ] Timeout de 5 segundos
-- [ ] Mensaje de éxito o error después del intento
-
-### Feedback
-
-- [ ] Durante reconexión: spinner o texto "Reconectando..."
-- [ ] Éxito: "Conectado exitosamente"
-- [ ] Error: "No se pudo conectar. Verifique la IP y que el RPi esté encendido"
-
-### Definición de Hecho
-
-- [ ] Botón reconectar funcional
-- [ ] Lógica de reconexión implementada
-- [ ] Feedback apropiado
-- [ ] Tests de reconexión
+**Total Paneles Pendientes:** 3 historias - 8 puntos
 
 ---
 
-# Épica 7: Monitoreo del Sistema
+# ⭐ NUEVAS HISTORIAS - ARQUITECTURA
 
-## US-017: Ver información de estado en tiempo real
+## Épica 8: Arquitectura e Integración (NUEVA)
 
-**Prioridad:** Media
-**Puntos:** 3
+### US-020: Implementar capa de Dominio
 
-**Como** usuario del termostato
-**Quiero** ver información detallada del estado del sistema
-**Para** monitorear su funcionamiento
+**Prioridad:** CRÍTICA | **Puntos:** 5 | **Estado:** PENDIENTE
+**Componente:** `app/dominio/`
 
-### Criterios de Aceptación
+**Como** desarrollador del sistema
+**Quiero** implementar la capa de lógica de negocio
+**Para** centralizar el estado del termostato y validación de comandos
 
-- [ ] Panel footer muestra:
-  - Modo: Activo/Inactivo
-  - Estado: Calentando/Enfriando/Estable
-  - (Opcional) Tiempo en estado actual
-- [ ] La información se actualiza en tiempo real
-- [ ] Formato de tiempo: "Tiempo: 2m 30s"
-- [ ] Texto en tamaño pequeño (xs)
-- [ ] Color gris claro (slate-500)
+**Criterios de Aceptación:**
 
-### Datos del JSON
+#### 1. EstadoTermostato (estado_termostato.py)
 
+- [ ] Dataclass inmutable (`@dataclass(frozen=True)`)
+- [ ] Atributos completos del estado:
+  ```python
+  @dataclass(frozen=True)
+  class EstadoTermostato:
+      temperatura_actual: float
+      temperatura_deseada: float
+      modo_climatizador: str  # "calentando", "enfriando", "reposo", "apagado"
+      falla_sensor: bool
+      bateria_baja: bool
+      encendido: bool
+      modo_display: str  # "ambiente", "deseada"
+      timestamp: datetime
+  ```
+- [ ] Método `from_json(data: dict) -> EstadoTermostato`
+  - Parsea JSON del RPi a objeto tipado
+  - Manejo de campos opcionales
+  - Validación de tipos
+- [ ] Método `to_dict() -> dict`
+  - Serialización para logging/debugging
+- [ ] Validaciones de rangos:
+  - `temperatura_actual`: -40°C a 85°C
+  - `temperatura_deseada`: 15°C a 35°C
+  - `modo_climatizador`: valores permitidos
+  - `modo_display`: valores permitidos
+- [ ] Validación de tipos (type hints + runtime checks)
+
+#### 2. Comandos (comandos.py)
+
+- [ ] Clase base abstracta `ComandoTermostato`:
+  ```python
+  @dataclass(frozen=True)
+  class ComandoTermostato(ABC):
+      timestamp: datetime = field(default_factory=datetime.now)
+
+      @abstractmethod
+      def to_json(self) -> dict:
+          pass
+  ```
+
+- [ ] `ComandoPower(estado: bool)`
+  - Comando de encendido/apagado
+  - JSON: `{"comando": "power", "estado": "on"|"off", "timestamp": ...}`
+
+- [ ] `ComandoSetTemp(valor: float)`
+  - Comando de ajuste de temperatura deseada
+  - Validación: 15°C ≤ valor ≤ 35°C
+  - JSON: `{"comando": "set_temp_deseada", "valor": X, "timestamp": ...}`
+
+- [ ] `ComandoSetModoDisplay(modo: str)`
+  - Comando de cambio de modo display
+  - Validación: modo in ["ambiente", "deseada"]
+  - JSON: `{"comando": "set_modo_display", "modo": "...", "timestamp": ...}`
+
+- [ ] Método `to_json()` en cada comando
+  - Serialización consistente
+  - Formato esperado por RPi
+
+- [ ] Validación de comandos:
+  - Rangos de valores
+  - Tipos correctos
+  - Campos requeridos
+
+**Definición de Hecho:**
+- [ ] EstadoTermostato completo con todos los métodos
+- [ ] Todos los comandos implementados
+- [ ] Tests unitarios (100% coverage)
+  - Tests de validación de rangos
+  - Tests de serialización/deserialización
+  - Tests de casos inválidos
+- [ ] Documentación de API (docstrings)
+- [ ] Type hints completos
+- [ ] Pylint ≥ 8.0
+
+**Dependencias:** Ninguna (capa base)
+
+---
+
+### US-021: Implementar capa de Comunicación
+
+**Prioridad:** CRÍTICA | **Puntos:** 8 | **Estado:** PENDIENTE
+**Componente:** `app/comunicacion/`
+
+**Como** desarrollador del sistema
+**Quiero** implementar clientes y servidores TCP
+**Para** comunicarme bidireccionalmente con el Raspberry Pi
+
+**Criterios de Aceptación:**
+
+#### 1. ServidorEstado (servidor_estado.py)
+
+- [ ] Hereda de `BaseSocketServer` (compartido/networking)
+- [ ] Configuración:
+  - Puerto por defecto: 14001
+  - IP bind: 0.0.0.0 (escucha todas las interfaces)
+- [ ] Manejo de conexiones:
+  - Acepta una conexión del RPi
+  - Recibe JSON en cada mensaje
+  - Thread-safe para PyQt
+- [ ] Procesamiento de mensajes:
+  - Parsea JSON → dict
+  - Valida estructura del JSON
+  - Crea `EstadoTermostato` via `from_json()`
+  - Emite señal PyQt: `estado_recibido(EstadoTermostato)`
+- [ ] Manejo de errores:
+  - JSON malformado → log error, continúa
+  - Campos faltantes → usa valores por defecto
+  - Conexión perdida → intenta reconectar
+  - Emite señal: `conexion_perdida()`
+- [ ] Logging:
+  - Log cada mensaje recibido (nivel DEBUG)
+  - Log errores de parsing (nivel ERROR)
+  - Log conexión establecida/perdida (nivel INFO)
+
+**Protocolo esperado del RPi:**
 ```json
 {
-  "tiempo_en_estado": 150  // segundos
+  "temperatura_actual": 22.5,
+  "temperatura_deseada": 24.0,
+  "modo_climatizador": "calentando",
+  "falla_sensor": false,
+  "bateria_baja": false,
+  "encendido": true,
+  "modo_display": "ambiente",
+  "timestamp": "2026-01-23T10:30:00Z"
 }
 ```
 
-### Definición de Hecho
+#### 2. ClienteComandos (cliente_comandos.py)
 
-- [ ] Panel footer con toda la info
-- [ ] Actualización en tiempo real
-- [ ] Formato de tiempo legible
-- [ ] Tests de actualización
+- [ ] Usa `EphemeralSocketClient` (compartido/networking)
+  - Patrón: conectar → enviar → cerrar
+  - No mantiene conexión persistente
+- [ ] Configuración:
+  - Puerto destino por defecto: 14000
+  - IP destino: configurable (desde ConfigManager)
+  - Timeout: 5 segundos
+- [ ] Método `enviar_comando(cmd: ComandoTermostato) -> bool`:
+  - Serializa comando → JSON via `cmd.to_json()`
+  - Conecta al RPi
+  - Envía JSON + newline
+  - Cierra conexión
+  - Retorna True si éxito, False si error
+  - Fire-and-forget (no espera respuesta)
+- [ ] Manejo de errores:
+  - Timeout de conexión → log error, retorna False
+  - Error de envío → log error, retorna False
+  - No lanza excepciones (las captura internamente)
+- [ ] Logging:
+  - Log cada comando enviado (nivel INFO)
+  - Log errores de conexión/envío (nivel ERROR)
 
----
-
-## US-018: Persistir configuración entre sesiones
-
-**Prioridad:** Media
-**Puntos:** 2
-
-**Como** usuario del termostato
-**Quiero** que mis configuraciones (IP, puertos) se guarden
-**Para** no tener que reconfigurar cada vez que abro la aplicación
-
-### Criterios de Aceptación
-
-- [ ] Al cerrar la aplicación, se guarda config.json
-- [ ] Al abrir la aplicación, se carga config.json
-- [ ] Si no existe config.json, se usan valores por defecto
-- [ ] Configuración incluye:
-  - IP del Raspberry Pi
-  - Puerto de recepción
-  - Puerto de envío
-  - (Opcional) Última temperatura deseada
-
-### Ubicación del archivo
-
-- [ ] Linux/Mac: `~/.config/ux_termostato/config.json`
-- [ ] Windows: `%APPDATA%\ux_termostato\config.json`
-
-### Definición de Hecho
-
-- [ ] ConfigManager implementado
-- [ ] Carga y guardado funciona
-- [ ] Valores por defecto correctos
-- [ ] Tests de persistencia
-
----
-
-## US-019: Ver historial de temperatura (Opcional - Fase 2)
-
-**Prioridad:** Baja
-**Puntos:** 8
-
-**Como** usuario del termostato
-**Quiero** ver un gráfico del historial de temperatura de las últimas horas
-**Para** analizar tendencias y comportamiento del sistema
-
-### Criterios de Aceptación
-
-- [ ] Gráfico de línea con pyqtgraph
-- [ ] Eje X: tiempo (últimos 10 minutos)
-- [ ] Eje Y: temperatura (°C)
-- [ ] Dos líneas:
-  - Azul: temperatura ambiente
-  - Roja: temperatura deseada
-- [ ] El gráfico se actualiza en tiempo real
-- [ ] Máximo 600 puntos de datos (para performance)
-
-### Ubicación
-
-- [ ] Panel nuevo debajo del display principal
-- [ ] Colapsable (botón para mostrar/ocultar)
-
-### Definición de Hecho
-
-- [ ] Panel Gráfico implementado
-- [ ] pyqtgraph configurado
-- [ ] Datos históricos almacenados
-- [ ] Actualización en tiempo real
-- [ ] Tests de gráfico
-
-**Nota:** Esta historia es opcional y puede implementarse en una fase posterior.
-
----
-
-# Resumen de Prioridades
-
-## Alta Prioridad (Must Have - MVP)
-
-Total: 11 historias, 35 puntos (~7 días de desarrollo)
-
-1. US-001: Ver temperatura ambiente (3 pts)
-2. US-002: Ver estado climatizador (5 pts)
-3. US-003: Ver indicadores de alerta (2 pts)
-4. US-004: Aumentar temperatura (3 pts)
-5. US-005: Disminuir temperatura (3 pts)
-6. US-007: Encender termostato (3 pts)
-7. US-008: Apagar termostato (2 pts)
-8. US-009: Alerta falla sensor (2 pts)
-9. US-011: Cambiar vista ambiente/deseada (3 pts)
-10. US-013: Configurar IP (3 pts)
-11. US-015: Ver estado conexión (2 pts)
-
-## Media Prioridad (Should Have)
-
-Total: 7 historias, 18 puntos (~3.5 días)
-
-1. US-006: Ver diferencia temperatura (2 pts)
-2. US-010: Alerta batería baja (2 pts)
-3. US-014: Configurar puertos (2 pts)
-4. US-016: Reconectar manualmente (2 pts)
-5. US-017: Info estado en tiempo real (3 pts)
-6. US-018: Persistir configuración (2 pts)
-
-## Baja Prioridad (Nice to Have)
-
-Total: 2 historias, 9 puntos (~2 días)
-
-1. US-012: Ver modo en footer (1 pt)
-2. US-019: Historial de temperatura (8 pts) - **Fase 2**
-
----
-
-# Plan de Sprints
-
-## Sprint 1: MVP Básico (35 puntos - 2 semanas)
-
-**Objetivo:** Visualización básica y control esencial
-
-### Semana 1
-- US-001: Ver temperatura ambiente (3 pts)
-- US-002: Ver estado climatizador (5 pts)
-- US-003: Ver indicadores alerta (2 pts)
-- US-007: Encender termostato (3 pts)
-- US-008: Apagar termostato (2 pts)
-- **Total:** 15 puntos
-
-### Semana 2
-- US-004: Aumentar temperatura (3 pts)
-- US-005: Disminuir temperatura (3 pts)
-- US-009: Alerta falla sensor (2 pts)
-- US-011: Cambiar vista (3 pts)
-- US-013: Configurar IP (3 pts)
-- US-015: Estado conexión (2 pts)
-- **Total:** 16 puntos
-
-**Entregable Sprint 1:** UX Desktop funcional con todas las funciones críticas
-
----
-
-## Sprint 2: Mejoras y Refinamiento (18 puntos - 1 semana)
-
-**Objetivo:** Funcionalidades adicionales y polish
-
-- US-006: Diferencia temperatura (2 pts)
-- US-010: Alerta batería (2 pts)
-- US-014: Configurar puertos (2 pts)
-- US-016: Reconectar manual (2 pts)
-- US-017: Info estado tiempo real (3 pts)
-- US-018: Persistir config (2 pts)
-- US-012: Modo en footer (1 pt)
-- **Total:** 14 puntos
-
-**Entregable Sprint 2:** UX Desktop completo y pulido
-
----
-
-## Sprint 3 (Opcional - Fase 2): Gráfico Histórico (8 puntos - 1 semana)
-
-- US-019: Historial temperatura (8 pts)
-
-**Entregable Sprint 3:** UX Desktop con análisis de tendencias
-
----
-
-# Formato para Jira
-
-## Template de Historia
-
-```
-Título: [US-XXX] Título descriptivo
-
-Tipo: Story
-Prioridad: Alta/Media/Baja
-Puntos: X
-Sprint: Sprint X
-Épica: [Nombre de la épica]
-
-Descripción:
-Como [rol]
-Quiero [funcionalidad]
-Para [beneficio]
-
-Criterios de Aceptación:
-[ ] Criterio 1
-[ ] Criterio 2
-...
-
-Notas Técnicas:
-- Componente: [Nombre del componente]
-- Dependencias: [US-XXX, US-YYY]
-
-Definición de Hecho:
-[ ] Tests unitarios pasan
-[ ] Código revisado
-[ ] Documentación actualizada
-[ ] Demo funcional
+**Ejemplo de uso:**
+```python
+cliente = ClienteComandos(ip="192.168.1.50", puerto=14000)
+cmd = ComandoPower(estado=True)
+exito = cliente.enviar_comando(cmd)
 ```
 
+**Definición de Hecho:**
+- [ ] ServidorEstado funcional
+  - Recibe JSON del RPi
+  - Emite señales PyQt correctamente
+  - Manejo robusto de errores
+- [ ] ClienteComandos funcional
+  - Envía comandos al RPi
+  - Fire-and-forget implementado
+  - Logging apropiado
+- [ ] Tests unitarios (mocking TCP):
+  - Mock de sockets para tests
+  - Tests de parsing JSON
+  - Tests de manejo de errores
+  - Tests de señales PyQt
+- [ ] Integración con dominio/ (usa EstadoTermostato y comandos)
+- [ ] Documentación de protocolos
+- [ ] Pylint ≥ 8.0
+
+**Dependencias:** US-020 (necesita EstadoTermostato y comandos)
+
 ---
 
-# Dependencias entre Historias
+### US-022: Implementar Factory y Coordinator
 
-## Cadena Crítica (MVP)
+**Prioridad:** CRÍTICA | **Puntos:** 5 | **Estado:** PENDIENTE
+**Componentes:** `factory.py`, `coordinator.py`
+
+**Como** desarrollador del sistema
+**Quiero** implementar patrones Factory y Coordinator
+**Para** crear componentes consistentemente y conectar señales sin acoplamiento
+
+**Criterios de Aceptación:**
+
+#### 1. ComponenteFactoryUX (factory.py)
+
+- [ ] Recibe configuración en `__init__(config: ConfigManager)`
+- [ ] Almacena config como atributo privado
+- [ ] Lazy initialization donde sea necesario
+
+**Métodos de creación de paneles:**
+- [ ] `crear_panel_display() -> tuple[DisplayModelo, DisplayVista, DisplayControlador]`
+  - Crea modelo con estado inicial
+  - Crea vista con estilos consistentes
+  - Crea controlador conectando modelo↔vista
+  - Retorna tupla (modelo, vista, controlador)
+
+- [ ] `crear_panel_climatizador() -> tuple[..., ..., ...]`
+- [ ] `crear_panel_indicadores() -> tuple[..., ..., ...]`
+- [ ] `crear_panel_power() -> tuple[..., ..., ...]`
+- [ ] `crear_panel_control_temp() -> tuple[..., ..., ...]`
+- [ ] `crear_panel_selector_vista() -> tuple[..., ..., ...]` (cuando US-011)
+- [ ] `crear_panel_conexion() -> tuple[..., ..., ...]` (cuando US-013)
+
+**Métodos de creación de servicios:**
+- [ ] `crear_servidor_estado() -> ServidorEstado`
+  - Lee puerto de config
+  - Crea servidor con config apropiada
+  - No inicia el servidor (lazy)
+
+- [ ] `crear_cliente_comandos() -> ClienteComandos`
+  - Lee IP y puerto de config
+  - Crea cliente configurado
+
+**Métodos de creación de UI:**
+- [ ] `crear_ui_compositor(paneles: dict) -> UICompositor`
+  - Recibe dict con todos los paneles creados
+  - Retorna compositor configurado
+
+**Consistencia:**
+- [ ] Todos los componentes creados con misma config
+- [ ] Estilos consistentes (vía ThemeProvider)
+- [ ] Logging de creación de componentes
+
+#### 2. UXCoordinator (coordinator.py)
+
+- [ ] Recibe todos los componentes en `__init__`:
+  ```python
+  def __init__(
+      self,
+      paneles: dict,  # {"display": ctrl, "power": ctrl, ...}
+      servidor_estado: ServidorEstado,
+      cliente_comandos: ClienteComandos
+  ):
+  ```
+
+- [ ] Método `conectar_signals()` - conecta todas las señales:
+
+**Flujo: Power → Controles**
+- [ ] `power.encendido_cambiado(bool) → control_temp.setEnabled(bool)`
+- [ ] `power.encendido_cambiado(bool) → selector_vista.setEnabled(bool)` (US-011)
+
+**Flujo: Control Temp → Cliente**
+- [ ] `control_temp.comando_generado(ComandoSetTemp) → cliente_comandos.enviar_comando()`
+
+**Flujo: Selector Vista → Display + Cliente**
+- [ ] `selector_vista.modo_cambiado(str) → display.cambiar_modo(str)` (US-011)
+- [ ] `selector_vista.modo_cambiado(str) → cliente_comandos.enviar_comando(ComandoSetModoDisplay)` (US-011)
+
+**Flujo: Servidor → Paneles**
+- [ ] `servidor_estado.estado_recibido(EstadoTermostato) → display.actualizar()`
+- [ ] `servidor_estado.estado_recibido(EstadoTermostato) → climatizador.actualizar()`
+- [ ] `servidor_estado.estado_recibido(EstadoTermostato) → indicadores.actualizar()`
+- [ ] `servidor_estado.estado_recibido(EstadoTermostato) → power.sincronizar_estado()`
+
+**Flujo: Conexión → Servidor/Cliente**
+- [ ] `conexion.ip_cambiada(str) → reconectar_servicios()` (US-013)
+
+- [ ] Sin dependencias circulares
+- [ ] Desacoplamiento total entre paneles
+- [ ] Logging de conexiones realizadas
+
+**Definición de Hecho:**
+- [ ] Factory crea todos los componentes existentes
+- [ ] Factory crea servicios de comunicación
+- [ ] Coordinator conecta todas las señales
+- [ ] Tests unitarios de factory
+  - Verifica que crea componentes válidos
+  - Verifica uso de config
+- [ ] Tests de integración de señales
+  - Mock de señales PyQt
+  - Verifica flujo completo de señales
+- [ ] Documentación del flujo de señales (diagrama ASCII)
+- [ ] Sin dependencias circulares (verificar imports)
+- [ ] Pylint ≥ 8.0
+
+**Dependencias:** US-020, US-021, paneles completados
+
+---
+
+### US-023: Implementar UICompositor
+
+**Prioridad:** Alta | **Puntos:** 3 | **Estado:** PENDIENTE
+**Componente:** `app/presentacion/ui_compositor.py`
+
+**Como** desarrollador del sistema
+**Quiero** ensamblar todos los paneles en un layout coherente
+**Para** tener la UI completa del termostato
+
+**Criterios de Aceptación:**
+
+- [ ] Clase `UICompositor` recibe dict de paneles:
+  ```python
+  def __init__(self, paneles: dict[str, QWidget]):
+      # paneles = {
+      #     "display": display_vista,
+      #     "climatizador": climatizador_vista,
+      #     "indicadores": indicadores_vista,
+      #     "power": power_vista,
+      #     "control_temp": control_temp_vista,
+      #     "selector_vista": selector_vista_vista,  # US-011
+      #     "conexion": conexion_vista,  # US-013
+      #     "estado_conexion": estado_conexion_widget  # US-015
+      # }
+  ```
+
+- [ ] Método `crear_layout() -> QWidget`:
+  - Retorna un QWidget con layout completo
+  - Layout vertical principal (QVBoxLayout)
+
+**Estructura del layout:**
+```
+┌─────────────────────────────────────┐
+│ HEADER                              │
+│ ┌─────────────┬──────────────────┐ │
+│ │EstadoConex  │  Indicadores     │ │  ← US-015 + US-003
+│ └─────────────┴──────────────────┘ │
+├─────────────────────────────────────┤
+│          DISPLAY LCD                │  ← US-001
+│         25.5 °C                     │
+│      Temperatura Ambiente           │
+├─────────────────────────────────────┤
+│ CLIMATIZADOR                        │  ← US-002
+│  [🔥]    [🌬️]    [❄️]             │
+├─────────────────────────────────────┤
+│ POWER                               │  ← US-007/008
+│        [⚡ APAGAR]                  │
+├─────────────────────────────────────┤
+│ CONTROL TEMPERATURA                 │  ← US-004/005
+│    [▲ SUBIR]  [▼ BAJAR]           │
+├─────────────────────────────────────┤
+│ SELECTOR VISTA                      │  ← US-011
+│  [Toggle: Ambiente / Deseada]      │
+├─────────────────────────────────────┤
+│ CONFIGURACIÓN                       │  ← US-013
+│  IP: [192.168.1.50] [Aplicar]      │
+└─────────────────────────────────────┘
+```
+
+**Detalles de layout:**
+- [ ] Header horizontal (QHBoxLayout):
+  - EstadoConexion (izquierda)
+  - Stretch
+  - Indicadores (derecha)
+- [ ] Espaciado entre secciones: 10-15px
+- [ ] Márgenes del widget principal: 15px
+- [ ] Responsive:
+  - Tamaño mínimo: 500x700
+  - Tamaño preferido: 600x800
+- [ ] Todos los widgets con tamaño apropiado
+- [ ] Sin lógica de negocio (solo layout)
+- [ ] Uso de `addWidget`, `addLayout`, `addStretch`
+
+**Definición de Hecho:**
+- [ ] Layout completo funcional
+- [ ] Todos los paneles visibles en orden correcto
+- [ ] Espaciado y márgenes consistentes
+- [ ] Tamaño responsive funciona
+- [ ] Tests visuales (manual)
+- [ ] Sin warnings de Qt en consola
+- [ ] Estética consistente con tema oscuro
+
+**Dependencias:** Todos los paneles implementados
+
+---
+
+### US-024: Implementar Ventana Principal
+
+**Prioridad:** CRÍTICA | **Puntos:** 5 | **Estado:** PENDIENTE
+**Componente:** `app/presentacion/ui_principal.py`
+
+**Como** desarrollador del sistema
+**Quiero** implementar la ventana principal de la aplicación
+**Para** tener un punto de entrada único que coordine todo
+
+**Criterios de Aceptación:**
+
+- [ ] Clase `VentanaPrincipalUX` hereda de `QMainWindow`
+- [ ] Constructor recibe Factory:
+  ```python
+  def __init__(self, factory: ComponenteFactoryUX):
+      super().__init__()
+      self._factory = factory
+      self._componentes = {}
+      self._coordinator = None
+      self._inicializar()
+  ```
+
+**Ciclo de vida completo:**
+
+1. **`_inicializar()`** - orquesta todo el setup
+   - Llama a `_configurar_ventana()`
+   - Llama a `_crear_componentes()`
+   - Llama a `_crear_coordinator()`
+   - Llama a `_crear_ui()`
+
+2. **`_configurar_ventana()`**
+   - [ ] Título: "UX Termostato Desktop"
+   - [ ] Tamaño inicial: 600x800
+   - [ ] Tamaño mínimo: 500x700
+   - [ ] Posición centrada en pantalla
+   - [ ] Icono de ventana (si existe)
+   - [ ] Aplica tema oscuro (ThemeProvider de compartido/estilos)
+
+3. **`_crear_componentes()`**
+   - [ ] Crea todos los paneles via Factory
+   - [ ] Almacena en `self._componentes`:
+     ```python
+     self._componentes = {
+         "display": (modelo, vista, ctrl),
+         "climatizador": (modelo, vista, ctrl),
+         # ... etc
+     }
+     ```
+   - [ ] Crea ServidorEstado via Factory
+   - [ ] Crea ClienteComandos via Factory
+   - [ ] Logging de componentes creados
+
+4. **`_crear_coordinator()`**
+   - [ ] Extrae controladores de `self._componentes`
+   - [ ] Crea UXCoordinator con todos los componentes
+   - [ ] Llama a `coordinator.conectar_signals()`
+   - [ ] Almacena en `self._coordinator`
+
+5. **`_crear_ui()`**
+   - [ ] Extrae vistas de `self._componentes`
+   - [ ] Crea UICompositor con las vistas
+   - [ ] Obtiene widget central via `compositor.crear_layout()`
+   - [ ] Establece como central widget: `self.setCentralWidget(widget)`
+
+6. **`iniciar()`** - método público
+   - [ ] Inicia ServidorEstado (comienza a escuchar puerto 14001)
+   - [ ] Muestra ventana: `self.show()`
+   - [ ] Logging: "Aplicación iniciada"
+   - [ ] Retorna self (para chaining)
+
+7. **`cerrar()`** - cleanup
+   - [ ] Detiene ServidorEstado
+   - [ ] Cierra conexiones activas
+   - [ ] Guarda config (via ConfigManager)
+   - [ ] Logging: "Aplicación cerrada"
+   - [ ] Llama a `super().close()`
+
+8. **`closeEvent(event)`** - override de QMainWindow
+   - [ ] Llama a `self.cerrar()`
+   - [ ] Acepta el evento: `event.accept()`
+
+**Manejo de errores:**
+- [ ] Try/catch en `_crear_componentes()`
+  - Si falla creación de panel → log error, continúa
+- [ ] Try/catch en `iniciar()`
+  - Si falla inicio de servidor → muestra diálogo error
+- [ ] QMessageBox para errores críticos
+
+**Definición de Hecho:**
+- [ ] Ventana se muestra correctamente
+- [ ] Todos los paneles visibles y funcionales
+- [ ] Lifecycle completo implementado (iniciar → cerrar)
+- [ ] Tests de integración:
+  - Verifica que ventana se crea
+  - Verifica que componentes se crean
+  - Verifica que señales se conectan
+- [ ] Manejo de cierre limpio (Ctrl+C, cerrar ventana)
+- [ ] Logging apropiado en cada fase
+- [ ] Tema oscuro aplicado correctamente
+- [ ] Sin memory leaks (verificar destrucción de objetos)
+
+**Dependencias:** US-022 (Factory, Coordinator), US-023 (UICompositor)
+
+---
+
+### US-025: Integración Final - run.py
+
+**Prioridad:** CRÍTICA | **Puntos:** 2 | **Estado:** PENDIENTE
+**Componente:** `run.py` (raíz de ux_termostato)
+
+**Como** usuario final
+**Quiero** ejecutar `python run.py`
+**Para** iniciar la aplicación UX Desktop completa
+
+**Criterios de Aceptación:**
+
+- [ ] Clase `AplicacionUX` (similar a `AplicacionSimulador` de los simuladores)
+- [ ] Método `main()`:
+
+**1. Setup de logging**
+```python
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+```
+
+**2. Carga de configuración**
+- [ ] Crea `ConfigManager`
+- [ ] Lee `config.json` (root del proyecto)
+- [ ] Sobrescribe con variables de .env si existen
+- [ ] Valida configuración mínima requerida
+- [ ] Si falla: usa valores por defecto + log warning
+
+**3. Creación de QApplication**
+- [ ] Verifica si ya existe: `QApplication.instance()`
+- [ ] Si no existe: `app = QApplication(sys.argv)`
+- [ ] Configura nombre de aplicación: `app.setApplicationName("UX Termostato")`
+- [ ] Configura organización: `app.setOrganizationName("ISSE")`
+
+**4. Creación de componentes**
+- [ ] Crea `ComponenteFactoryUX(config)`
+- [ ] Crea `VentanaPrincipalUX(factory)`
+- [ ] Llama a `ventana.iniciar()`
+
+**5. Ejecución**
+- [ ] Ejecuta event loop: `sys.exit(app.exec())`
+
+**Manejo de excepciones:**
+- [ ] Try/catch global:
+  ```python
+  try:
+      main()
+  except KeyboardInterrupt:
+      logger.info("Aplicación interrumpida por usuario")
+      sys.exit(0)
+  except Exception as e:
+      logger.error(f"Error fatal: {e}", exc_info=True)
+      sys.exit(1)
+  ```
+
+**Exit codes:**
+- [ ] 0: éxito
+- [ ] 1: error fatal
+- [ ] 130: interrupción por usuario (Ctrl+C)
+
+**Logging:**
+- [ ] Log de inicio: versión, PID, config cargada
+- [ ] Log de componentes creados
+- [ ] Log de ventana mostrada
+- [ ] Log de evento loop iniciado
+- [ ] Log de cierre
+
+**Ejemplo de output esperado:**
+```
+2026-01-23 10:30:00 - __main__ - INFO - Iniciando UX Termostato Desktop v1.0
+2026-01-23 10:30:00 - __main__ - INFO - Config cargada: IP=192.168.1.50, Puerto=14001
+2026-01-23 10:30:00 - __main__ - INFO - Componentes creados correctamente
+2026-01-23 10:30:00 - __main__ - INFO - Ventana principal mostrada
+2026-01-23 10:30:00 - __main__ - INFO - Event loop iniciado
+```
+
+**Definición de Hecho:**
+- [ ] `python run.py` inicia la aplicación
+- [ ] Ventana se muestra correctamente
+- [ ] Todos los paneles operativos
+- [ ] Conexión al RPi funciona (si RPi está disponible)
+- [ ] Cierre limpio con Ctrl+C
+- [ ] Cierre limpio con botón cerrar ventana
+- [ ] Exit codes apropiados
+- [ ] Logging completo y útil
+- [ ] Manejo robusto de errores
+- [ ] Tests de inicio/cierre
+
+**Dependencias:** US-024 (VentanaPrincipalUX), US-022 (Factory)
+
+**Total Arquitectura:** 6 historias - 28 puntos
+
+---
+
+# 📊 RESUMEN Y PLANIFICACIÓN
+
+## Estado Actual del Proyecto
 
 ```
-US-013 (Configurar IP)
-    ↓
-US-015 (Estado conexión)
-    ↓
-US-001 (Ver temperatura)
-    ↓
-US-002 (Estado climatizador)
-    ↓
-US-003 (Indicadores)
-    ↓
-US-007/US-008 (Power)
-    ↓
-US-004/US-005 (Control temp)
-    ↓
-US-011 (Cambiar vista)
+┌─────────────────────────────────────────────────┐
+│  PROYECTO: UX TERMOSTATO DESKTOP                │
+│  Branch: development/.../refactorizacion-arq    │
+│  Fecha: 2026-01-23                              │
+└─────────────────────────────────────────────────┘
+
+COMPLETADAS:           7 historias - 25 puntos (61% del proyecto)
+DESESTIMADAS:         10 historias - 28 puntos (reducción de alcance)
+PANELES PENDIENTES:    3 historias -  8 puntos (20% del pendiente)
+ARQUITECTURA NUEVA:    6 historias - 28 puntos (68% del pendiente)
+────────────────────────────────────────────────────────────────
+TOTAL PROYECTO:       16 historias - 61 puntos
+TRABAJO RESTANTE:      9 historias - 36 puntos (59%)
 ```
 
-## Historias Independientes
+## Distribución por Épica
 
-Pueden desarrollarse en paralelo:
-- US-009 (Alerta sensor)
-- US-010 (Alerta batería)
-- US-012 (Modo footer)
-- US-014 (Config puertos)
-
----
-
-# Validación y Testing
-
-## Tests de Aceptación por Historia
-
-Cada historia debe incluir:
-
-1. **Tests Unitarios**
-   - Modelo: validación de datos
-   - Vista: renderizado correcto
-   - Controlador: lógica de negocio
-
-2. **Tests de Integración**
-   - Comunicación servidor/cliente
-   - Señales entre componentes
-   - Actualización de UI
-
-3. **Tests Manuales**
-   - Checklist de criterios de aceptación
-   - Prueba con Raspberry Pi real
-   - Casos extremos (sin conexión, fallas, etc.)
-
-## Coverage Objetivo
-
-- Código: ≥ 95%
-- Pylint: ≥ 8.0
-- CC: ≤ 10 promedio
-- MI: > 20
+| Épica | Historias | Puntos | Completado | Pendiente |
+|-------|-----------|--------|------------|-----------|
+| Épica 1: Visualización | 3 | 10 | 100% | 0% |
+| Épica 2: Control Temp | 2 | 6 | 100% | 0% |
+| Épica 3: Power | 2 | 5 | 100% | 0% |
+| Épica 4: Alertas | 1 | 2 | 100% | 0% (US-009/010 desestimadas) |
+| Épica 5: Modos Vista | 1 | 3 | 0% | 100% (US-011) |
+| Épica 6: Configuración | 2 | 5 | 0% | 100% (US-013, US-015) |
+| **Épica 8: Arquitectura** | **6** | **28** | **0%** | **100%** (US-020 a US-025) |
 
 ---
 
-# Glosario
+## Plan de Implementación Propuesto
 
-**RPi:** Raspberry Pi
-**MVP:** Minimum Viable Product
-**MVC:** Model-View-Controller
-**LCD:** Liquid Crystal Display (simulado)
-**LED:** Light Emitting Diode (simulado)
-**TCP:** Transmission Control Protocol
-**JSON:** JavaScript Object Notation
+### Sprint 1: Arquitectura Base (13 puntos - 1 semana)
+**Objetivo:** Construir las capas fundamentales
+
+**Historias:**
+- US-020: Capa Dominio (5 pts) - **PRIMERO**
+  - EstadoTermostato
+  - Comandos
+  - Validaciones
+
+- US-021: Capa Comunicación (8 pts) - **SEGUNDO**
+  - ServidorEstado
+  - ClienteComandos
+  - Protocolo TCP
+
+**Entregable:** Dominio y comunicación funcionales con tests (100% coverage)
+
+**Criterio de éxito:** Tests de integración pasan, se puede enviar/recibir datos del RPi (mock)
 
 ---
 
-**Versión:** 1.0
-**Fecha:** 2026-01-16
-**Estado:** Listo para importar a Jira
-**Total de Historias:** 19 (11 Alta, 7 Media, 1 Baja)
-**Puntos Totales:** 62 (~12 días de desarrollo)
+### Sprint 2: Integración de Componentes (10 puntos - 1 semana)
+**Objetivo:** Factory, Coordinator, Compositor
+
+**Historias:**
+- US-022: Factory + Coordinator (5 pts) - **TERCERO**
+  - ComponenteFactoryUX
+  - UXCoordinator
+  - Conexión de señales
+
+- US-023: UICompositor (3 pts) - **CUARTO**
+  - Layout assembly
+  - Integración visual
+
+- US-024: VentanaPrincipal (2 pts parcial) - **QUINTO (parcial)**
+  - Solo con paneles existentes (sin US-011, US-013)
+  - Lifecycle básico
+
+**Entregable:** UI integrada parcial - funciona con 5 paneles existentes
+
+**Criterio de éxito:** `python run.py` muestra ventana con paneles funcionando, comunicación con RPi mock
+
+---
+
+### Sprint 3: Paneles Finales + Integración Total (10 puntos - 1 semana)
+**Objetivo:** Completar paneles pendientes y finalizar
+
+**Historias:**
+- US-011: Selector Vista (3 pts) - **SEXTO**
+- US-013: Config IP (3 pts) - **SÉPTIMO**
+- US-015: Estado Conexión (2 pts) - **OCTAVO**
+- US-024: VentanaPrincipal (completar integración) - **NOVENO**
+- US-025: run.py (2 pts) - **DÉCIMO (FINAL)**
+
+**Entregable:** ✅ UX Desktop 100% funcional
+
+**Criterio de éxito:**
+- Todos los paneles implementados
+- Conexión real con Raspberry Pi funciona
+- Tests de integración end-to-end pasan
+- Coverage ≥ 95%
+- Pylint ≥ 8.0 en todo el proyecto
+
+---
+
+## Dependencias Críticas
+
+### Cadena de Dependencias
+
+```
+US-020 (Dominio)
+    ↓
+US-021 (Comunicación)
+    ↓
+US-022 (Factory + Coordinator)
+    ↓
+US-023 (UICompositor)
+    ↓
+┌───────────────────┬──────────────────────┐
+│                   │                      │
+US-011            US-013              US-015
+(Selector Vista)  (Config IP)     (Estado Conexión)
+│                   │                      │
+└───────────────────┴──────────────────────┘
+                    ↓
+            US-024 (VentanaPrincipal - completa)
+                    ↓
+            US-025 (run.py - FINAL)
+```
+
+### Notas sobre Dependencias
+
+- **US-020 es bloqueante** para todo lo demás
+- **US-021 depende de US-020** (usa EstadoTermostato)
+- **US-011, US-013, US-015 pueden hacerse en paralelo** una vez que US-023 esté listo
+- **US-025 es la última** - integración final
+
+---
+
+## Métricas de Calidad
+
+Objetivo para cada historia:
+
+| Métrica | Objetivo | Crítico |
+|---------|----------|---------|
+| **Coverage** | ≥ 95% | ✅ Obligatorio |
+| **Pylint** | ≥ 8.0 | ✅ Obligatorio |
+| **CC (Complejidad)** | ≤ 10 promedio | ⚠️ Recomendado |
+| **MI (Mantenibilidad)** | > 20 | ⚠️ Recomendado |
+
+---
+
+## Testing por Tipo
+
+| Tipo de Test | Responsable | Cobertura Esperada |
+|--------------|-------------|--------------------|
+| **Tests Unitarios** | Por componente MVC | Modelo: 100%, Vista: 90%, Ctrl: 95% |
+| **Tests de Integración** | Por historia | Flujo completo de señales |
+| **Tests de Comunicación** | US-021 | Protocolo TCP (con mocks) |
+| **Tests End-to-End** | US-025 | Aplicación completa |
+
+---
+
+## Criterios de Aceptación del Proyecto
+
+El proyecto se considerará completo cuando:
+
+- [ ] ✅ Todas las 16 historias implementadas
+- [ ] ✅ Coverage global ≥ 95%
+- [ ] ✅ Pylint global ≥ 8.0
+- [ ] ✅ `python run.py` inicia aplicación sin errores
+- [ ] ✅ Conexión real con Raspberry Pi funciona
+- [ ] ✅ Todos los paneles operativos
+- [ ] ✅ Señales PyQt fluyen correctamente
+- [ ] ✅ Manejo robusto de errores
+- [ ] ✅ Documentación completa (README, docstrings)
+- [ ] ✅ Arquitectura alineada con simuladores de referencia
+
+---
+
+**Versión:** 2.0
+**Fecha:** 2026-01-23
+**Estado:** Replanificado - Listo para Sprint 1
+**Total de Historias Activas:** 16 (7 completadas, 9 pendientes)
+**Puntos Totales:** 61 (~12 días de desarrollo restantes)
