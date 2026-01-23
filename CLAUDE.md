@@ -364,11 +364,11 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 **Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.2 - Actualizado 2026-01-23)
 **Principio:** Cliente sin estado - No persiste datos, solo renderiza estado del RPi
 
-**Total:** 16 historias, 61 puntos (9 completadas, 10 deestimadas, 7 pendientes)
+**Total:** 16 historias, 61 puntos (10 completadas, 10 deestimadas, 6 pendientes)
 
 ---
 
-#### ✅ COMPLETADAS (9 historias, 35 puntos)
+#### ✅ COMPLETADAS (10 historias, 40 puntos)
 
 **Paneles de Visualización:**
 - ✅ US-001: Ver temperatura ambiente (3 pts)
@@ -406,6 +406,14 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
   - Comunicación bidireccional TCP, 34 tests, 95% coverage, Pylint 10/10, CC 1.85, MI 96.00
   - Análisis de diseño: 9.8/10 (cohesión alta, acoplamiento bajo, SOLID completo)
 
+**Arquitectura - Factory + Coordinator:**
+- ✅ US-022: Factory + Coordinator (5 pts)
+  - `configuracion/config.py`: ConfigUX (parseo de config.json, validaciones)
+  - `factory.py`: ComponenteFactoryUX (crea todos los componentes con config consistente)
+  - `coordinator.py`: UXCoordinator (conecta señales PyQt entre capas, sin dependencias circulares)
+  - 49 tests, 99% coverage, Pylint 10.00/10, CC 1.56, MI 86.09
+  - Patrones: Factory (creación consistente) + Coordinator (orquestación de señales)
+
 ---
 
 #### ❌ DESESTIMADAS (10 historias, 28 puntos)
@@ -429,7 +437,7 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 ---
 
-#### 🔲 PENDIENTES (7 historias, 26 puntos)
+#### 🔲 PENDIENTES (6 historias, 21 puntos)
 
 **Sprint 2 - Paneles Finales (3 historias, 8 pts)**
 - 🔲 US-011: Cambiar vista display (3 pts)
@@ -439,10 +447,7 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 - 🔲 US-015: Ver estado conexión (2 pts)
   - Panel EstadoFooter: indicador conectado/desconectado
 
-**Sprint 3 - Arquitectura e Integración (4 historias, 18 pts)**
-- 🔲 US-022: Factory + Coordinator (5 pts)
-  - `factory.py`: ComponenteFactoryUX crea todos los componentes
-  - `coordinator.py`: UXCoordinator conecta señales entre capas
+**Sprint 3 - Arquitectura e Integración (3 historias, 13 pts)**
 - 🔲 US-023: Compositor UI (3 pts)
   - `presentacion/ui_compositor.py`: ensambla layout de paneles
 - 🔲 US-024: Ventana Principal (5 pts)
@@ -454,23 +459,25 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 #### 📊 Planificación
 
-**2 Sprints restantes:**
-- ✅ Sprint 1 (10 pts): COMPLETADO - US-020 Capa de Dominio + US-021 Capa de Comunicación
+**Sprints:**
+- ✅ Sprint 1 (15 pts): COMPLETADO - US-020 Dominio + US-021 Comunicación + US-022 Factory/Coordinator
 - Sprint 2 (8 pts): Paneles finales (US-011, US-013, US-015)
-- Sprint 3 (18 pts): Arquitectura e integración (US-022 a US-025)
+- Sprint 3 (13 pts): Integración final (US-023 Compositor + US-024 Ventana + US-025 Entry Point)
 
 **Dependencias críticas:**
 - ✅ US-020 completada - Capa de dominio (EstadoTermostato y Comandos)
 - ✅ US-021 completada - Capa de comunicación (ServidorEstado y ClienteComandos)
-- US-022 a US-024 tienen dependencias secuenciales
+- ✅ US-022 completada - Factory y Coordinator (creación y orquestación)
+- US-023 a US-024 tienen dependencias secuenciales
 - US-025 es último, integra todo
 
 **Directorios implementados:**
 ```
 app/
-├── factory.py              ✅ Creado (vacío, pendiente US-022)
-├── coordinator.py          ✅ Creado (vacío, pendiente US-022)
-├── configuracion/          ✅ Existente
+├── factory.py              ✅ Completado (US-022) - ComponenteFactoryUX
+├── coordinator.py          ✅ Completado (US-022) - UXCoordinator
+├── configuracion/          ✅ Completado (US-022)
+│   └── config.py               - ConfigUX (parseo config.json)
 ├── dominio/                ✅ Completado (US-020)
 │   ├── estado_termostato.py    - EstadoTermostato dataclass
 │   └── comandos.py             - ComandoPower, ComandoSetTemp, ComandoSetModoDisplay
