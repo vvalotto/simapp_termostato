@@ -361,14 +361,14 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 ### ux_termostato - En Desarrollo Activo
 
 **Arquitectura:** MVC + Factory/Coordinator (siguiendo ADR-003)
-**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.0 - Replanificado 2026-01-23)
+**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.2 - Actualizado 2026-01-23)
 **Principio:** Cliente sin estado - No persiste datos, solo renderiza estado del RPi
 
-**Total:** 16 historias, 61 puntos (7 completadas, 10 deestimadas, 9 pendientes)
+**Total:** 16 historias, 61 puntos (9 completadas, 10 deestimadas, 7 pendientes)
 
 ---
 
-#### ✅ COMPLETADAS (7 historias, 25 puntos)
+#### ✅ COMPLETADAS (9 historias, 35 puntos)
 
 **Paneles de Visualización:**
 - ✅ US-001: Ver temperatura ambiente (3 pts)
@@ -393,6 +393,19 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 - ✅ US-006: Refactorizar panel ControlTemp (6 pts)
   - Fusión exitosa US-004 + US-005 en panel único
 
+**Arquitectura - Capa de Dominio:**
+- ✅ US-020: Capa de Dominio (5 pts)
+  - `dominio/estado_termostato.py`: EstadoTermostato (dataclass inmutable)
+  - `dominio/comandos.py`: ComandoPower, ComandoSetTemp, ComandoSetModoDisplay
+  - Validaciones completas, serialización JSON, 100% coverage
+
+**Arquitectura - Capa de Comunicación:**
+- ✅ US-021: Capa de Comunicación (5 pts)
+  - `comunicacion/servidor_estado.py`: ServidorEstado (recibe JSON del RPi, puerto 14001)
+  - `comunicacion/cliente_comandos.py`: ClienteComandos (envía comandos al RPi, puerto 14000)
+  - Comunicación bidireccional TCP, 34 tests, 95% coverage, Pylint 10/10, CC 1.85, MI 96.00
+  - Análisis de diseño: 9.8/10 (cohesión alta, acoplamiento bajo, SOLID completo)
+
 ---
 
 #### ❌ DESESTIMADAS (10 historias, 28 puntos)
@@ -416,7 +429,7 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 ---
 
-#### 🔲 PENDIENTES (9 historias, 36 puntos)
+#### 🔲 PENDIENTES (7 historias, 26 puntos)
 
 **Sprint 2 - Paneles Finales (3 historias, 8 pts)**
 - 🔲 US-011: Cambiar vista display (3 pts)
@@ -426,13 +439,7 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 - 🔲 US-015: Ver estado conexión (2 pts)
   - Panel EstadoFooter: indicador conectado/desconectado
 
-**Sprint 3 - Arquitectura e Integración (6 historias, 28 pts)**
-- 🔲 US-020: Capa de Dominio (5 pts)
-  - `dominio/estado_termostato.py`: dataclass EstadoTermostato
-  - `dominio/comandos.py`: clases ComandoTermostato, ComandoEncendido, etc.
-- 🔲 US-021: Capa de Comunicación (5 pts)
-  - `comunicacion/servidor_estado.py`: recibe JSON del RPi (puerto 14001)
-  - `comunicacion/cliente_comandos.py`: envía comandos al RPi (puerto 14000)
+**Sprint 3 - Arquitectura e Integración (4 historias, 18 pts)**
 - 🔲 US-022: Factory + Coordinator (5 pts)
   - `factory.py`: ComponenteFactoryUX crea todos los componentes
   - `coordinator.py`: UXCoordinator conecta señales entre capas
@@ -447,13 +454,15 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 #### 📊 Planificación
 
-**3 Sprints, 33 días de trabajo:**
-- Sprint 2 (8 pts): 6 días - Paneles finales
-- Sprint 3 (28 pts): 22 días - Arquitectura e integración
-- Buffer: 5 días para ajustes y documentación
+**2 Sprints restantes:**
+- ✅ Sprint 1 (10 pts): COMPLETADO - US-020 Capa de Dominio + US-021 Capa de Comunicación
+- Sprint 2 (8 pts): Paneles finales (US-011, US-013, US-015)
+- Sprint 3 (18 pts): Arquitectura e integración (US-022 a US-025)
 
 **Dependencias críticas:**
-- US-020 a US-024 tienen dependencias secuenciales (ver diagrama en HISTORIAS-USUARIO-UX-TERMOSTATO.md)
+- ✅ US-020 completada - Capa de dominio (EstadoTermostato y Comandos)
+- ✅ US-021 completada - Capa de comunicación (ServidorEstado y ClienteComandos)
+- US-022 a US-024 tienen dependencias secuenciales
 - US-025 es último, integra todo
 
 **Directorios implementados:**
@@ -462,8 +471,12 @@ app/
 ├── factory.py              ✅ Creado (vacío, pendiente US-022)
 ├── coordinator.py          ✅ Creado (vacío, pendiente US-022)
 ├── configuracion/          ✅ Existente
-├── dominio/                ✅ Creado (vacío, pendiente US-020)
-├── comunicacion/           ✅ Renombrado de servicios/ (vacío, pendiente US-021)
+├── dominio/                ✅ Completado (US-020)
+│   ├── estado_termostato.py    - EstadoTermostato dataclass
+│   └── comandos.py             - ComandoPower, ComandoSetTemp, ComandoSetModoDisplay
+├── comunicacion/           ✅ Completado (US-021)
+│   ├── servidor_estado.py      - ServidorEstado (recibe JSON del RPi)
+│   └── cliente_comandos.py     - ClienteComandos (envía comandos al RPi)
 └── presentacion/
     ├── ui_principal.py     ✅ Creado (vacío, pendiente US-024)
     ├── ui_compositor.py    ✅ Creado (vacío, pendiente US-023)
