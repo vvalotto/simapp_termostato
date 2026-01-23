@@ -20,6 +20,9 @@ from app.presentacion.paneles.indicadores.controlador import IndicadoresControla
 from app.presentacion.paneles.power.modelo import PowerModelo
 from app.presentacion.paneles.power.vista import PowerVista
 from app.presentacion.paneles.power.controlador import PowerControlador
+from app.presentacion.paneles.control_temp.modelo import ControlTempModelo
+from app.presentacion.paneles.control_temp.vista import ControlTempVista
+from app.presentacion.paneles.control_temp.controlador import ControlTempControlador
 
 
 @pytest.fixture(scope="session")
@@ -449,4 +452,110 @@ def power_controlador_custom(qapp):
         if vista is None:
             vista = PowerVista()
         return PowerControlador(modelo, vista)
+    return _crear_controlador
+
+
+# ========== Fixtures para Panel Control Temp ==========
+
+@pytest.fixture
+def control_temp_modelo():
+    """
+    Fixture para crear un ControlTempModelo con valores por defecto.
+
+    Returns:
+        ControlTempModelo: Instancia con temperatura_deseada=22.0, habilitado=False
+    """
+    return ControlTempModelo(
+        temperatura_deseada=22.0,
+        habilitado=False
+    )
+
+
+@pytest.fixture
+def control_temp_modelo_custom():
+    """
+    Fixture factory para crear ControlTempModelo con valores personalizados.
+
+    Returns:
+        callable: Función que crea ControlTempModelo con parámetros custom
+    """
+    def _crear_modelo(**kwargs):
+        """
+        Crea ControlTempModelo con valores personalizados.
+
+        Args:
+            **kwargs: Parámetros para ControlTempModelo
+
+        Returns:
+            ControlTempModelo: Instancia con valores custom
+        """
+        defaults = {
+            "temperatura_deseada": 22.0,
+            "habilitado": False,
+            "temp_min": 15.0,
+            "temp_max": 35.0,
+            "incremento": 0.5,
+        }
+        defaults.update(kwargs)
+        return ControlTempModelo(**defaults)
+    return _crear_modelo
+
+
+@pytest.fixture
+def control_temp_vista(qapp):
+    """
+    Fixture para crear un ControlTempVista.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        ControlTempVista: Instancia de la vista del panel control temp
+    """
+    return ControlTempVista()
+
+
+@pytest.fixture
+def control_temp_controlador(qapp, control_temp_modelo, control_temp_vista):
+    """
+    Fixture para crear un ControlTempControlador completo.
+
+    Args:
+        qapp: Fixture de QApplication
+        control_temp_modelo: Fixture de ControlTempModelo
+        control_temp_vista: Fixture de ControlTempVista
+
+    Returns:
+        ControlTempControlador: Controlador completamente configurado
+    """
+    return ControlTempControlador(control_temp_modelo, control_temp_vista)
+
+
+@pytest.fixture
+def control_temp_controlador_custom(qapp):
+    """
+    Fixture factory para crear ControlTempControlador con configuración custom.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        callable: Función que crea ControlTempControlador con parámetros custom
+    """
+    def _crear_controlador(modelo=None, vista=None):
+        """
+        Crea ControlTempControlador con componentes personalizados.
+
+        Args:
+            modelo: ControlTempModelo opcional (crea uno por defecto si None)
+            vista: ControlTempVista opcional (crea una por defecto si None)
+
+        Returns:
+            ControlTempControlador: Controlador configurado
+        """
+        if modelo is None:
+            modelo = ControlTempModelo()
+        if vista is None:
+            vista = ControlTempVista()
+        return ControlTempControlador(modelo, vista)
     return _crear_controlador
