@@ -36,14 +36,6 @@ python simulador_temperatura/run.py
 python simulador_bateria/run.py
 python ux_termostato/run.py
 
-# Testing (ejecutar desde directorio raiz o del producto)
-cd simulador_bateria  # o simulador_temperatura
-pytest tests/ -v                                                   # Todos los tests
-pytest tests/test_generador_bateria.py -v                          # Un archivo
-pytest tests/test_generador_bateria.py::TestGeneradorBateria -v    # Una clase
-pytest tests/test_generador_bateria.py::TestGeneradorBateria::test_generar_valor -v  # Test especifico
-pytest tests/ --cov=app --cov-report=html                          # Coverage HTML en htmlcov/
-
 # Quality (ejecutar desde directorio del producto)
 pylint app/                                              # Linting
 python quality/scripts/calculate_metrics.py app          # Generar métricas CC/MI
@@ -100,16 +92,38 @@ Generador ──valor_generado──► ServicioEnvio ──TCP──► RPi
 - `coordinator.py` conecta señales PyQt entre componentes, evitando dependencias circulares
 - Permite lazy initialization del servicio de envío (se crea al conectar)
 
-### ux_termostato
+### ux_termostato - MVC + Factory/Coordinator
 
-Arquitectura más simple sin Factory/Coordinator:
+**Principio arquitectural:** UX Desktop es un **cliente sin estado** - no persiste configuración ni datos históricos.
+
+Siguiendo la arquitectura de referencia de los simuladores:
+
 ```
+run.py                      # AplicacionUX (lifecycle)
 app/
-├── configuracion/          # Config manager
-├── datos/                  # Modelos de datos
-├── general/                # Main window
-└── servicios/              # Servicios de red
+├── factory.py              # ComponenteFactoryUX - crea todos los componentes
+├── coordinator.py          # UXCoordinator - conecta signals PyQt
+├── configuracion/          # ConfigManager, ConfigUX, constantes
+├── dominio/                # EstadoTermostato, ComandoTermostato (lógica pura)
+├── comunicacion/           # ServidorEstado, ClienteComandos (TCP bidireccional)
+└── presentacion/
+    ├── ui_principal.py     # Ventana principal (lifecycle, menú)
+    ├── ui_compositor.py    # Composición del layout principal
+    └── paneles/            # Cada panel tiene: modelo.py, vista.py, controlador.py
+        ├── display/        # Display LCD temperatura
+        ├── climatizador/   # Indicadores calor/reposo/frío
+        ├── indicadores/    # LEDs alerta (sensor, batería)
+        ├── power/          # Botón encender/apagar
+        ├── control_temp/   # Botones subir/bajar temperatura
+        ├── selector_vista/ # (pendiente) Toggle ambiente/deseada
+        ├── conexion/       # (pendiente) Config IP/puerto
+        └── estado_footer/  # (pendiente) Info estado/conexión
 ```
+
+**Diferencia con simuladores:**
+- **Comunicación bidireccional**: Recibe estado (puerto 14001) y envía comandos (14000)
+- **Sin generador**: No simula datos, solo renderiza estado recibido del RPi
+- **Sin persistencia**: Estado es efímero, pertenece al RPi
 
 ### compartido/
 
@@ -347,42 +361,122 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 ### ux_termostato - En Desarrollo Activo
 
 **Arquitectura:** MVC + Factory/Coordinator (siguiendo ADR-003)
-**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md`
+**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.0 - Replanificado 2026-01-23)
+**Principio:** Cliente sin estado - No persiste datos, solo renderiza estado del RPi
 
-**Sprint 1 - MVP Básico (35 puntos)**
+**Total:** 16 historias, 61 puntos (7 completadas, 10 deestimadas, 9 pendientes)
 
-Semana 1 - Completado: 13/15 puntos
-- ✅ US-001: Ver temperatura ambiente (3 pts) - Panel Display con 100% coverage
-- ✅ US-002: Ver estado climatizador (5 pts) - Panel Climatizador con 100% coverage
-- ✅ US-003: Ver indicadores de alerta (2 pts) - Panel Indicadores con 99% coverage
-- ✅ US-007: Encender termostato (3 pts) - Panel Power con 100% coverage, Pylint 10.00/10
-- 🔲 US-008: Apagar termostato (2 pts) - Pendiente
+---
 
-Semana 2 - Completado: 6/16 puntos
-- ✅ US-004 + US-005: Control temperatura (6 pts) - Panel ControlTemp, 100% coverage, Pylint 10.00/10
-- 🔲 US-009: Alerta falla sensor (2 pts)
-- 🔲 US-009: Alerta falla sensor (2 pts)
-- 🔲 US-011: Cambiar vista (3 pts)
-- 🔲 US-013: Configurar IP (3 pts)
-- 🔲 US-015: Estado conexión (2 pts)
+#### ✅ COMPLETADAS (7 historias, 25 puntos)
 
-**Paneles implementados:**
-- `presentacion/paneles/display/` - Display LCD principal
-- `presentacion/paneles/climatizador/` - Indicadores calor/reposo/frío
-- `presentacion/paneles/indicadores/` - LEDs de alerta (sensor, batería)
-- `presentacion/paneles/power/` - Botón encender/apagar (100% coverage, Pylint 10/10)
-- `presentacion/paneles/control_temp/` - Botones subir/bajar temperatura (100% coverage, Pylint 10/10, CC 1.58, MI 75.43)
+**Paneles de Visualización:**
+- ✅ US-001: Ver temperatura ambiente (3 pts)
+  - Panel Display LCD, 100% coverage, Pylint 10/10
+- ✅ US-002: Ver estado climatizador (5 pts)
+  - Panel Climatizador (calor/frío/reposo), 100% coverage, Pylint 10/10
+- ✅ US-003: Ver indicadores de alerta (2 pts)
+  - Panel Indicadores LED (sensor/batería), 99% coverage, Pylint 9.66/10
 
-**Paneles pendientes:**
-- `selector_vista/` - Toggle ambiente/deseada
-- `estado_footer/` - Info de estado
-- `conexion/` - Config IP/puerto
+**Control de Temperatura:**
+- ✅ US-004: Aumentar temperatura (3 pts)
+  - Panel ControlTemp, botón subir, 100% coverage
+- ✅ US-005: Disminuir temperatura (3 pts)
+  - Panel ControlTemp, botón bajar, 100% coverage
+  - Métricas: Pylint 10/10, CC 1.58, MI 75.43
 
-**Capas pendientes:**
-- `app/dominio/` - EstadoTermostato, ComandoTermostato
-- `app/comunicacion/` - ServidorEstado, ClienteComandos
-- `app/factory.py` - ComponenteFactoryUX
-- `app/coordinator.py` - UXCoordinator
+**Control de Encendido:**
+- ✅ US-007: Encender termostato (3 pts)
+  - Panel Power, botón power, 100% coverage, Pylint 10/10
+
+**Refactorización:**
+- ✅ US-006: Refactorizar panel ControlTemp (6 pts)
+  - Fusión exitosa US-004 + US-005 en panel único
+
+---
+
+#### ❌ DESESTIMADAS (10 historias, 28 puntos)
+
+**Redundancia funcional (US-003 ya cubre):**
+- ❌ US-009: Alerta falla sensor (2 pts) - LEDs ya implementados
+- ❌ US-010: Alerta batería baja (2 pts) - LEDs ya implementados
+
+**Fuera de scope (desktop es cliente sin estado):**
+- ❌ US-018: Persistir configuración (3 pts) - Estado pertenece al RPi
+- ❌ US-019: Histórico temperatura (5 pts) - Datos históricos pertenecen al RPi
+
+**Funcionalidad básica ya cubierta:**
+- ❌ US-008: Apagar termostato (2 pts) - US-007 cubre toggle on/off
+- ❌ US-012: Ver temperatura deseada (2 pts) - US-001 ya muestra ambas
+
+**No críticas para MVP:**
+- ❌ US-014: Logs de eventos (5 pts)
+- ❌ US-016: Modo manual/auto (3 pts)
+- ❌ US-017: Programar horarios (5 pts)
+
+---
+
+#### 🔲 PENDIENTES (9 historias, 36 puntos)
+
+**Sprint 2 - Paneles Finales (3 historias, 8 pts)**
+- 🔲 US-011: Cambiar vista display (3 pts)
+  - Panel SelectorVista: toggle ambiente/deseada
+- 🔲 US-013: Configurar IP Raspberry (3 pts)
+  - Panel Conexión: IP/puerto del RPi
+- 🔲 US-015: Ver estado conexión (2 pts)
+  - Panel EstadoFooter: indicador conectado/desconectado
+
+**Sprint 3 - Arquitectura e Integración (6 historias, 28 pts)**
+- 🔲 US-020: Capa de Dominio (5 pts)
+  - `dominio/estado_termostato.py`: dataclass EstadoTermostato
+  - `dominio/comandos.py`: clases ComandoTermostato, ComandoEncendido, etc.
+- 🔲 US-021: Capa de Comunicación (5 pts)
+  - `comunicacion/servidor_estado.py`: recibe JSON del RPi (puerto 14001)
+  - `comunicacion/cliente_comandos.py`: envía comandos al RPi (puerto 14000)
+- 🔲 US-022: Factory + Coordinator (5 pts)
+  - `factory.py`: ComponenteFactoryUX crea todos los componentes
+  - `coordinator.py`: UXCoordinator conecta señales entre capas
+- 🔲 US-023: Compositor UI (3 pts)
+  - `presentacion/ui_compositor.py`: ensambla layout de paneles
+- 🔲 US-024: Ventana Principal (5 pts)
+  - `presentacion/ui_principal.py`: main window, menú, lifecycle
+- 🔲 US-025: Entry Point (5 pts)
+  - `run.py`: configuración, factory, coordinator, ventana principal
+
+---
+
+#### 📊 Planificación
+
+**3 Sprints, 33 días de trabajo:**
+- Sprint 2 (8 pts): 6 días - Paneles finales
+- Sprint 3 (28 pts): 22 días - Arquitectura e integración
+- Buffer: 5 días para ajustes y documentación
+
+**Dependencias críticas:**
+- US-020 a US-024 tienen dependencias secuenciales (ver diagrama en HISTORIAS-USUARIO-UX-TERMOSTATO.md)
+- US-025 es último, integra todo
+
+**Directorios implementados:**
+```
+app/
+├── factory.py              ✅ Creado (vacío, pendiente US-022)
+├── coordinator.py          ✅ Creado (vacío, pendiente US-022)
+├── configuracion/          ✅ Existente
+├── dominio/                ✅ Creado (vacío, pendiente US-020)
+├── comunicacion/           ✅ Renombrado de servicios/ (vacío, pendiente US-021)
+└── presentacion/
+    ├── ui_principal.py     ✅ Creado (vacío, pendiente US-024)
+    ├── ui_compositor.py    ✅ Creado (vacío, pendiente US-023)
+    └── paneles/
+        ├── display/        ✅ Completado (US-001)
+        ├── climatizador/   ✅ Completado (US-002)
+        ├── indicadores/    ✅ Completado (US-003)
+        ├── power/          ✅ Completado (US-007)
+        ├── control_temp/   ✅ Completado (US-004, US-005, US-006)
+        ├── selector_vista/ 🔲 Pendiente (US-011)
+        ├── conexion/       🔲 Pendiente (US-013)
+        └── estado_footer/  🔲 Pendiente (US-015)
+```
 
 ### simulador_temperatura - Completo ✅
 Coverage: ~95%+, Quality gates: ✅
