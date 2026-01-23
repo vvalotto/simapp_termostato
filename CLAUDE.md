@@ -356,11 +356,11 @@ Semana 1 - Completado: 13/15 puntos
 - ✅ US-002: Ver estado climatizador (5 pts) - Panel Climatizador con 100% coverage
 - ✅ US-003: Ver indicadores de alerta (2 pts) - Panel Indicadores con 99% coverage
 - ✅ US-007: Encender termostato (3 pts) - Panel Power con 100% coverage, Pylint 10.00/10
-- ⏭️ **PRÓXIMO: US-008: Apagar termostato (2 pts)**
+- 🔲 US-008: Apagar termostato (2 pts) - Pendiente
 
-Semana 2 - Pendiente: 0/16 puntos
-- 🔲 US-004: Aumentar temperatura (3 pts)
-- 🔲 US-005: Disminuir temperatura (3 pts)
+Semana 2 - Completado: 6/16 puntos
+- ✅ US-004 + US-005: Control temperatura (6 pts) - Panel ControlTemp, 100% coverage, Pylint 10.00/10
+- 🔲 US-009: Alerta falla sensor (2 pts)
 - 🔲 US-009: Alerta falla sensor (2 pts)
 - 🔲 US-011: Cambiar vista (3 pts)
 - 🔲 US-013: Configurar IP (3 pts)
@@ -371,9 +371,9 @@ Semana 2 - Pendiente: 0/16 puntos
 - `presentacion/paneles/climatizador/` - Indicadores calor/reposo/frío
 - `presentacion/paneles/indicadores/` - LEDs de alerta (sensor, batería)
 - `presentacion/paneles/power/` - Botón encender/apagar (100% coverage, Pylint 10/10)
+- `presentacion/paneles/control_temp/` - Botones subir/bajar temperatura (100% coverage, Pylint 10/10, CC 1.58, MI 75.43)
 
 **Paneles pendientes:**
-- `control_temp/` - Botones subir/bajar temperatura
 - `selector_vista/` - Toggle ambiente/deseada
 - `estado_footer/` - Info de estado
 - `conexion/` - Config IP/puerto
