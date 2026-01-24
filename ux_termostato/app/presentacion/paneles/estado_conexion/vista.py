@@ -3,7 +3,8 @@
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel
 from PyQt6.QtCore import QTimer
 
-from compartido.widgets.led_indicator import LedIndicator
+from compartido.widgets.led_indicator import LEDIndicator
+from compartido.widgets.led_color_provider import LEDColor
 from .modelo import EstadoConexionModelo
 
 
@@ -31,7 +32,7 @@ class EstadoConexionVista(QWidget):
         self._label.setStyleSheet("color: #cccccc; font-weight: bold; font-size: 13px;")
 
         # LED indicator
-        self._led = LedIndicator()
+        self._led = LEDIndicator()
         self._led.setFixedSize(16, 16)
 
         # Label texto estado
@@ -53,19 +54,19 @@ class EstadoConexionVista(QWidget):
         self._detener_pulso()
 
         if modelo.estado == "conectado":
-            self._led.set_color("green")
-            self._led.set_active(True)
+            self._led.set_color(LEDColor.GREEN)
+            self._led.set_state(True)
             self._label_estado.setText("Conectado")
             self._label_estado.setStyleSheet("color: #28a745; font-weight: bold; font-size: 13px;")
 
         elif modelo.estado == "desconectado":
-            self._led.set_color("red")
-            self._led.set_active(False)
+            self._led.set_color(LEDColor.RED)
+            self._led.set_state(False)
             self._label_estado.setText("Desconectado")
             self._label_estado.setStyleSheet("color: #dc3545; font-size: 13px;")
 
         elif modelo.estado == "conectando":
-            self._led.set_color("yellow")
+            self._led.set_color(LEDColor.YELLOW)
             self._label_estado.setText("Conectando...")
             self._label_estado.setStyleSheet("color: #ffc107; font-size: 13px;")
             # Iniciar animación pulsante
@@ -88,4 +89,4 @@ class EstadoConexionVista(QWidget):
     def _toggle_pulso(self):
         """Toggle del LED para efecto de animación."""
         if self._pulso_activo:
-            self._led.set_active(not self._led.is_active)
+            self._led.set_state(not self._led.state)
