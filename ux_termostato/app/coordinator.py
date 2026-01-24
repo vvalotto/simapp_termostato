@@ -11,7 +11,7 @@ from typing import Optional
 from PyQt6.QtCore import QObject
 
 from .comunicacion import ServidorEstado, ClienteComandos
-from .dominio import EstadoTermostato, ComandoPower, ComandoSetTemp
+from .dominio import EstadoTermostato, ComandoPower, ComandoSetTemp, ComandoSetModoDisplay
 
 logger = logging.getLogger(__name__)
 
@@ -63,6 +63,15 @@ class UXCoordinator(QObject):
         self._conectar_servidor_estado()
         self._conectar_power()
         self._conectar_control_temp()
+
+        # Paneles del Sprint 2
+        if "selector_vista" in self._paneles:
+            self._conectar_selector_vista()
+        if "estado_conexion" in self._paneles:
+            self._conectar_estado_conexion()
+        if "conexion" in self._paneles:
+            self._conectar_conexion()
+
         logger.info("Señales conectadas correctamente")
 
     # -- Conexión de Señales por Componente --
@@ -100,6 +109,41 @@ class UXCoordinator(QObject):
         ctrl_control_temp.temperatura_cambiada.connect(self._on_temperatura_cambiada)
 
         logger.debug("Señales de ControlTempControlador conectadas")
+
+    def _conectar_selector_vista(self) -> None:
+        """Conecta señales del panel SelectorVista."""
+        ctrl_selector = self._paneles["selector_vista"][2]
+        ctrl_power = self._paneles["power"][2]
+
+        # SelectorVista → Cliente (enviar comando de cambio de modo)
+        ctrl_selector.modo_cambiado.connect(self._on_modo_vista_cambiado)
+
+        # Power → SelectorVista (habilitar/deshabilitar)
+        ctrl_power.power_cambiado.connect(ctrl_selector.setEnabled)
+
+        logger.debug("Señales de SelectorVistaControlador conectadas")
+
+    def _conectar_estado_conexion(self) -> None:
+        """Conecta señales del panel EstadoConexion."""
+        ctrl_estado = self._paneles["estado_conexion"][2]
+
+        # Servidor → EstadoConexion (actualizar estado)
+        self._servidor.conexion_establecida.connect(ctrl_estado.conexion_establecida)
+        self._servidor.conexion_perdida.connect(ctrl_estado.conexion_perdida)
+
+        # Estado inicial: conectando
+        ctrl_estado.conectando()
+
+        logger.debug("Señales de EstadoConexionControlador conectadas")
+
+    def _conectar_conexion(self) -> None:
+        """Conecta señales del panel Conexion."""
+        ctrl_conexion = self._paneles["conexion"][2]
+
+        # Conexion → Reconectar servicios
+        ctrl_conexion.ip_cambiada.connect(self._on_ip_cambiada)
+
+        logger.debug("Señales de ConexionControlador conectadas")
 
     # -- Callbacks --
 
@@ -181,7 +225,7 @@ class UXCoordinator(QObject):
             direccion: Dirección IP:puerto del cliente conectado
         """
         logger.info("Conexión establecida con %s", direccion)
-        # [futuro US-015] Actualizar widget de estado de conexión
+        # Nota: US-015 conecta automáticamente este callback en _conectar_estado_conexion()
 
     def _on_conexion_perdida(self, direccion: str) -> None:
         """
@@ -191,7 +235,7 @@ class UXCoordinator(QObject):
             direccion: Dirección IP:puerto del cliente desconectado
         """
         logger.warning("Conexión perdida con %s", direccion)
-        # [futuro US-015] Actualizar widget de estado de conexión
+        # Nota: US-015 conecta automáticamente este callback en _conectar_estado_conexion()
 
     def _on_error_parsing(self, mensaje: str) -> None:
         """
@@ -201,3 +245,42 @@ class UXCoordinator(QObject):
             mensaje: Descripción del error
         """
         logger.error("Error de parsing JSON: %s", mensaje)
+
+    def _on_modo_vista_cambiado(self, modo: str) -> None:
+        """
+        Envía comando de cambio de modo de vista al RPi.
+
+        Args:
+            modo: Modo de vista ("ambiente" o "deseada")
+        """
+        # Crear comando del dominio
+        cmd = ComandoSetModoDisplay(modo=modo)
+
+        # Enviar al RPi
+        exito = self._cliente.enviar_comando(cmd)
+
+        if exito:
+            logger.info("Comando set_modo_display=%s enviado correctamente", modo)
+        else:
+            logger.error("Error al enviar comando set_modo_display=%s", modo)
+
+    def _on_ip_cambiada(self, nueva_ip: str) -> None:
+        """
+        Maneja cambio de IP del Raspberry Pi.
+
+        Args:
+            nueva_ip: Nueva dirección IP configurada
+
+        Note:
+            La persistencia de la IP en config.json se debe manejar
+            en un ConfigManager separado (US-013). Por ahora solo
+            registramos el cambio.
+        """
+        logger.info("IP del Raspberry Pi actualizada a: %s", nueva_ip)
+        logger.warning(
+            "Persistencia de IP no implementada aún. "
+            "Requiere ConfigManager con método guardar_config()"
+        )
+        # TODO US-013: Implementar persistencia y reconexión
+        # 1. Persistir en config.json via ConfigManager
+        # 2. Reconectar ClienteComandos con nueva IP

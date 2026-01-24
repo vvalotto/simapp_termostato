@@ -27,6 +27,21 @@ from .presentacion.paneles.control_temp import (
     ControlTempVista,
     ControlTempControlador,
 )
+from .presentacion.paneles.selector_vista import (
+    SelectorVistaModelo,
+    SelectorVistaVista,
+    SelectorVistaControlador,
+)
+from .presentacion.paneles.estado_conexion import (
+    EstadoConexionModelo,
+    EstadoConexionVista,
+    EstadoConexionControlador,
+)
+from .presentacion.paneles.conexion import (
+    ConexionModelo,
+    ConexionVista,
+    ConexionControlador,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -215,6 +230,75 @@ class ComponenteFactoryUX:
         logger.debug("Panel ControlTemp creado correctamente")
         return (modelo, vista, controlador)
 
+    def crear_panel_selector_vista(
+        self,
+    ) -> tuple[SelectorVistaModelo, SelectorVistaVista, SelectorVistaControlador]:
+        """
+        Crea el panel Selector de Vista completo (MVC).
+
+        Returns:
+            Tupla (modelo, vista, controlador) del panel SelectorVista
+        """
+        # 1. Crear modelo con modo inicial "ambiente"
+        modelo = SelectorVistaModelo(modo="ambiente", habilitado=True)
+
+        # 2. Crear vista
+        vista = SelectorVistaVista()
+
+        # 3. Crear controlador conectando modelo y vista
+        controlador = SelectorVistaControlador(modelo, vista)
+
+        logger.debug("Panel SelectorVista creado correctamente")
+        return (modelo, vista, controlador)
+
+    def crear_panel_estado_conexion(
+        self,
+    ) -> tuple[EstadoConexionModelo, EstadoConexionVista, EstadoConexionControlador]:
+        """
+        Crea el panel de Estado de Conexión completo (MVC).
+
+        Returns:
+            Tupla (modelo, vista, controlador) del panel EstadoConexion
+        """
+        # 1. Crear modelo con estado inicial "desconectado"
+        modelo = EstadoConexionModelo(estado="desconectado", direccion_ip="")
+
+        # 2. Crear vista
+        vista = EstadoConexionVista()
+
+        # 3. Crear controlador conectando modelo y vista
+        controlador = EstadoConexionControlador(modelo, vista)
+
+        logger.debug("Panel EstadoConexion creado correctamente")
+        return (modelo, vista, controlador)
+
+    def crear_panel_conexion(
+        self,
+    ) -> tuple[ConexionModelo, ConexionVista, ConexionControlador]:
+        """
+        Crea el panel de Configuración de Conexión completo (MVC).
+
+        Returns:
+            Tupla (modelo, vista, controlador) del panel Conexion
+        """
+        # 1. Crear modelo con configuración actual
+        modelo = ConexionModelo(
+            ip=self._config.ip_raspberry,
+            puerto_recv=self._config.puerto_recv,
+            puerto_send=self._config.puerto_send,
+            ip_valida=True,
+            mensaje_error="",
+        )
+
+        # 2. Crear vista
+        vista = ConexionVista()
+
+        # 3. Crear controlador conectando modelo y vista
+        controlador = ConexionControlador(modelo, vista)
+
+        logger.debug("Panel Conexion creado correctamente")
+        return (modelo, vista, controlador)
+
     # -- Método Auxiliar --
 
     def crear_todos_paneles(self) -> dict[str, tuple]:
@@ -228,6 +312,9 @@ class ComponenteFactoryUX:
             - 'indicadores': tuple (...)
             - 'power': tuple (...)
             - 'control_temp': tuple (...)
+            - 'selector_vista': tuple (...)
+            - 'estado_conexion': tuple (...)
+            - 'conexion': tuple (...)
         """
         paneles = {
             "display": self.crear_panel_display(),
@@ -235,6 +322,9 @@ class ComponenteFactoryUX:
             "indicadores": self.crear_panel_indicadores(),
             "power": self.crear_panel_power(),
             "control_temp": self.crear_panel_control_temp(),
+            "selector_vista": self.crear_panel_selector_vista(),
+            "estado_conexion": self.crear_panel_estado_conexion(),
+            "conexion": self.crear_panel_conexion(),
         }
         logger.info("Todos los paneles creados correctamente (%d paneles)", len(paneles))
         return paneles
