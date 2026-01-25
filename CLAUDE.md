@@ -361,14 +361,14 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 ### ux_termostato - En Desarrollo Activo
 
 **Arquitectura:** MVC + Factory/Coordinator (siguiendo ADR-003)
-**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.2 - Actualizado 2026-01-23)
+**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.4 - Actualizado 2026-01-25)
 **Principio:** Cliente sin estado - No persiste datos, solo renderiza estado del RPi
 
-**Total:** 16 historias, 61 puntos (10 completadas, 10 deestimadas, 6 pendientes)
+**Total:** 16 historias, 61 puntos (13 completadas, 10 deestimadas, 3 pendientes - 79% completo)
 
 ---
 
-#### ✅ COMPLETADAS (10 historias, 40 puntos)
+#### ✅ COMPLETADAS (13 historias, 48 puntos)
 
 **Paneles de Visualización:**
 - ✅ US-001: Ver temperatura ambiente (3 pts)
@@ -414,6 +414,24 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
   - 49 tests, 99% coverage, Pylint 10.00/10, CC 1.56, MI 86.09
   - Patrones: Factory (creación consistente) + Coordinator (orquestación de señales)
 
+**Sprint 2 - Paneles Finales:**
+- ✅ US-011: Cambiar vista display (3 pts)
+  - Panel SelectorVista: toggle ambiente/deseada
+  - 100% coverage, Pylint 9.76/10, CC 1.47, MI 91.38
+  - Diseño: Cohesión 9.5/10, Acoplamiento 8.0/10
+
+- ✅ US-013: Configurar IP Raspberry (3 pts)
+  - Panel Conexión: configuración IP/puerto del RPi
+  - Validación de IP en tiempo real
+  - 100% coverage, Pylint 9.67/10, CC 1.72, MI 94.84
+  - Diseño: Cohesión 10.0/10, Acoplamiento 9.0/10
+
+- ✅ US-015: Ver estado conexión (2 pts)
+  - Panel EstadoConexion: indicador LED conectado/desconectado con animación
+  - 100% coverage, Pylint 9.89/10, CC 1.75, MI 90.32
+  - Diseño: Cohesión 9.0/10, Acoplamiento 8.5/10
+  - Calidad de diseño promedio Sprint 2: 9.1/10 (EXCELENTE)
+
 ---
 
 #### ❌ DESESTIMADAS (10 historias, 28 puntos)
@@ -437,17 +455,9 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 ---
 
-#### 🔲 PENDIENTES (6 historias, 21 puntos)
+#### 🔲 PENDIENTES (3 historias, 13 puntos)
 
-**Sprint 2 - Paneles Finales (3 historias, 8 pts)**
-- 🔲 US-011: Cambiar vista display (3 pts)
-  - Panel SelectorVista: toggle ambiente/deseada
-- 🔲 US-013: Configurar IP Raspberry (3 pts)
-  - Panel Conexión: IP/puerto del RPi
-- 🔲 US-015: Ver estado conexión (2 pts)
-  - Panel EstadoFooter: indicador conectado/desconectado
-
-**Sprint 3 - Arquitectura e Integración (3 historias, 13 pts)**
+**Sprint 3 - Integración Final (3 historias, 13 pts)**
 - 🔲 US-023: Compositor UI (3 pts)
   - `presentacion/ui_compositor.py`: ensambla layout de paneles
 - 🔲 US-024: Ventana Principal (5 pts)
@@ -461,15 +471,16 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 **Sprints:**
 - ✅ Sprint 1 (15 pts): COMPLETADO - US-020 Dominio + US-021 Comunicación + US-022 Factory/Coordinator
-- Sprint 2 (8 pts): Paneles finales (US-011, US-013, US-015)
-- Sprint 3 (13 pts): Integración final (US-023 Compositor + US-024 Ventana + US-025 Entry Point)
+- ✅ Sprint 2 (8 pts): COMPLETADO - US-011 SelectorVista + US-013 Conexion + US-015 EstadoConexion
+- 🔲 Sprint 3 (13 pts): PENDIENTE - Integración final (US-023 Compositor + US-024 Ventana + US-025 Entry Point)
 
 **Dependencias críticas:**
 - ✅ US-020 completada - Capa de dominio (EstadoTermostato y Comandos)
 - ✅ US-021 completada - Capa de comunicación (ServidorEstado y ClienteComandos)
 - ✅ US-022 completada - Factory y Coordinator (creación y orquestación)
-- US-023 a US-024 tienen dependencias secuenciales
-- US-025 es último, integra todo
+- ✅ US-011, US-013, US-015 completadas - Todos los paneles MVC finalizados
+- 🔲 US-023 a US-025 pendientes - Tienen dependencias secuenciales
+- 🔲 US-025 es último - Integra todo el sistema
 
 **Directorios implementados:**
 ```
@@ -493,9 +504,9 @@ app/
         ├── indicadores/    ✅ Completado (US-003)
         ├── power/          ✅ Completado (US-007)
         ├── control_temp/   ✅ Completado (US-004, US-005, US-006)
-        ├── selector_vista/ 🔲 Pendiente (US-011)
-        ├── conexion/       🔲 Pendiente (US-013)
-        └── estado_footer/  🔲 Pendiente (US-015)
+        ├── selector_vista/ ✅ Completado (US-011) - Sprint 2
+        ├── conexion/       ✅ Completado (US-013) - Sprint 2
+        └── estado_conexion/✅ Completado (US-015) - Sprint 2
 ```
 
 ### simulador_temperatura - Completo ✅
