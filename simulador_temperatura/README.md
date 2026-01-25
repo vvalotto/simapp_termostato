@@ -167,7 +167,7 @@ RASPBERRY_PORT=12000
 ## Documentación
 
 - [Arquitectura Detallada](docs/arquitectura.md)
-- [Informe de Calidad de Diseño](quality/reports/informe_calidad_diseno.md)
+- [Informe de Calidad de Diseño](docs/informe_calidad_diseno.md)
 
 ## Contribución
 

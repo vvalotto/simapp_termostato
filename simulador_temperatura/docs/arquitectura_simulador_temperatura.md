@@ -649,4 +649,4 @@ simulador_temperatura/
 
 - [ESPECIFICACION_COMUNICACIONES.md](../../docs/ESPECIFICACION_COMUNICACIONES.md)
 - [ADR-001: Separación Socket Clients](../../docs/ADR-001-separacion-socket-clients.md)
-- [Informe de Calidad de Diseño](../quality/reports/informe_calidad_diseno.md)
+- [Informe de Calidad de Diseño](informe_calidad_diseno.md)
