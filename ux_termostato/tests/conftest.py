@@ -29,6 +29,9 @@ from app.presentacion.paneles.conexion.controlador import ConexionControlador
 from app.presentacion.paneles.estado_conexion.modelo import EstadoConexionModelo
 from app.presentacion.paneles.estado_conexion.vista import EstadoConexionVista
 from app.presentacion.paneles.estado_conexion.controlador import EstadoConexionControlador
+from app.presentacion.paneles.selector_vista.modelo import SelectorVistaModelo
+from app.presentacion.paneles.selector_vista.vista import SelectorVistaVista
+from app.presentacion.paneles.selector_vista.controlador import SelectorVistaControlador
 
 
 @pytest.fixture(scope="session")
@@ -565,3 +568,172 @@ def control_temp_controlador_custom(qapp):
             vista = ControlTempVista()
         return ControlTempControlador(modelo, vista)
     return _crear_controlador
+
+
+# ========== Fixtures para Panel SelectorVista ==========
+
+@pytest.fixture
+def selector_vista_modelo():
+    """
+    Fixture para crear un SelectorVistaModelo con valores por defecto.
+
+    Returns:
+        SelectorVistaModelo: Instancia con modo="ambiente", habilitado=True
+    """
+    return SelectorVistaModelo(modo="ambiente", habilitado=True)
+
+
+@pytest.fixture
+def selector_vista_vista(qapp):
+    """
+    Fixture para crear un SelectorVistaVista.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        SelectorVistaVista: Instancia de la vista del selector
+    """
+    return SelectorVistaVista()
+
+
+@pytest.fixture
+def selector_vista_controlador(qapp, selector_vista_modelo, selector_vista_vista):
+    """
+    Fixture para crear un SelectorVistaControlador completo.
+
+    Args:
+        qapp: Fixture de QApplication
+        selector_vista_modelo: Fixture de SelectorVistaModelo
+        selector_vista_vista: Fixture de SelectorVistaVista
+
+    Returns:
+        SelectorVistaControlador: Controlador completamente configurado
+    """
+    return SelectorVistaControlador(selector_vista_modelo, selector_vista_vista)
+
+
+# ========== Fixtures para UICompositor ==========
+
+@pytest.fixture
+def todos_paneles(
+    qapp,
+    display_modelo, display_vista, display_controlador,
+    climatizador_modelo, climatizador_vista, climatizador_controlador,
+    indicadores_modelo, indicadores_vista, indicadores_controlador,
+    power_modelo, power_vista, power_controlador,
+    control_temp_modelo, control_temp_vista, control_temp_controlador,
+    selector_vista_modelo, selector_vista_vista, selector_vista_controlador,
+    estado_conexion_modelo, estado_conexion_vista, estado_conexion_controlador,
+    conexion_modelo, conexion_vista, conexion_controlador
+):
+    """
+    Fixture que crea un diccionario completo con todos los paneles MVC.
+
+    Este es el formato esperado por UICompositor.
+
+    Returns:
+        dict: Diccionario con todos los paneles en formato (modelo, vista, controlador)
+    """
+    return {
+        "display": (display_modelo, display_vista, display_controlador),
+        "climatizador": (climatizador_modelo, climatizador_vista, climatizador_controlador),
+        "indicadores": (indicadores_modelo, indicadores_vista, indicadores_controlador),
+        "power": (power_modelo, power_vista, power_controlador),
+        "control_temp": (control_temp_modelo, control_temp_vista, control_temp_controlador),
+        "selector_vista": (selector_vista_modelo, selector_vista_vista, selector_vista_controlador),
+        "estado_conexion": (estado_conexion_modelo, estado_conexion_vista, estado_conexion_controlador),
+        "conexion": (conexion_modelo, conexion_vista, conexion_controlador),
+    }
+
+
+# ========== Fixtures para Panel EstadoConexion ==========
+
+@pytest.fixture
+def estado_conexion_modelo():
+    """
+    Fixture para crear un EstadoConexionModelo con valores por defecto.
+
+    Returns:
+        EstadoConexionModelo: Instancia con estado="desconectado"
+    """
+    return EstadoConexionModelo(estado="desconectado", direccion_ip="")
+
+
+@pytest.fixture
+def estado_conexion_vista(qapp):
+    """
+    Fixture para crear un EstadoConexionVista.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        EstadoConexionVista: Instancia de la vista del estado de conexión
+    """
+    return EstadoConexionVista()
+
+
+@pytest.fixture
+def estado_conexion_controlador(qapp, estado_conexion_modelo, estado_conexion_vista):
+    """
+    Fixture para crear un EstadoConexionControlador completo.
+
+    Args:
+        qapp: Fixture de QApplication
+        estado_conexion_modelo: Fixture de EstadoConexionModelo
+        estado_conexion_vista: Fixture de EstadoConexionVista
+
+    Returns:
+        EstadoConexionControlador: Controlador completamente configurado
+    """
+    return EstadoConexionControlador(estado_conexion_modelo, estado_conexion_vista)
+
+
+# ========== Fixtures para Panel Conexion ==========
+
+@pytest.fixture
+def conexion_modelo():
+    """
+    Fixture para crear un ConexionModelo con valores por defecto.
+
+    Returns:
+        ConexionModelo: Instancia con IP por defecto
+    """
+    return ConexionModelo(
+        ip="192.168.1.50",
+        puerto_recv=14001,
+        puerto_send=14000,
+        ip_valida=True,
+        mensaje_error="",
+    )
+
+
+@pytest.fixture
+def conexion_vista(qapp):
+    """
+    Fixture para crear un ConexionVista.
+
+    Args:
+        qapp: Fixture de QApplication
+
+    Returns:
+        ConexionVista: Instancia de la vista de conexión
+    """
+    return ConexionVista()
+
+
+@pytest.fixture
+def conexion_controlador(qapp, conexion_modelo, conexion_vista):
+    """
+    Fixture para crear un ConexionControlador completo.
+
+    Args:
+        qapp: Fixture de QApplication
+        conexion_modelo: Fixture de ConexionModelo
+        conexion_vista: Fixture de ConexionVista
+
+    Returns:
+        ConexionControlador: Controlador completamente configurado
+    """
+    return ConexionControlador(conexion_modelo, conexion_vista)
