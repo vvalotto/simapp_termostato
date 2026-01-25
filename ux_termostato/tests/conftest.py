@@ -737,3 +737,41 @@ def conexion_controlador(qapp, conexion_modelo, conexion_vista):
         ConexionControlador: Controlador completamente configurado
     """
     return ConexionControlador(conexion_modelo, conexion_vista)
+
+
+# ========== Fixtures para Factory y Ventana Principal ==========
+
+@pytest.fixture
+def config_ux():
+    """
+    Fixture para crear ConfigUX con valores de prueba.
+
+    Returns:
+        ConfigUX: Configuración para tests
+    """
+    from app.configuracion import ConfigUX
+    return ConfigUX(
+        ip_raspberry="127.0.0.1",
+        puerto_recv=14001,
+        puerto_send=14000,
+        intervalo_recepcion_ms=1000,
+        intervalo_actualizacion_ui_ms=100,
+        temperatura_min_setpoint=15.0,
+        temperatura_max_setpoint=35.0,
+        temperatura_setpoint_inicial=22.0,
+    )
+
+
+@pytest.fixture
+def factory_ux(config_ux):
+    """
+    Fixture para crear ComponenteFactoryUX con configuración de prueba.
+
+    Args:
+        config_ux: Fixture de ConfigUX
+
+    Returns:
+        ComponenteFactoryUX: Factory configurada para tests
+    """
+    from app.factory import ComponenteFactoryUX
+    return ComponenteFactoryUX(config_ux)
