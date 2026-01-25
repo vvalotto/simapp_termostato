@@ -1525,7 +1525,7 @@ ENV/
 *.qrc.bak
 
 # IDE
-.idea/
+../.idea/
 .vscode/
 *.swp
 *.swo
