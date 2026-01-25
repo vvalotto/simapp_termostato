@@ -26,6 +26,21 @@ from app.presentacion.paneles.control_temp import (
     ControlTempVista,
     ControlTempControlador,
 )
+from app.presentacion.paneles.selector_vista import (
+    SelectorVistaModelo,
+    SelectorVistaVista,
+    SelectorVistaControlador,
+)
+from app.presentacion.paneles.estado_conexion import (
+    EstadoConexionModelo,
+    EstadoConexionVista,
+    EstadoConexionControlador,
+)
+from app.presentacion.paneles.conexion import (
+    ConexionModelo,
+    ConexionVista,
+    ConexionControlador,
+)
 
 
 @pytest.fixture
@@ -152,7 +167,7 @@ class TestCrearTodosPaneles:
         paneles = factory.crear_todos_paneles()
 
         assert isinstance(paneles, dict)
-        assert len(paneles) == 5
+        assert len(paneles) == 8
 
     def test_crear_todos_paneles_tiene_claves_correctas(self, factory, qapp):
         """Debe tener claves de todos los paneles."""
@@ -163,6 +178,9 @@ class TestCrearTodosPaneles:
         assert "indicadores" in paneles
         assert "power" in paneles
         assert "control_temp" in paneles
+        assert "selector_vista" in paneles
+        assert "estado_conexion" in paneles
+        assert "conexion" in paneles
 
     def test_crear_todos_paneles_valores_son_tuplas(self, factory, qapp):
         """Cada valor debe ser tupla (modelo, vista, controlador)."""
@@ -205,6 +223,24 @@ class TestCrearTodosPaneles:
         assert isinstance(modelo, ControlTempModelo)
         assert isinstance(vista, ControlTempVista)
         assert isinstance(ctrl, ControlTempControlador)
+
+        # SelectorVista
+        modelo, vista, ctrl = paneles["selector_vista"]
+        assert isinstance(modelo, SelectorVistaModelo)
+        assert isinstance(vista, SelectorVistaVista)
+        assert isinstance(ctrl, SelectorVistaControlador)
+
+        # EstadoConexion
+        modelo, vista, ctrl = paneles["estado_conexion"]
+        assert isinstance(modelo, EstadoConexionModelo)
+        assert isinstance(vista, EstadoConexionVista)
+        assert isinstance(ctrl, EstadoConexionControlador)
+
+        # Conexion
+        modelo, vista, ctrl = paneles["conexion"]
+        assert isinstance(modelo, ConexionModelo)
+        assert isinstance(vista, ConexionVista)
+        assert isinstance(ctrl, ConexionControlador)
 
 
 class TestConfigEnPaneles:

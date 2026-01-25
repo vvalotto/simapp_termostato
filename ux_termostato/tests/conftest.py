@@ -23,6 +23,12 @@ from app.presentacion.paneles.power.controlador import PowerControlador
 from app.presentacion.paneles.control_temp.modelo import ControlTempModelo
 from app.presentacion.paneles.control_temp.vista import ControlTempVista
 from app.presentacion.paneles.control_temp.controlador import ControlTempControlador
+from app.presentacion.paneles.conexion.modelo import ConexionModelo
+from app.presentacion.paneles.conexion.vista import ConexionVista
+from app.presentacion.paneles.conexion.controlador import ConexionControlador
+from app.presentacion.paneles.estado_conexion.modelo import EstadoConexionModelo
+from app.presentacion.paneles.estado_conexion.vista import EstadoConexionVista
+from app.presentacion.paneles.estado_conexion.controlador import EstadoConexionControlador
 
 
 @pytest.fixture(scope="session")
