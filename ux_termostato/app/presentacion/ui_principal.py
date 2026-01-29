@@ -14,8 +14,8 @@ from typing import TYPE_CHECKING
 # Agregar path para imports de compartido (debe estar antes de otros imports)
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
-from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox
-from PyQt6.QtCore import QEvent
+from PyQt6.QtWidgets import QMainWindow, QApplication, QMessageBox, QScrollArea
+from PyQt6.QtCore import QEvent, Qt
 
 from compartido.estilos import load_dark_theme
 
@@ -193,7 +193,7 @@ class VentanaPrincipalUX(QMainWindow):
         """Ensambla la interfaz de usuario completa.
 
         Usa UICompositor para ensamblar todos los paneles en un layout
-        coherente y establece el widget central de la ventana.
+        coherente y establece el widget central de la ventana con scroll.
 
         Raises:
             RuntimeError: Si falla el ensamblado de la UI
@@ -207,10 +207,42 @@ class VentanaPrincipalUX(QMainWindow):
             # Crear layout completo
             widget_central = self._compositor.crear_layout()
 
-            # Establecer como widget central
-            self.setCentralWidget(widget_central)
+            # Envolver en QScrollArea para que todos los paneles sean accesibles
+            scroll_area = QScrollArea()
+            scroll_area.setWidget(widget_central)
+            scroll_area.setWidgetResizable(True)  # El widget se ajusta al ancho del scroll
+            scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+            scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+            scroll_area.setFrameShape(QScrollArea.Shape.NoFrame)
 
-            logger.info("Interfaz de usuario ensamblada exitosamente")
+            # Aplicar estilo para que el scroll sea visible
+            scroll_area.setStyleSheet("""
+                QScrollArea {
+                    background: transparent;
+                    border: none;
+                }
+                QScrollBar:vertical {
+                    background: #1e293b;
+                    width: 12px;
+                    border-radius: 6px;
+                }
+                QScrollBar::handle:vertical {
+                    background: #475569;
+                    border-radius: 6px;
+                    min-height: 20px;
+                }
+                QScrollBar::handle:vertical:hover {
+                    background: #64748b;
+                }
+                QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                    height: 0px;
+                }
+            """)
+
+            # Establecer scroll area como widget central
+            self.setCentralWidget(scroll_area)
+
+            logger.info("Interfaz de usuario ensamblada exitosamente (con scroll)")
 
         except Exception as e:
             error_msg = f"Error al ensamblar UI: {e}"

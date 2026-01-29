@@ -5,11 +5,14 @@ Este módulo define el controlador MVC que coordina el modelo y la vista del dis
 manejando la lógica de actualización y comunicación con otros componentes.
 """
 
+import logging
 from dataclasses import replace
 from PyQt6.QtCore import QObject, pyqtSignal
 
 from .modelo import DisplayModelo
 from .vista import DisplayVista
+
+logger = logging.getLogger(__name__)
 
 
 class DisplayControlador(QObject):
@@ -126,14 +129,25 @@ class DisplayControlador(QObject):
         Args:
             estado_termostato: Instancia de EstadoTermostato con datos del RPi
         """
+        logger.info("🔄 Display actualizando desde estado: modo_vista=%s, encendido=%s",
+                   self._modelo.modo_vista, estado_termostato.encendido)
+
+        # CRÍTICO: Actualizar estado de encendido primero
+        self.set_encendido(estado_termostato.encendido)
+
         # Determinar qué temperatura mostrar según modo actual
         if self._modelo.modo_vista == "ambiente":
-            temperatura = estado_termostato.temp_actual
+            temperatura = estado_termostato.temperatura_actual
         else:
-            temperatura = estado_termostato.temp_deseada
+            temperatura = estado_termostato.temperatura_deseada
+
+        logger.info("📊 Actualizando temperatura a %.1f°C (falla_sensor=%s)",
+                   temperatura, estado_termostato.falla_sensor)
 
         # Actualizar temperatura
         self.actualizar_temperatura(temperatura)
 
         # Actualizar estado de error sensor
         self.set_error_sensor(estado_termostato.falla_sensor)
+
+        logger.info("✅ Display actualizado correctamente")

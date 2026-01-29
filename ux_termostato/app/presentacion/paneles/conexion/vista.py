@@ -1,11 +1,14 @@
 """Vista del panel de configuración de conexión."""
 
+import logging
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QFormLayout,
     QLineEdit, QLabel, QPushButton, QGroupBox
 )
 
 from .modelo import ConexionModelo
+
+logger = logging.getLogger(__name__)
 
 
 class ConexionVista(QWidget):
@@ -189,6 +192,9 @@ class ConexionVista(QWidget):
         Args:
             modelo: Modelo con la configuración actual
         """
+        logger.info("🔧 Actualizando vista Conexión: IP=%s, puerto_recv=%d, puerto_send=%d",
+                   modelo.ip, modelo.puerto_recv, modelo.puerto_send)
+
         # IP
         self._input_ip.setText(modelo.ip)
 
@@ -202,11 +208,13 @@ class ConexionVista(QWidget):
             self._aplicar_estilos_ip_valida()
             self._label_validacion.setText("")
             self._btn_aplicar.setEnabled(True)
+            logger.info("✅ IP válida, botón habilitado")
         else:
             # Borde rojo
             self._aplicar_estilos_ip_invalida()
             self._label_validacion.setText(f"❌ {modelo.mensaje_error}")
             self._btn_aplicar.setEnabled(False)
+            logger.warning("❌ IP inválida: %s", modelo.mensaje_error)
 
     @property
     def input_ip(self) -> QLineEdit:

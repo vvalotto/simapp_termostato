@@ -11,7 +11,14 @@ from typing import Optional
 from PyQt6.QtCore import QObject
 
 from .comunicacion import ServidorEstado, ClienteComandos
-from .dominio import EstadoTermostato, ComandoPower, ComandoSetTemp, ComandoSetModoDisplay
+from .dominio import (
+    EstadoTermostato,
+    ComandoPower,
+    ComandoSetTemp,
+    ComandoAumentar,
+    ComandoDisminuir,
+    ComandoSetModoDisplay,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -80,13 +87,14 @@ class UXCoordinator(QObject):
         """Conecta señales del servidor que recibe estado del RPi."""
         # Servidor → Paneles (distribuir estado)
         self._servidor.estado_recibido.connect(self._on_estado_recibido)
+        logger.info("✓ Señal estado_recibido conectada a _on_estado_recibido")
 
         # Servidor → Logging (conexión establecida/perdida)
         self._servidor.conexion_establecida.connect(self._on_conexion_establecida)
         self._servidor.conexion_perdida.connect(self._on_conexion_perdida)
         self._servidor.error_parsing.connect(self._on_error_parsing)
 
-        logger.debug("Señales de ServidorEstado conectadas")
+        logger.info("✓ Señales de ServidorEstado conectadas correctamente")
 
     def _conectar_power(self) -> None:
         """Conecta señales del panel Power."""
@@ -105,8 +113,8 @@ class UXCoordinator(QObject):
         """Conecta señales del panel ControlTemp."""
         ctrl_control_temp = self._paneles["control_temp"][2]
 
-        # ControlTemp → Cliente (enviar comando)
-        ctrl_control_temp.temperatura_cambiada.connect(self._on_temperatura_cambiada)
+        # ControlTemp → Cliente (enviar comando aumentar/disminuir)
+        ctrl_control_temp.accion_temperatura.connect(self._on_accion_temperatura)
 
         logger.debug("Señales de ControlTempControlador conectadas")
 
@@ -154,16 +162,22 @@ class UXCoordinator(QObject):
         Args:
             estado: Estado completo del termostato recibido del RPi
         """
+        logger.info("🔄 Distribuyendo estado a paneles: temp=%.1f°C, modo=%s",
+                   estado.temperatura_actual, estado.modo_climatizador)
+
         # Display: actualizar temperatura según modo
         ctrl_display = self._paneles["display"][2]
+        logger.debug("Actualizando Display...")
         ctrl_display.actualizar_desde_estado(estado)
 
         # Climatizador: actualizar modo
         ctrl_climatizador = self._paneles["climatizador"][2]
+        logger.debug("Actualizando Climatizador...")
         ctrl_climatizador.actualizar_desde_estado(estado)
 
         # Indicadores: actualizar alertas
         ctrl_indicadores = self._paneles["indicadores"][2]
+        logger.debug("Actualizando Indicadores...")
         ctrl_indicadores.actualizar_desde_estado(
             falla_sensor=estado.falla_sensor, bateria_baja=estado.bateria_baja
         )
@@ -171,15 +185,11 @@ class UXCoordinator(QObject):
         # Power: sincronizar estado (sin emitir señal para evitar loop)
         ctrl_power = self._paneles["power"][2]
         if hasattr(ctrl_power, "actualizar_modelo"):
+            logger.debug("Actualizando Power...")
             # Usar actualizar_modelo que NO genera comando
             ctrl_power.actualizar_modelo(estado.encendido)
 
-        logger.debug(
-            "Estado distribuido: temp=%.1f°C, modo=%s, encendido=%s",
-            estado.temperatura_actual,
-            estado.modo_climatizador,
-            estado.encendido,
-        )
+        logger.info("✅ Estado distribuido correctamente")
 
     def _on_power_cambiado(self, encendido: bool) -> None:
         """
@@ -199,23 +209,44 @@ class UXCoordinator(QObject):
         else:
             logger.error("Error al enviar comando power=%s", encendido)
 
-    def _on_temperatura_cambiada(self, temperatura: float) -> None:
+    def _on_accion_temperatura(self, accion: str) -> None:
         """
-        Envía comando de seteo de temperatura al RPi.
+        Envía comando de acción de temperatura al RPi.
 
         Args:
-            temperatura: Nueva temperatura deseada en °C
+            accion: Tipo de acción ("aumentar" | "disminuir")
         """
-        # Crear comando del dominio
-        cmd = ComandoSetTemp(valor=temperatura)
+        logger.info("🌡️  Acción de temperatura recibida: %s", accion)
+
+        # Crear comando según la acción
+        if accion == "aumentar":
+            cmd = ComandoAumentar()
+        elif accion == "disminuir":
+            cmd = ComandoDisminuir()
+        else:
+            logger.error("❌ Acción desconocida: %s", accion)
+            return
 
         # Enviar al RPi
         exito = self._cliente.enviar_comando(cmd)
 
         if exito:
-            logger.info("Comando set_temp=%.1f°C enviado correctamente", temperatura)
+            logger.info("✅ Comando '%s' enviado correctamente", accion)
         else:
-            logger.error("Error al enviar comando set_temp=%.1f°C", temperatura)
+            logger.error("❌ Error al enviar comando '%s'", accion)
+
+    def _on_temperatura_cambiada(self, temperatura: float) -> None:
+        """
+        Envía comando de seteo de temperatura al RPi (DEPRECADO).
+
+        Este método ya no se usa - se reemplazó por _on_accion_temperatura.
+        Se mantiene por compatibilidad.
+
+        Args:
+            temperatura: Nueva temperatura deseada en °C
+        """
+        # DEPRECADO: Ya no se usa porque no es compatible con ISSE_Termostato
+        logger.debug("Señal temperatura_cambiada ignorada (se usa accion_temperatura)")
 
     def _on_conexion_establecida(self, direccion: str) -> None:
         """

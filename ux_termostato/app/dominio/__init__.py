@@ -11,6 +11,8 @@ from .comandos import (
     ComandoTermostato,
     ComandoPower,
     ComandoSetTemp,
+    ComandoAumentar,
+    ComandoDisminuir,
     ComandoSetModoDisplay,
 )
 
@@ -19,5 +21,7 @@ __all__ = [
     "ComandoTermostato",
     "ComandoPower",
     "ComandoSetTemp",
+    "ComandoAumentar",
+    "ComandoDisminuir",
     "ComandoSetModoDisplay",
 ]

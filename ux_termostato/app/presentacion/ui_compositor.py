@@ -131,15 +131,15 @@ class UICompositor:
         Returns:
             QWidget con todos los paneles ensamblados.
         """
-        # Widget central
+        # Widget central (sin tamaño fijo para que el scroll funcione)
         widget_central = QWidget()
-        widget_central.setMinimumSize(QSize(500, 700))
-        widget_central.resize(600, 800)
+        widget_central.setMinimumWidth(500)  # Solo ancho mínimo
 
         # Layout principal vertical
         layout_principal = QVBoxLayout(widget_central)
         layout_principal.setContentsMargins(15, 15, 15, 15)
         layout_principal.setSpacing(12)
+        layout_principal.setSizeConstraint(QVBoxLayout.SizeConstraint.SetMinAndMaxSize)
 
         # 1. Header horizontal (EstadoConexion + Indicadores)
         layout_header = self._crear_header()
@@ -153,9 +153,10 @@ class UICompositor:
         vista_climatizador = self._extraer_vista("climatizador")
         layout_principal.addWidget(vista_climatizador)
 
-        # 4. Power
-        vista_power = self._extraer_vista("power")
-        layout_principal.addWidget(vista_power)
+        # 4. Power - DESHABILITADO (ISSE_Termostato no tiene endpoint de encendido)
+        # vista_power = self._extraer_vista("power")
+        # vista_power.setVisible(False)  # Ocultar sin eliminar del layout
+        # layout_principal.addWidget(vista_power)
 
         # 5. Control Temperatura
         vista_control_temp = self._extraer_vista("control_temp")

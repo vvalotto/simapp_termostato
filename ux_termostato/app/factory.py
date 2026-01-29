@@ -190,9 +190,13 @@ class ComponenteFactoryUX:
 
         Returns:
             Tupla (modelo, vista, controlador) del panel Power
+
+        Note:
+            Panel oculto en UI pero mantiene funcionalidad interna.
+            Inicia encendido para que los controles estén habilitados.
         """
-        # 1. Crear modelo con estado inicial (apagado)
-        modelo = PowerModelo(encendido=False)
+        # 1. Crear modelo con estado inicial ENCENDIDO (panel oculto, siempre activo)
+        modelo = PowerModelo(encendido=True)
 
         # 2. Crear vista
         vista = PowerVista()
@@ -215,7 +219,7 @@ class ComponenteFactoryUX:
         # 1. Crear modelo con temperatura inicial de config
         modelo = ControlTempModelo(
             temperatura_deseada=self._config.temperatura_setpoint_inicial,
-            habilitado=False,  # Inicia deshabilitado hasta que se encienda
+            habilitado=True,  # Inicia habilitado (power oculto pero activo)
             temp_min=self._config.temperatura_min_setpoint,
             temp_max=self._config.temperatura_max_setpoint,
             incremento=0.5,

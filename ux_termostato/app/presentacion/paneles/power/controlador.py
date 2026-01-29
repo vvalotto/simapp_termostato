@@ -84,10 +84,11 @@ class PowerControlador(QObject):
 
     def actualizar_modelo(self, encendido: bool):
         """
-        Actualiza el modelo con un nuevo estado.
+        Actualiza el modelo con un nuevo estado SIN emitir señales.
 
         Este método es útil para sincronizar el estado desde el servidor
-        cuando se recibe confirmación del Raspberry Pi.
+        cuando se recibe confirmación del Raspberry Pi, evitando loops
+        de comandos.
 
         Args:
             encendido: True si está encendido, False si apagado
@@ -98,8 +99,7 @@ class PowerControlador(QObject):
         # Renderizar cambios
         self._vista.actualizar(self._modelo)
 
-        # Emitir señal (sin comando, ya que viene del exterior)
-        self.power_cambiado.emit(encendido)
+        # NO emitir señal para evitar enviar comando de vuelta al RPi
 
     def _generar_comando_power(self, encendido: bool) -> dict:
         """

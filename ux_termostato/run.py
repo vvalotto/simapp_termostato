@@ -56,21 +56,32 @@ def cargar_configuracion() -> ConfigUX:
     Raises:
         ValueError: Si la configuración tiene valores inválidos
     """
-    # Valores por defecto (normalmente se leen de config.json)
-    ip_raspberry = os.getenv('RASPBERRY_IP', '127.0.0.1')
-    puerto_recv = int(os.getenv('PUERTO_RECV', '14001'))
-    puerto_send = int(os.getenv('PUERTO_SEND', '14000'))
+    import json
+
+    # Leer config.json
+    config_path = Path(__file__).parent.parent / "config.json"
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config_data = json.load(f)
+
+    ux_config = config_data.get('ux_termostato', {})
+    raspberry = config_data.get('raspberry_pi', {})
+    puertos = config_data.get('puertos', {})
+
+    # Valores de config.json con sobrescritura por variables de entorno
+    ip_raspberry = os.getenv('RASPBERRY_IP', raspberry.get('ip', '127.0.0.1'))
+    puerto_recv = int(os.getenv('PUERTO_RECV', puertos.get('visualizador_temperatura', 14001)))
+    puerto_send = int(os.getenv('PUERTO_SEND', puertos.get('selector_temperatura', 14000)))
 
     # Crear configuración
     config = ConfigUX(
         ip_raspberry=ip_raspberry,
         puerto_recv=puerto_recv,
         puerto_send=puerto_send,
-        intervalo_recepcion_ms=1000,
-        intervalo_actualizacion_ui_ms=100,
-        temperatura_min_setpoint=15.0,
-        temperatura_max_setpoint=35.0,
-        temperatura_setpoint_inicial=22.0,
+        intervalo_recepcion_ms=ux_config.get('intervalo_recepcion_ms', 1000),
+        intervalo_actualizacion_ui_ms=ux_config.get('intervalo_actualizacion_ui_ms', 100),
+        temperatura_min_setpoint=ux_config.get('temperatura_minima_setpoint', 15.0),
+        temperatura_max_setpoint=ux_config.get('temperatura_maxima_setpoint', 35.0),
+        temperatura_setpoint_inicial=ux_config.get('temperatura_setpoint_inicial', 24.0),
     )
 
     logger.info(

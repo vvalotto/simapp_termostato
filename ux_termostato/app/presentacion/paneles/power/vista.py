@@ -77,7 +77,6 @@ class PowerVista(QWidget):
 
             QPushButton#btnPower:pressed {
                 background-color: #166534;  /* green-800 */
-                transform: scale(0.95);
             }
         """)
 
@@ -101,7 +100,6 @@ class PowerVista(QWidget):
 
             QPushButton#btnPower:pressed {
                 background-color: #1e293b;  /* slate-800 */
-                transform: scale(0.95);
             }
         """)
 
