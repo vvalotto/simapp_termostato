@@ -48,18 +48,21 @@ class ClienteComandos(QObject):
 
         Args:
             host: Dirección IP del servidor RPi.
-            port: Puerto TCP del servidor (default: 14000).
+            port: Puerto TCP base (default: 14000, no usado con protocolo texto).
             parent: Objeto padre Qt opcional.
+
+        Note:
+            El puerto se determina dinámicamente según el tipo de comando:
+            - Puerto 13000: comandos de temperatura (aumentar/disminuir)
+            - Puerto 14000: selector de display (ambiente/deseada)
         """
         super().__init__(parent)
         self._host = host
-        self._port = port
-        self._cliente = EphemeralSocketClient(host, port, self)
+        self._port = port  # Puerto base (no usado con protocolo adaptado)
 
         logger.info(
-            "ClienteComandos inicializado: %s:%d",
-            host,
-            port
+            "ClienteComandos inicializado: %s (puertos dinámicos)",
+            host
         )
 
     @property
@@ -76,8 +79,9 @@ class ClienteComandos(QObject):
         """
         Envía un comando al termostato en el RPi.
 
-        Este método serializa el comando a JSON, lo envía al RPi y retorna
-        el resultado. Usa el patrón efímero: conectar → enviar → cerrar.
+        PROTOCOLO ADAPTADO: Envía texto plano (no JSON) compatible con ISSE_Termostato:
+        - Puerto 13000: "aumentar" o "disminuir" (comandos de temperatura)
+        - Puerto 14000: "ambiente" o "deseada" (selector de display)
 
         No lanza excepciones - todos los errores son capturados y logueados.
 
@@ -92,37 +96,47 @@ class ClienteComandos(QObject):
             >>> exito = cliente.enviar_comando(cmd)
         """
         try:
-            # 1. Serializar comando a JSON
+            # 1. Serializar comando a JSON (formato interno)
             datos_json = cmd.to_json()
             tipo_comando = datos_json.get("comando", "desconocido")
 
-            # 2. Convertir a string JSON + newline (protocolo)
-            mensaje = json.dumps(datos_json) + "\n"
+            # 2. Adaptar a protocolo texto plano de ISSE_Termostato
+            mensaje_texto, puerto = self._adaptar_comando_a_texto(datos_json)
+
+            if mensaje_texto is None:
+                logger.warning(
+                    "Comando '%s' no soportado por protocolo texto plano",
+                    tipo_comando
+                )
+                return False
 
             logger.debug(
-                "Enviando comando '%s' a %s:%d: %s",
+                "Enviando comando '%s' a %s:%d (texto: '%s')",
                 tipo_comando,
                 self._host,
-                self._port,
-                datos_json
+                puerto,
+                mensaje_texto.strip()
             )
 
-            # 3. Enviar via cliente efímero (conectar → enviar → cerrar)
-            exito = self._cliente.send(mensaje)
+            # 3. Crear cliente efímero con puerto correcto
+            cliente = EphemeralSocketClient(self._host, puerto, self)
+
+            # 4. Enviar texto plano (conectar → enviar → cerrar)
+            exito = cliente.send(mensaje_texto)
 
             if exito:
                 logger.info(
                     "Comando '%s' enviado exitosamente a %s:%d",
                     tipo_comando,
                     self._host,
-                    self._port
+                    puerto
                 )
             else:
                 logger.error(
                     "Error al enviar comando '%s' a %s:%d",
                     tipo_comando,
                     self._host,
-                    self._port
+                    puerto
                 )
 
             return exito
@@ -130,10 +144,48 @@ class ClienteComandos(QObject):
         except Exception as e:  # pylint: disable=broad-except
             # Catch-all: nunca lanzar excepciones al usuario
             logger.error(
-                "Excepción al enviar comando a %s:%d: %s",
-                self._host,
-                self._port,
+                "Excepción al enviar comando: %s",
                 e,
                 exc_info=True
             )
             return False
+
+    def _adaptar_comando_a_texto(self, datos_json: dict) -> tuple[Optional[str], int]:
+        """
+        Adapta un comando JSON al formato texto plano de ISSE_Termostato.
+
+        Args:
+            datos_json: Comando en formato JSON interno
+
+        Returns:
+            Tupla (mensaje_texto, puerto) o (None, 0) si el comando no es soportado
+
+        Mapeo:
+            - "aumentar"  → ("aumentar", 13000)
+            - "disminuir" → ("disminuir", 13000)
+            - "ambiente"  → ("ambiente", 14000)
+            - "deseada"   → ("deseada", 14000)
+            - "power"     → (None, 0) - NO soportado por ISSE_Termostato
+        """
+        tipo_comando = datos_json.get("comando", "")
+
+        # Comandos de temperatura (puerto 13000)
+        if tipo_comando in ("aumentar", "disminuir"):
+            return (tipo_comando, 13000)
+
+        # Selector de display (puerto 14000)
+        if tipo_comando == "set_modo_display":
+            modo = datos_json.get("modo", "")
+            if modo in ("ambiente", "deseada"):
+                return (modo, 14000)
+
+        # Comando 'power' NO soportado (ISSE_Termostato no tiene endpoint)
+        if tipo_comando == "power":
+            logger.debug(
+                "Comando 'power' omitido - ISSE_Termostato no tiene endpoint de encendido"
+            )
+            return (None, 0)
+
+        # Comando desconocido/no soportado
+        logger.warning("Comando '%s' no reconocido", tipo_comando)
+        return (None, 0)

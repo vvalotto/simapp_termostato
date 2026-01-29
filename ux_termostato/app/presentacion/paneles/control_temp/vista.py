@@ -130,7 +130,6 @@ class ControlTempVista(QWidget):
                     background-color: #475569;  /* slate-600 */
                     border-color: #334155;      /* slate-700 */
                     color: #64748b;             /* slate-500 */
-                    cursor: not-allowed;
                 }
             """)
             self.btn_subir.setEnabled(True)
@@ -180,7 +179,6 @@ class ControlTempVista(QWidget):
                     background-color: #475569;  /* slate-600 */
                     border-color: #334155;      /* slate-700 */
                     color: #64748b;             /* slate-500 */
-                    cursor: not-allowed;
                 }
             """)
             self.btn_bajar.setEnabled(True)

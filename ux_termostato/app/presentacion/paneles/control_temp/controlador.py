@@ -5,12 +5,15 @@ Este módulo define el controlador MVC que coordina el modelo y la vista del
 panel de control de temperatura, manejando aumentos/disminuciones y comandos.
 """
 
+import logging
 from dataclasses import replace
 from datetime import datetime
 from PyQt6.QtCore import QObject, pyqtSignal
 
 from .modelo import ControlTempModelo
 from .vista import ControlTempVista
+
+logger = logging.getLogger(__name__)
 
 
 class ControlTempControlador(QObject):
@@ -27,8 +30,9 @@ class ControlTempControlador(QObject):
     """
 
     # Señales para comunicación con otros componentes
-    temperatura_cambiada = pyqtSignal(float)  # Nueva temperatura deseada
-    comando_enviado = pyqtSignal(dict)  # Comando JSON para el RPi
+    temperatura_cambiada = pyqtSignal(float)  # Nueva temperatura deseada (local UI)
+    accion_temperatura = pyqtSignal(str)  # Acción a enviar al RPi: "aumentar" | "disminuir"
+    comando_enviado = pyqtSignal(dict)  # Comando JSON para el RPi (deprecado)
 
     def __init__(self, modelo: ControlTempModelo, vista: ControlTempVista):
         """
@@ -75,7 +79,13 @@ class ControlTempControlador(QObject):
         5. Genera y envía comando JSON al RPi
         6. Emite señales
         """
+        logger.info("🔼 Botón SUBIR presionado")
+
         if not self._modelo.puede_aumentar():
+            logger.warning("❌ No se puede aumentar: habilitado=%s, temp_actual=%.1f°C, max=%.1f°C",
+                          self._modelo.habilitado,
+                          self._modelo.temperatura_deseada,
+                          self._modelo.temp_max)
             return
 
         # Calcular nueva temperatura
@@ -84,18 +94,22 @@ class ControlTempControlador(QObject):
         # Asegurar que no supera el máximo (por redondeo de floats)
         nueva_temp = min(nueva_temp, self._modelo.temp_max)
 
+        logger.info("✅ Aumentando temperatura: %.1f°C → %.1f°C",
+                   self._modelo.temperatura_deseada, nueva_temp)
+
         # Actualizar modelo (inmutable, crear nueva instancia)
         self._modelo = replace(self._modelo, temperatura_deseada=nueva_temp)
 
         # Renderizar cambios en la vista
         self._vista.actualizar(self._modelo)
 
-        # Generar comando JSON para el Raspberry Pi
-        comando = self._generar_comando_temperatura(nueva_temp)
+        # Generar comando JSON para el Raspberry Pi (indicando aumento)
+        comando = self._generar_comando_temperatura(nueva_temp, direccion="aumentar")
 
         # Emitir señales
-        self.temperatura_cambiada.emit(nueva_temp)
-        self.comando_enviado.emit(comando)
+        logger.info("📡 Emitiendo señales: temperatura_cambiada(%.1f°C) + accion_temperatura('aumentar')", nueva_temp)
+        self.temperatura_cambiada.emit(nueva_temp)  # Para actualizar UI local
+        self.accion_temperatura.emit("aumentar")  # Para enviar comando al RPi
 
     def disminuir_temperatura(self):
         """
@@ -113,7 +127,13 @@ class ControlTempControlador(QObject):
         5. Genera y envía comando JSON al RPi
         6. Emite señales
         """
+        logger.info("🔽 Botón BAJAR presionado")
+
         if not self._modelo.puede_disminuir():
+            logger.warning("❌ No se puede disminuir: habilitado=%s, temp_actual=%.1f°C, min=%.1f°C",
+                          self._modelo.habilitado,
+                          self._modelo.temperatura_deseada,
+                          self._modelo.temp_min)
             return
 
         # Calcular nueva temperatura
@@ -122,18 +142,19 @@ class ControlTempControlador(QObject):
         # Asegurar que no baja del mínimo (por redondeo de floats)
         nueva_temp = max(nueva_temp, self._modelo.temp_min)
 
+        logger.info("✅ Disminuyendo temperatura: %.1f°C → %.1f°C",
+                   self._modelo.temperatura_deseada, nueva_temp)
+
         # Actualizar modelo (inmutable, crear nueva instancia)
         self._modelo = replace(self._modelo, temperatura_deseada=nueva_temp)
 
         # Renderizar cambios en la vista
         self._vista.actualizar(self._modelo)
 
-        # Generar comando JSON para el Raspberry Pi
-        comando = self._generar_comando_temperatura(nueva_temp)
-
         # Emitir señales
-        self.temperatura_cambiada.emit(nueva_temp)
-        self.comando_enviado.emit(comando)
+        logger.info("📡 Emitiendo señales: temperatura_cambiada(%.1f°C) + accion_temperatura('disminuir')", nueva_temp)
+        self.temperatura_cambiada.emit(nueva_temp)  # Para actualizar UI local
+        self.accion_temperatura.emit("disminuir")  # Para enviar comando al RPi
 
     def set_habilitado(self, habilitado: bool):
         """
@@ -183,26 +204,27 @@ class ControlTempControlador(QObject):
         # Emitir señal (sin comando, ya que viene del exterior)
         self.temperatura_cambiada.emit(temperatura)
 
-    def _generar_comando_temperatura(self, temperatura: float) -> dict:
+    def _generar_comando_temperatura(self, temperatura: float, direccion: str = "aumentar") -> dict:
         """
         Genera el comando JSON para enviar al Raspberry Pi.
 
-        El comando incluye timestamp ISO 8601 para permitir al RPi
-        detectar comandos duplicados o desfasados.
+        El comando incluye timestamp ISO 8601 y la dirección del cambio
+        (aumentar/disminuir) para compatibilidad con ISSE_Termostato.
 
         Args:
             temperatura: Temperatura deseada en °C
+            direccion: "aumentar" o "disminuir" (indica la acción del usuario)
 
         Returns:
             dict: Comando JSON con estructura:
                 {
-                    "comando": "set_temp_deseada",
+                    "comando": "aumentar" | "disminuir",
                     "valor": 23.5,
                     "timestamp": "2026-01-22T14:30:00.123456"
                 }
         """
         return {
-            "comando": "set_temp_deseada",
+            "comando": direccion,  # "aumentar" o "disminuir"
             "valor": round(temperatura, 1),  # Redondear a 1 decimal
             "timestamp": datetime.now().isoformat()
         }

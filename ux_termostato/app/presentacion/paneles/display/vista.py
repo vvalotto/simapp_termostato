@@ -5,11 +5,14 @@ Este módulo define la vista MVC que renderiza el display principal del termosta
 mostrando la temperatura en un formato tipo LCD verde oscuro.
 """
 
+import logging
 from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
 
 from .modelo import DisplayModelo
+
+logger = logging.getLogger(__name__)
 
 
 class DisplayVista(QWidget):
@@ -49,7 +52,7 @@ class DisplayVista(QWidget):
         layout_temp.setContentsMargins(0, 10, 0, 10)
 
         # Label del valor de temperatura (grande)
-        self.label_temp = QLabel("22.0")
+        self.label_temp = QLabel("--.-")  # Placeholder, el controlador actualiza con valor real
         self.label_temp.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.label_temp.setObjectName("labelTemp")
 
@@ -137,8 +140,12 @@ class DisplayVista(QWidget):
         Args:
             modelo: Instancia de DisplayModelo con el estado actual
         """
+        logger.debug("🎨 Vista renderizando: temp=%.1f°C, encendido=%s, error=%s",
+                    modelo.temperatura, modelo.encendido, modelo.error_sensor)
+
         # Manejar estado apagado
         if not modelo.encendido:
+            logger.info("🔴 Display: Sistema apagado, mostrando '---'")
             self.label_temp.setText("---")
             self.label_temp.setVisible(True)
             self.label_unidad.setVisible(True)
@@ -148,6 +155,7 @@ class DisplayVista(QWidget):
 
         # Manejar error de sensor
         if modelo.error_sensor:
+            logger.warning("⚠️  Display: Error de sensor detectado")
             self.label_temp.setVisible(False)
             self.label_unidad.setVisible(False)
             self.label_error.setVisible(True)
@@ -155,6 +163,7 @@ class DisplayVista(QWidget):
             return
 
         # Estado normal: mostrar temperatura
+        logger.info("🟢 Display: Mostrando temperatura %.1f°C", modelo.temperatura)
         self.label_temp.setVisible(True)
         self.label_unidad.setVisible(True)
         self.label_error.setVisible(False)

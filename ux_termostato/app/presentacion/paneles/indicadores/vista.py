@@ -162,13 +162,23 @@ class IndicadoresVista(QWidget):
             modelo: Modelo con el estado de los indicadores
         """
         # Actualizar LED sensor
+        # Verde fijo = OK, Rojo pulsante = Falla
         if modelo.falla_sensor:
+            # Cambiar a rojo y pulsar
+            self.alert_sensor.led.set_color(LEDColor.RED)
             self.alert_sensor.set_estado(activo=True, pulsar=True)
         else:
-            self.alert_sensor.set_estado(activo=False, pulsar=False)
+            # Verde fijo (sin pulsar)
+            self.alert_sensor.led.set_color(LEDColor.GREEN)
+            self.alert_sensor.set_estado(activo=True, pulsar=False)
 
         # Actualizar LED batería
+        # Verde fijo = OK, Amarillo pulsante = Batería baja
         if modelo.bateria_baja:
+            # Cambiar a amarillo y pulsar
+            self.alert_bateria.led.set_color(LEDColor.YELLOW)
             self.alert_bateria.set_estado(activo=True, pulsar=True)
         else:
-            self.alert_bateria.set_estado(activo=False, pulsar=False)
+            # Verde fijo (sin pulsar)
+            self.alert_bateria.led.set_color(LEDColor.GREEN)
+            self.alert_bateria.set_estado(activo=True, pulsar=False)

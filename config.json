@@ -30,7 +30,7 @@
         "intervalo_actualizacion_ui_ms": 100,
         "temperatura_minima_setpoint": 15.0,
         "temperatura_maxima_setpoint": 30.0,
-        "temperatura_setpoint_inicial": 22.0,
+        "temperatura_setpoint_inicial": 24.0,
         "historial_max_puntos": 100
     },
     "debug": false

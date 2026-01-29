@@ -103,6 +103,56 @@ class ComandoSetTemp(ComandoTermostato):
 
 
 @dataclass(frozen=True)
+class ComandoAumentar(ComandoTermostato):
+    """
+    Comando para aumentar la temperatura deseada.
+
+    Este comando envía "aumentar" al RPi (puerto 13000).
+    No incluye valor - el incremento lo decide ISSE_Termostato.
+
+    Attributes:
+        timestamp: Marca de tiempo heredada de ComandoTermostato
+    """
+
+    def to_json(self) -> dict:
+        """
+        Serializa el comando a JSON.
+
+        Returns:
+            dict: {"comando": "aumentar", "timestamp": ...}
+        """
+        return {
+            "comando": "aumentar",
+            "timestamp": self.timestamp.isoformat(),
+        }
+
+
+@dataclass(frozen=True)
+class ComandoDisminuir(ComandoTermostato):
+    """
+    Comando para disminuir la temperatura deseada.
+
+    Este comando envía "disminuir" al RPi (puerto 13000).
+    No incluye valor - el decremento lo decide ISSE_Termostato.
+
+    Attributes:
+        timestamp: Marca de tiempo heredada de ComandoTermostato
+    """
+
+    def to_json(self) -> dict:
+        """
+        Serializa el comando a JSON.
+
+        Returns:
+            dict: {"comando": "disminuir", "timestamp": ...}
+        """
+        return {
+            "comando": "disminuir",
+            "timestamp": self.timestamp.isoformat(),
+        }
+
+
+@dataclass(frozen=True)
 class ComandoSetModoDisplay(ComandoTermostato):
     """
     Comando para cambiar el modo de visualización del display.

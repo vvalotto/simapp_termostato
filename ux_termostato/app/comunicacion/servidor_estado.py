@@ -134,17 +134,18 @@ class ServidorEstado(BaseSocketServer):
         Args:
             data: Mensaje JSON recibido del cliente.
         """
+        logger.info("📥 Mensaje recibido (%d bytes)", len(data))
         try:
             # 1. Parsear JSON a diccionario
             datos = json.loads(data.strip())
-            logger.debug("JSON recibido: %s", datos)
+            logger.debug("JSON parseado: %s", datos)
 
             # 2. Crear EstadoTermostato desde el diccionario
             estado = EstadoTermostato.from_json(datos)
 
             # 3. Emitir señal con el estado
-            logger.debug(
-                "Estado procesado: temp_actual=%.1f°C, "
+            logger.info(
+                "✓ Estado procesado: temp_actual=%.1f°C, "
                 "temp_deseada=%.1f°C, modo=%s",
                 estado.temperatura_actual,
                 estado.temperatura_deseada,
