@@ -70,6 +70,14 @@ jobs:
           cp main_repo/simulador_bateria/docs/informes/informe_calidad_final.md wiki_repo/Bateria-Informe-Calidad.md
           cp main_repo/simulador_bateria/docs/informes/informe_diseno.md wiki_repo/Bateria-Informe-Diseno.md
 
+          # UX Termostato
+          cp main_repo/ux_termostato/docs/arquitectura.md wiki_repo/UX-Arquitectura.md
+          cp main_repo/ux_termostato/docs/guia_uso.md wiki_repo/UX-Guia-Uso.md
+          cp main_repo/ux_termostato/docs/configuracion.md wiki_repo/UX-Configuracion.md
+          cp main_repo/ux_termostato/docs/historias/catalogo_historias.md wiki_repo/UX-Historias-Usuario.md
+          cp main_repo/ux_termostato/docs/informes/informe_calidad_final.md wiki_repo/UX-Informe-Calidad.md
+          cp main_repo/ux_termostato/docs/informes/informe_hallazgos.md wiki_repo/UX-Hallazgos.md
+
       - name: Commit y Push a la Wiki
         run: |
           cd wiki_repo
