@@ -1,12 +1,5 @@
 # ADR-002: Refactorización de BaseSocketServer aplicando SRP y DIP
 
-**Estado:** Aceptado
-**Fecha:** 2025-12-30
-**Autores:** Equipo ISSE_Simuladores
-**Relacionado:** ADR-001 (Separación de Socket Clients)
-
----
-
 ## Contexto
 
 Tras implementar `BaseSocketServer` para la tarea ST-14, un análisis de calidad de diseño reveló violaciones a los principios SOLID, específicamente SRP (Single Responsibility Principle) y DIP (Dependency Inversion Principle).
@@ -48,20 +41,28 @@ Separar `BaseSocketServer` en una jerarquía de tres clases con responsabilidade
 
 ### Arquitectura resultante
 
-```
-SocketServerBase (configuración)
-       │
-       ▼
-BaseSocketServer (orquestación) ──uses──▶ ClientSession (comunicación)
+```mermaid
+graph TB
+    A[SocketServerBase<br/>configuración] --> B[BaseSocketServer<br/>orquestación]
+    B -->|uses| C[ClientSession<br/>comunicación]
+
+    style A fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style B fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
 ```
 
 ### Estructura de archivos
 
-```
-compartido/networking/
-├── socket_server_base.py      # Configuración común
-├── client_session.py          # Comunicación con cliente individual
-└── base_socket_server.py      # Orquestación del servidor
+```mermaid
+graph TD
+    A[compartido/networking/] --> B[socket_server_base.py<br/>Configuración común]
+    A --> C[client_session.py<br/>Comunicación con cliente]
+    A --> D[base_socket_server.py<br/>Orquestación del servidor]
+
+    style A fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style B fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style C fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style D fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
 
 ---
@@ -289,37 +290,26 @@ cd compartido && pytest tests/test_base_socket_server.py -v
 
 ## Diagrama de secuencia
 
-```
-┌─────────┐     ┌──────────────────┐     ┌───────────────┐
-│ Cliente │     │ BaseSocketServer │     │ ClientSession │
-└────┬────┘     └────────┬─────────┘     └───────┬───────┘
-     │                   │                       │
-     │   connect()       │                       │
-     │──────────────────>│                       │
-     │                   │                       │
-     │                   │ _create_client_session()
-     │                   │──────────────────────>│
-     │                   │                       │
-     │                   │ client_connected.emit()
-     │                   │                       │
-     │   send(data)      │                       │
-     │──────────────────>│                       │
-     │                   │                       │
-     │                   │   receive_once()      │
-     │                   │──────────────────────>│
-     │                   │                       │
-     │                   │   data                │
-     │                   │<──────────────────────│
-     │                   │                       │
-     │                   │ data_received.emit()  │
-     │                   │                       │
+```mermaid
+sequenceDiagram
+    participant Cliente
+    participant BaseSocketServer
+    participant ClientSession
+
+    Cliente->>BaseSocketServer: connect()
+    BaseSocketServer->>ClientSession: _create_client_session()
+    BaseSocketServer->>BaseSocketServer: client_connected.emit()
+    Cliente->>BaseSocketServer: send(data)
+    BaseSocketServer->>ClientSession: receive_once()
+    ClientSession-->>BaseSocketServer: data
+    BaseSocketServer->>BaseSocketServer: data_received.emit()
 ```
 
 ---
 
 ## Referencias
 
-- **ADR-001:** Separación de Socket Clients
+- **adr_001_separacion_socket_clients.md:** Separación de Socket Clients
 - **Principios SOLID:** Robert C. Martin
 - **Patrones aplicados:** Template Method, Factory Method
 - **Código fuente:** `compartido/networking/`

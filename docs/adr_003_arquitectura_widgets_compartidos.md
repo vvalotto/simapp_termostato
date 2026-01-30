@@ -1,12 +1,5 @@
 # ADR-003: Arquitectura de Widgets Compartidos aplicando DIP
 
-**Estado:** Aceptado
-**Fecha:** 2025-12-31
-**Autores:** Equipo ISSE_Simuladores
-**Relacionado:** ADR-001 (Separación Socket Clients), ADR-002 (Refactorización Socket Server)
-
----
-
 ## Contexto
 
 El proyecto ISSE_Simuladores requiere widgets PyQt6 reutilizables en tres aplicaciones de escritorio. Estos widgets deben ser:
@@ -52,26 +45,31 @@ Aplicar el **Dependency Inversion Principle (DIP)** como arquitectura base para 
 
 ### Arquitectura resultante
 
-```
-Widget (LEDIndicator, ConfigPanel, LogViewer)
-    │
-    ├── Protocol (interface abstracta)
-    │   ├── LEDColorProvider
-    │   ├── StatusIndicator
-    │   ├── ValidationFeedbackProvider
-    │   ├── LogColorProvider
-    │   └── LogFormatter
-    │
-    ├── Implementación por defecto
-    │   ├── DefaultLEDColorProvider
-    │   ├── LEDStatusIndicator (Adapter)
-    │   ├── BorderValidationFeedback
-    │   ├── DefaultLogColorProvider
-    │   └── TimestampLogFormatter
-    │
-    └── Dataclass para textos
-        ├── ConfigPanelLabels
-        └── LogViewerLabels
+```mermaid
+graph TD
+    A[Widget<br/>LEDIndicator, ConfigPanel, LogViewer] --> B[Protocol<br/>interface abstracta]
+    A --> C[Implementación por defecto]
+    A --> D[Dataclass para textos]
+    
+    B --> B1[LEDColorProvider]
+    B --> B2[StatusIndicator]
+    B --> B3[ValidationFeedbackProvider]
+    B --> B4[LogColorProvider]
+    B --> B5[LogFormatter]
+    
+    C --> C1[DefaultLEDColorProvider]
+    C --> C2[LEDStatusIndicator Adapter]
+    C --> C3[BorderValidationFeedback]
+    C --> C4[DefaultLogColorProvider]
+    C --> C5[TimestampLogFormatter]
+    
+    D --> D1[ConfigPanelLabels]
+    D --> D2[LogViewerLabels]
+
+    style A fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style B fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style D fill:#ffebee,stroke:#f44336,stroke-width:2px
 ```
 
 ---
@@ -319,18 +317,28 @@ def __init__(self, status_indicator: StatusIndicator | None = None):
 
 ## Estructura de archivos
 
-```
-compartido/widgets/
-├── __init__.py
-├── led_indicator.py           # Widget LED con animación
-├── led_color_provider.py      # Protocol + Default para colores LED
-├── config_panel.py            # Panel de configuración
-├── config_panel_labels.py     # Dataclass de textos
-├── status_indicator.py        # Protocol + Adapter
-├── validation_feedback.py     # Protocol + BorderValidationFeedback
-├── log_viewer.py              # Widget visor de logs
-├── log_color_provider.py      # Protocol + Default para colores log
-└── log_formatter.py           # Protocol + TimestampLogFormatter
+```mermaid
+graph TD
+    A[compartido/widgets/] --> B1[led_indicator.py<br/>Widget LED con animación]
+    A --> B2[led_color_provider.py<br/>Protocol + Default para colores LED]
+    A --> B3[config_panel.py<br/>Panel de configuración]
+    A --> B4[config_panel_labels.py<br/>Dataclass de textos]
+    A --> B5[status_indicator.py<br/>Protocol + Adapter]
+    A --> B6[validation_feedback.py<br/>Protocol + BorderValidationFeedback]
+    A --> B7[log_viewer.py<br/>Widget visor de logs]
+    A --> B8[log_color_provider.py<br/>Protocol + Default para colores log]
+    A --> B9[log_formatter.py<br/>Protocol + TimestampLogFormatter]
+
+    style A fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style B1 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B2 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B3 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B4 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B5 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B6 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B7 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B8 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B9 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
 
 ---
@@ -378,8 +386,8 @@ cd compartido && pytest tests/ -v
 
 ## Referencias
 
-- **ADR-001:** Separación de Socket Clients
-- **ADR-002:** Refactorización de BaseSocketServer
+- **adr_001_separacion_socket_clients.md:** Separación de Socket Clients
+- **adr_002_refactorizacion_socket_server.md:** Refactorización de BaseSocketServer
 - **Principios SOLID:** Robert C. Martin
 - **Patrones aplicados:** Protocol, Adapter, Strategy, Observer
 - **Python typing.Protocol:** PEP 544

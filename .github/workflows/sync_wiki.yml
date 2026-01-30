@@ -1,0 +1,66 @@
+name: Sincronizar Wiki
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'README.md'
+      - 'docs/**'
+  # Habilitamos ejecución manual para probar desde la web de GitHub
+  workflow_dispatch:
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Necesario para poder hacer push
+    steps:
+      - name: Checkout Repositorio Principal
+        uses: actions/checkout@v4
+        with:
+          path: main_repo
+
+      - name: Checkout Repositorio Wiki
+        uses: actions/checkout@v4
+        with:
+          # La Wiki (ej: https://github.com/vvalotto/app_termostato/wiki) es un repositorio Git
+          # independiente. Esta línea hace checkout de ese repositorio usando la variable de GitHub.
+          repository: ${{ github.repository }}.wiki
+          path: wiki_repo
+
+      - name: Copiar y Sincronizar Archivos
+        run: |
+          # 1. Sincronizar README.md con la Home de la Wiki
+          cp main_repo/README.md wiki_repo/Home.md
+
+          # 2. Sincronizar archivos de documentación técnica
+          # ADR (Architecture Decision Records)
+          cp main_repo/docs/adr_001_separacion_socket_clients.md wiki_repo/ADR-001-Separacion-Socket-Clients.md
+          cp main_repo/docs/adr_002_refactorizacion_socket_server.md wiki_repo/ADR-002-Refactorizacion-Socket-Server.md
+          cp main_repo/docs/adr_003_arquitectura_widgets_compartidos.md wiki_repo/ADR-003-Arquitectura-Widgets-Compartidos.md
+          cp main_repo/docs/adr_004_arquitectura_presentacion_simulador_temperatura.md wiki_repo/ADR-004-Arquitectura-Presentacion-Simulador-Temperatura.md
+          cp main_repo/docs/adr_005_arquitectura_referencia_simuladores.md wiki_repo/ADR-005-Arquitectura-Referencia-Simuladores.md
+
+          # Especificaciones técnicas
+          cp main_repo/docs/spec_001_comunicaciones.md wiki_repo/Especificacion-Comunicaciones.md
+
+          # Documentos de diseño
+          cp main_repo/docs/design_001_simuladores.md wiki_repo/Diseno-Simuladores.md
+
+          # Guías
+          cp main_repo/docs/guide_001_estructura_jira.md wiki_repo/Guia-Estructura-Jira.md
+
+      - name: Commit y Push a la Wiki
+        run: |
+          cd wiki_repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add .
+          if git diff --staged --quiet; then
+            echo "No hay cambios en la documentación."
+          else
+            git commit -m "Sincronización automática desde main: ${{ github.sha }}"
+            git push
+          fi

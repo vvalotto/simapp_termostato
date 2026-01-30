@@ -8,28 +8,25 @@ Conjunto de aplicaciones desktop PyQt6 que simulan sensores y proporcionan inter
 
 ## Arquitectura
 
-```
-┌─────────────────────────────────────────────────────┐
-│  Desktop (Mac/PC)                                   │
-│                                                     │
-│  ┌──────────────┐  ┌──────────────┐                │
-│  │  Simulador   │  │  Simulador   │                │
-│  │  Temperatura │  │  Batería     │                │
-│  └──────┬───────┘  └──────┬───────┘                │
-│         │ :14001          │ :14002                 │
-│         └────────┬────────┘                        │
-│                  │                                 │
-│  ┌───────────────┴───────────────┐                 │
-│  │      UX Termostato            │                 │
-│  │      :14003 / :14004          │                 │
-│  └───────────────┬───────────────┘                 │
-└──────────────────┼─────────────────────────────────┘
-                   │ TCP/IP
-                   ▼
-┌─────────────────────────────────────────────────────┐
-│  Raspberry Pi - ISSE_Termostato                     │
-│  Servidores: 14001, 14002 | Clientes: 14003, 14004  │
-└─────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Desktop["Desktop (Mac/PC)"]
+        ST["Simulador<br/>Temperatura"]
+        SB["Simulador<br/>Batería"]
+        UX["UX Termostato<br/>:14003 / :14004"]
+    end
+
+    RPI["Raspberry Pi<br/>ISSE_Termostato<br/>Servidores: 14001, 14002<br/>Clientes: 14003, 14004"]
+
+    ST -->|":14001<br/>TCP/IP"| RPI
+    SB -->|":14002<br/>TCP/IP"| RPI
+    UX <-->|"TCP/IP"| RPI
+
+    style Desktop fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#fff
+    style ST fill:#3182ce,stroke:#2c5282,stroke-width:2px,color:#fff
+    style SB fill:#3182ce,stroke:#2c5282,stroke-width:2px,color:#fff
+    style UX fill:#38a169,stroke:#2f855a,stroke-width:2px,color:#fff
+    style RPI fill:#805ad5,stroke:#6b46c1,stroke-width:2px,color:#fff
 ```
 
 ## Productos

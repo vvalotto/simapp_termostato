@@ -360,7 +360,7 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 ### ux_termostato - En Desarrollo Activo
 
-**Arquitectura:** MVC + Factory/Coordinator (siguiendo ADR-003)
+**Arquitectura:** MVC + Factory/Coordinator (siguiendo docs/adr_005_arquitectura_referencia_simuladores.md)
 **Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.4 - Actualizado 2026-01-25)
 **Principio:** Cliente sin estado - No persiste datos, solo renderiza estado del RPi
 
