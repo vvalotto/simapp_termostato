@@ -56,6 +56,13 @@ jobs:
           cp main_repo/compartido/docs/widgets_guide.md wiki_repo/Compartido-Widgets-Guide.md
           cp main_repo/compartido/docs/networking_guide.md wiki_repo/Compartido-Networking-Guide.md
 
+          # Simulador Temperatura
+          cp main_repo/simulador_temperatura/docs/arquitectura.md wiki_repo/Temperatura-Arquitectura.md
+          cp main_repo/simulador_temperatura/docs/guia_uso.md wiki_repo/Temperatura-Guia-Uso.md
+          cp main_repo/simulador_temperatura/docs/configuracion.md wiki_repo/Temperatura-Configuracion.md
+          cp main_repo/simulador_temperatura/docs/informes/informe_calidad_final.md wiki_repo/Temperatura-Informe-Calidad.md
+          cp main_repo/simulador_temperatura/docs/informes/informe_hallazgos.md wiki_repo/Temperatura-Hallazgos.md
+
       - name: Commit y Push a la Wiki
         run: |
           cd wiki_repo
