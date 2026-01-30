@@ -51,6 +51,11 @@ jobs:
           # Guías
           cp main_repo/docs/guide_001_estructura_jira.md wiki_repo/Guia-Estructura-Jira.md
 
+          # Compartido - Documentación de infraestructura
+          cp main_repo/compartido/docs/api_reference.md wiki_repo/Compartido-API-Reference.md
+          cp main_repo/compartido/docs/widgets_guide.md wiki_repo/Compartido-Widgets-Guide.md
+          cp main_repo/compartido/docs/networking_guide.md wiki_repo/Compartido-Networking-Guide.md
+
       - name: Commit y Push a la Wiki
         run: |
           cd wiki_repo
