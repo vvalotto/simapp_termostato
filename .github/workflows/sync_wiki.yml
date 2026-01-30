@@ -63,6 +63,13 @@ jobs:
           cp main_repo/simulador_temperatura/docs/informes/informe_calidad_final.md wiki_repo/Temperatura-Informe-Calidad.md
           cp main_repo/simulador_temperatura/docs/informes/informe_hallazgos.md wiki_repo/Temperatura-Hallazgos.md
 
+          # Simulador Batería
+          cp main_repo/simulador_bateria/docs/arquitectura.md wiki_repo/Bateria-Arquitectura.md
+          cp main_repo/simulador_bateria/docs/guia_uso.md wiki_repo/Bateria-Guia-Uso.md
+          cp main_repo/simulador_bateria/docs/configuracion.md wiki_repo/Bateria-Configuracion.md
+          cp main_repo/simulador_bateria/docs/informes/informe_calidad_final.md wiki_repo/Bateria-Informe-Calidad.md
+          cp main_repo/simulador_bateria/docs/informes/informe_diseno.md wiki_repo/Bateria-Informe-Diseno.md
+
       - name: Commit y Push a la Wiki
         run: |
           cd wiki_repo
