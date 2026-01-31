@@ -358,7 +358,7 @@ graph TD
 3. **Extensibilidad:** Nuevos temas/configuraciones sin modificar codigo
 4. **Testabilidad:** 141 tests con pytest-qt
 5. **Mantenibilidad:** MI > 70, Pylint > 9.5
-6. **Consistencia:** Sigue patrones de adr_003_arquitectura_widgets_compartidos.md (widgets compartidos)
+6. **Consistencia:** Sigue patrones de ../compartido/docs/decisiones/adr_003_arquitectura_widgets_compartidos.md (widgets compartidos)
 
 ### Negativas
 
@@ -390,7 +390,7 @@ cd simulador_temperatura && pytest tests/ -v
 
 ## Referencias
 
-- **adr_003_arquitectura_widgets_compartidos.md:** Arquitectura de Widgets Compartidos
+- **../compartido/docs/decisiones/adr_003_arquitectura_widgets_compartidos.md:** Arquitectura de Widgets Compartidos
 - **Principios SOLID:** Robert C. Martin
 - **Patrones aplicados:** Composition, Factory Method, Observer (Signals)
 - **Tickets:** ST-39, ST-40, ST-41

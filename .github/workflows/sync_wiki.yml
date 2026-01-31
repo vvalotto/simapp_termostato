@@ -35,10 +35,7 @@ jobs:
           cp main_repo/README.md wiki_repo/Home.md
 
           # 2. Sincronizar archivos de documentación técnica
-          # ADR (Architecture Decision Records)
-          cp main_repo/docs/adr_001_separacion_socket_clients.md wiki_repo/ADR-001-Separacion-Socket-Clients.md
-          cp main_repo/docs/adr_002_refactorizacion_socket_server.md wiki_repo/ADR-002-Refactorizacion-Socket-Server.md
-          cp main_repo/docs/adr_003_arquitectura_widgets_compartidos.md wiki_repo/ADR-003-Arquitectura-Widgets-Compartidos.md
+          # ADR (Architecture Decision Records) - Proyecto
           cp main_repo/docs/adr_004_arquitectura_presentacion_simulador_temperatura.md wiki_repo/ADR-004-Arquitectura-Presentacion-Simulador-Temperatura.md
           cp main_repo/docs/adr_005_arquitectura_referencia_simuladores.md wiki_repo/ADR-005-Arquitectura-Referencia-Simuladores.md
 
@@ -52,11 +49,17 @@ jobs:
           cp main_repo/docs/guide_001_estructura_jira.md wiki_repo/Guia-Estructura-Jira.md
 
           # Compartido - Documentación de infraestructura
+          cp main_repo/compartido/docs/arquitectura.md wiki_repo/Compartido-Arquitectura.md
           cp main_repo/compartido/docs/api_reference.md wiki_repo/Compartido-API-Reference.md
           cp main_repo/compartido/docs/widgets_guide.md wiki_repo/Compartido-Widgets-Guide.md
           cp main_repo/compartido/docs/networking_guide.md wiki_repo/Compartido-Networking-Guide.md
           cp main_repo/compartido/docs/informes/informe_calidad_final.md wiki_repo/Compartido-Informe-Calidad.md
           cp main_repo/compartido/docs/informes/informe_diseno.md wiki_repo/Compartido-Informe-Diseno.md
+
+          # Compartido - ADR (Architecture Decision Records)
+          cp main_repo/compartido/docs/decisiones/adr_001_separacion_socket_clients.md wiki_repo/ADR-001-Separacion-Socket-Clients.md
+          cp main_repo/compartido/docs/decisiones/adr_002_refactorizacion_socket_server.md wiki_repo/ADR-002-Refactorizacion-Socket-Server.md
+          cp main_repo/compartido/docs/decisiones/adr_003_arquitectura_widgets_compartidos.md wiki_repo/ADR-003-Arquitectura-Widgets-Compartidos.md
 
           # Simulador Temperatura
           cp main_repo/simulador_temperatura/docs/arquitectura.md wiki_repo/Temperatura-Arquitectura.md
