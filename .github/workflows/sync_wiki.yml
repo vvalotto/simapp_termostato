@@ -55,6 +55,8 @@ jobs:
           cp main_repo/compartido/docs/api_reference.md wiki_repo/Compartido-API-Reference.md
           cp main_repo/compartido/docs/widgets_guide.md wiki_repo/Compartido-Widgets-Guide.md
           cp main_repo/compartido/docs/networking_guide.md wiki_repo/Compartido-Networking-Guide.md
+          cp main_repo/compartido/docs/informes/informe_calidad_final.md wiki_repo/Compartido-Informe-Calidad.md
+          cp main_repo/compartido/docs/informes/informe_diseno.md wiki_repo/Compartido-Informe-Diseno.md
 
           # Simulador Temperatura
           cp main_repo/simulador_temperatura/docs/arquitectura.md wiki_repo/Temperatura-Arquitectura.md
