@@ -631,8 +631,8 @@ def main():
 - [CLAUDE.md](../CLAUDE.md) - Guía general del proyecto
 - [simulador_bateria/docs/arquitectura.md](../simulador_bateria/docs/arquitectura.md) - Implementación detallada
 - [simulador_temperatura/docs/arquitectura.md](../simulador_temperatura/docs/arquitectura.md) - Implementación detallada
-- [ADR-001: Separación Socket Clients](./adr_001_separacion_socket_clients.md)
-- [ADR-002: Refactorización Socket Server](./adr_002_refactorizacion_socket_server.md)
+- [ADR-001: Separación Socket Clients](../compartido/docs/decisiones/adr_001_separacion_socket_clients.md)
+- [ADR-002: Refactorización Socket Server](../compartido/docs/decisiones/adr_002_refactorizacion_socket_server.md)
 
 ---
 
