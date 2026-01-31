@@ -1,12 +1,5 @@
 # ADR-004: Arquitectura de Presentacion del Simulador de Temperatura
 
-**Estado:** Aceptado
-**Fecha:** 2026-01-07
-**Autores:** Equipo ISSE_Simuladores
-**Relacionado:** ADR-003 (Arquitectura Widgets Compartidos)
-
----
-
 ## Contexto
 
 El Simulador de Temperatura requiere una interfaz grafica PyQt6 que permita:
@@ -53,31 +46,31 @@ Aplicar arquitectura basada en **composicion de widgets** con:
 
 ### Arquitectura resultante
 
-```
-UIPrincipal (QMainWindow)
-    │
-    ├── ConfigVentana (dataclass)
-    ├── ConfigTemaOscuro (dataclass)
-    │
-    ├── ControlTemperatura (QWidget) ──────────────────────┐
-    │       │                                              │
-    │       ├── RangosControl (dataclass)                  │
-    │       ├── ParametrosSenoidal (dataclass)             │
-    │       │                                              │
-    │       ├── PanelParametrosSenoidal (QGroupBox)        │
-    │       │       └── SliderConValor (x3)                │
-    │       │                                              │
-    │       └── PanelTemperaturaManual (QGroupBox)         │
-    │               └── SliderConValor (x1)                │
-    │                                                      │
-    ├── GraficoTemperatura (QWidget) ──────────────────────┤
-    │       │                                              │
-    │       ├── ConfigGrafico (dataclass)                  │
-    │       └── pyqtgraph.PlotWidget                       │
-    │                                                      │
-    └── PanelEstado (QFrame) ──────────────────────────────┘
-            │
-            └── ConfigPanelEstado (dataclass)
+```mermaid
+graph TD
+    A[UIPrincipal<br/>QMainWindow] --> B[ConfigVentana<br/>dataclass]
+    A --> C[ConfigTemaOscuro<br/>dataclass]
+    A --> D[ControlTemperatura<br/>QWidget]
+    A --> E[GraficoTemperatura<br/>QWidget]
+    A --> F[PanelEstado<br/>QFrame]
+    
+    D --> D1[RangosControl<br/>dataclass]
+    D --> D2[ParametrosSenoidal<br/>dataclass]
+    D --> D3[PanelParametrosSenoidal<br/>QGroupBox]
+    D --> D4[PanelTemperaturaManual<br/>QGroupBox]
+    
+    D3 --> D3A[SliderConValor x3]
+    D4 --> D4A[SliderConValor x1]
+    
+    E --> E1[ConfigGrafico<br/>dataclass]
+    E --> E2[pyqtgraph.PlotWidget]
+    
+    F --> F1[ConfigPanelEstado<br/>dataclass]
+
+    style A fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style D fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style E fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style F fill:#ffebee,stroke:#f44336,stroke-width:2px
 ```
 
 ---
@@ -333,35 +326,25 @@ class GraficoTemperatura(QWidget):
 
 ## Estructura de archivos
 
-```
-simulador_temperatura/
-├── app/
-│   └── presentacion/
-│       ├── __init__.py                  # Exports publicos
-│       ├── control_temperatura.py       # 6 clases (SRP)
-│       │   ├── ParametrosSenoidal       # Dataclass
-│       │   ├── RangosControl            # Dataclass
-│       │   ├── SliderConValor           # Widget atomico
-│       │   ├── PanelParametrosSenoidal  # Panel senoidal
-│       │   ├── PanelTemperaturaManual   # Panel manual
-│       │   └── ControlTemperatura       # Compositor
-│       │
-│       ├── grafico_temperatura.py       # 2 clases
-│       │   ├── ConfigGrafico            # Dataclass
-│       │   └── GraficoTemperatura       # Widget grafico
-│       │
-│       └── ui_principal.py              # 4 clases
-│           ├── ConfigVentana            # Dataclass
-│           ├── ConfigPanelEstado        # Dataclass
-│           ├── ConfigTemaOscuro         # Dataclass
-│           └── UIPrincipal              # Ventana principal
-│
-├── tests/
-│   ├── test_control_temperatura.py      # 79 tests
-│   ├── test_grafico_temperatura.py      # 19 tests
-│   └── test_ui_principal.py             # 24 tests
-│
-└── run.py                               # Punto de entrada
+```mermaid
+graph TD
+    A[simulador_temperatura/] --> B[app/]
+    A --> C[tests/]
+    A --> D[run.py<br/>Punto de entrada]
+    
+    B --> B1[presentacion/]
+    B1 --> B1A[control_temperatura.py<br/>6 clases SRP]
+    B1 --> B1B[grafico_temperatura.py<br/>2 clases]
+    B1 --> B1C[ui_principal.py<br/>4 clases]
+    
+    C --> C1[test_control_temperatura.py<br/>79 tests]
+    C --> C2[test_grafico_temperatura.py<br/>19 tests]
+    C --> C3[test_ui_principal.py<br/>24 tests]
+
+    style A fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style B fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style B1 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
 ```
 
 ---
@@ -375,7 +358,7 @@ simulador_temperatura/
 3. **Extensibilidad:** Nuevos temas/configuraciones sin modificar codigo
 4. **Testabilidad:** 141 tests con pytest-qt
 5. **Mantenibilidad:** MI > 70, Pylint > 9.5
-6. **Consistencia:** Sigue patrones de ADR-003 (widgets compartidos)
+6. **Consistencia:** Sigue patrones de adr_003_arquitectura_widgets_compartidos.md (widgets compartidos)
 
 ### Negativas
 
@@ -407,7 +390,7 @@ cd simulador_temperatura && pytest tests/ -v
 
 ## Referencias
 
-- **ADR-003:** Arquitectura de Widgets Compartidos
+- **adr_003_arquitectura_widgets_compartidos.md:** Arquitectura de Widgets Compartidos
 - **Principios SOLID:** Robert C. Martin
 - **Patrones aplicados:** Composition, Factory Method, Observer (Signals)
 - **Tickets:** ST-39, ST-40, ST-41

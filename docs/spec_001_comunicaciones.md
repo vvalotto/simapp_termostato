@@ -2,50 +2,45 @@
 
 ## Sistema HIL: ISSE_Simuladores ↔ ISSE_Termostato
 
-**Versión:** 1.0
-**Fecha:** 2025-12-30
-**Estado:** En desarrollo
-
----
-
 ## 1. Visión General
 
 Este documento especifica el protocolo de comunicación TCP entre las aplicaciones de simulación (ISSE_Simuladores) y el sistema de control del termostato (ISSE_Termostato).
 
 ### 1.1 Arquitectura del Sistema
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  DESKTOP (Mac/PC) - ISSE_Simuladores                                │
-│                                                                     │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  │
-│  │ Simulador        │  │ Simulador        │  │ UX Termostato    │  │
-│  │ Temperatura      │  │ Batería          │  │                  │  │
-│  │ (Cliente TCP)    │  │ (Cliente TCP)    │  │ (Srv+Cli TCP)    │  │
-│  └────────┬─────────┘  └────────┬─────────┘  └────────┬─────────┘  │
-│           │ :12000              │ :11000              │            │
-│           └──────────┬──────────┴──────────┬──────────┘            │
-│                      │                     │                       │
-└──────────────────────┼─────────────────────┼───────────────────────┘
-                       │ TCP/IP              │ TCP/IP
-                       ▼                     ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│  RASPBERRY PI / LOCAL - ISSE_Termostato                              │
-│                                                                      │
-│  SERVIDORES TCP (reciben datos de simuladores):                      │
-│  ┌─────────────────────────────────────────────────────────────────┐ │
-│  │ Puerto 12000: ProxySensorTemperatura  ← recibe float            │ │
-│  │ Puerto 11000: ProxyBateria            ← recibe float            │ │
-│  │ Puerto 13000: SeteoTemperatura        ← recibe comando          │ │
-│  │ Puerto 14000: SelectorTemperatura     ← recibe modo             │ │
-│  └─────────────────────────────────────────────────────────────────┘ │
-│                                                                      │
-│  CLIENTES TCP (envían estado a UX):                                  │
-│  ┌─────────────────────────────────────────────────────────────────┐ │
-│  │ Puerto 14001: VisualizadorTemperatura → envía estado temp       │ │
-│  │ Puerto 14002: VisualizadorBateria     → envía estado batería    │ │
-│  └─────────────────────────────────────────────────────────────────┘ │
-└──────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "DESKTOP Mac/PC - ISSE_Simuladores"
+        A1[Simulador Temperatura<br/>Cliente TCP]
+        A2[Simulador Batería<br/>Cliente TCP]
+        A3[UX Termostato<br/>Srv+Cli TCP]
+    end
+    
+    subgraph "RASPBERRY PI - ISSE_Termostato"
+        B1[":12000 ProxySensorTemperatura"]
+        B2[":11000 ProxyBateria"]
+        B3[":13000 SeteoTemperatura"]
+        B4[":14000 SelectorTemperatura"]
+        B5[":14001 VisualizadorTemperatura"]
+        B6[":14002 VisualizadorBateria"]
+    end
+    
+    A1 -->|TCP :12000| B1
+    A2 -->|TCP :11000| B2
+    A3 -->|TCP :13000| B3
+    A3 -->|TCP :14000| B4
+    B5 -->|TCP :14001| A3
+    B6 -->|TCP :14002| A3
+
+    style A1 fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style A2 fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style A3 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style B1 fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style B2 fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style B3 fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style B4 fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style B5 fill:#ffebee,stroke:#f44336,stroke-width:2px
+    style B6 fill:#ffebee,stroke:#f44336,stroke-width:2px
 ```
 
 ### 1.2 Roles de Comunicación
@@ -225,25 +220,39 @@ servidor.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 Para desarrollo y testing, ambos sistemas corren en la misma máquina:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  LOCALHOST (Mac/PC)                                             │
-│                                                                 │
-│  ┌─────────────────────┐      ┌─────────────────────┐          │
-│  │ ISSE_Simuladores    │      │ ISSE_Termostato     │          │
-│  │ (PyQt6 Apps)        │      │ (Control Loop)      │          │
-│  │                     │      │                     │          │
-│  │ Simulador Temp ─────┼──────┼→ :12000 (servidor)  │          │
-│  │ Simulador Bat  ─────┼──────┼→ :11000 (servidor)  │          │
-│  │                     │      │                     │          │
-│  │ UX :14001 (srv) ←───┼──────┼── Visualizador      │          │
-│  │ UX :14002 (srv) ←───┼──────┼── Visualizador      │          │
-│  │ UX ─────────────────┼──────┼→ :13000 (seteo)     │          │
-│  │ UX ─────────────────┼──────┼→ :14000 (selector)  │          │
-│  └─────────────────────┘      └─────────────────────┘          │
-│                                                                 │
-│  IP: 127.0.0.1 / localhost / 0.0.0.0                           │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    subgraph "LOCALHOST Mac/PC"
+        subgraph "ISSE_Simuladores PyQt6"
+            A1[Simulador Temp]
+            A2[Simulador Bat]
+            A3[UX :14001 srv]
+            A4[UX :14002 srv]
+            A5[UX envía]
+        end
+        
+        subgraph "ISSE_Termostato Control Loop"
+            B1[":12000 servidor"]
+            B2[":11000 servidor"]
+            B3[":14001 Visualizador"]
+            B4[":14002 Visualizador"]
+            B5[":13000 seteo"]
+            B6[":14000 selector"]
+        end
+        
+        A1 -->|TCP| B1
+        A2 -->|TCP| B2
+        B3 -->|TCP| A3
+        B4 -->|TCP| A4
+        A5 -->|TCP| B5
+        A5 -->|TCP| B6
+    end
+
+    style A1 fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style A2 fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style A3 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style A4 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style A5 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
 ```
 
 ### 5.2 Configuración Local
@@ -393,52 +402,42 @@ class BaseSocketServer(QObject):
 
 ### 7.1 Flujo: Envío de Temperatura Simulada
 
-```
-[Simulador Temperatura]              [ISSE_Termostato]
-        │                                    │
-        │  1. socket.connect(:12000)         │
-        │───────────────────────────────────>│
-        │                                    │
-        │  2. send("23.5")                   │
-        │───────────────────────────────────>│
-        │                                    │
-        │  3. socket.close()                 │
-        │─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─>│
-        │                                    │
-        │                    4. float("23.5")│
-        │                    5. Procesar temp│
+```mermaid
+sequenceDiagram
+    participant SimTemp as Simulador Temperatura
+    participant ISSE as ISSE_Termostato
+
+    SimTemp->>ISSE: 1. socket.connect(:12000)
+    SimTemp->>ISSE: 2. send("23.5")
+    SimTemp-->>ISSE: 3. socket.close()
+    ISSE->>ISSE: 4. float("23.5")
+    ISSE->>ISSE: 5. Procesar temp
 ```
 
 ### 7.2 Flujo: Recepción de Estado en UX
 
-```
-[ISSE_Termostato]                    [UX Termostato]
-        │                                    │
-        │                    1. listen(:14001)
-        │                                    │
-        │  2. socket.connect(:14001)         │
-        │───────────────────────────────────>│
-        │                                    │
-        │  3. send("ambiente: 23.5")         │
-        │───────────────────────────────────>│
-        │                                    │
-        │                    4. emit signal  │
-        │                    5. Update GUI   │
+```mermaid
+sequenceDiagram
+    participant ISSE as ISSE_Termostato
+    participant UX as UX Termostato
+
+    UX->>UX: 1. listen(:14001)
+    ISSE->>UX: 2. socket.connect(:14001)
+    ISSE->>UX: 3. send("ambiente: 23.5")
+    UX->>UX: 4. emit signal
+    UX->>UX: 5. Update GUI
 ```
 
 ### 7.3 Flujo: Comando desde UX
 
-```
-[UX Termostato]                      [ISSE_Termostato]
-        │                                    │
-        │  1. socket.connect(:13000)         │
-        │───────────────────────────────────>│
-        │                                    │
-        │  2. send("aumentar")               │
-        │───────────────────────────────────>│
-        │                                    │
-        │                    3. temp_deseada++
-        │                                    │
+```mermaid
+sequenceDiagram
+    participant UX as UX Termostato
+    participant ISSE as ISSE_Termostato
+
+    UX->>ISSE: 1. socket.connect(:13000)
+    UX->>ISSE: 2. send("aumentar")
+    ISSE->>ISSE: 3. temp_deseada++
 ```
 
 ---

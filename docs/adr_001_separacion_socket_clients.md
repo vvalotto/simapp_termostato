@@ -1,11 +1,5 @@
 # ADR-001: Separación de BaseSocketClient en clases cohesivas
 
-**Estado:** Aceptado
-**Fecha:** 2025-12-30
-**Autores:** Equipo ISSE_Simuladores
-
----
-
 ## Contexto
 
 La clase `BaseSocketClient` original fue diseñada como una clase base única para todos los clientes TCP del sistema. Sin embargo, un análisis de cohesión y del Principio de Responsabilidad Única (SRP) reveló problemas de diseño.
@@ -44,20 +38,30 @@ def _send_and_close_thread(self, data: str) -> None:
 
 Separar `BaseSocketClient` en una jerarquía de tres clases con responsabilidades únicas:
 
-```
-SocketClientBase (abstracta)
-├── PersistentSocketClient
-└── EphemeralSocketClient
+```mermaid
+graph TD
+    A[SocketClientBase<br/>abstracta] --> B[PersistentSocketClient]
+    A --> C[EphemeralSocketClient]
+
+    style A fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style B fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
 ```
 
 ### Arquitectura resultante
 
-```
-compartido/networking/
-├── socket_client_base.py          # Configuración común
-├── persistent_socket_client.py    # Conexiones de larga duración
-├── ephemeral_socket_client.py     # Conexiones fire-and-forget
-└── base_socket_client.py          # Alias (compatibilidad)
+```mermaid
+graph TD
+    A[compartido/networking/] --> B[socket_client_base.py<br/>Configuración común]
+    A --> C[persistent_socket_client.py<br/>Conexiones de larga duración]
+    A --> D[ephemeral_socket_client.py<br/>Conexiones fire-and-forget]
+    A --> E[base_socket_client.py<br/>Alias compatibilidad]
+
+    style A fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style B fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style C fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style D fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style E fill:#ffebee,stroke:#f44336,stroke-width:2px
 ```
 
 ---
@@ -206,5 +210,5 @@ cd compartido && pytest tests/ -v
 ## Referencias
 
 - [SOLID Principles](https://en.wikipedia.org/wiki/SOLID)
-- `docs/ESPECIFICACION_COMUNICACIONES.md` - Protocolo TCP del sistema
+- `docs/spec_001_comunicaciones.md` - Protocolo TCP del sistema
 - `compartido/networking/` - Implementación

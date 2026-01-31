@@ -238,7 +238,7 @@ class TestIntegracion:
 
 ## Workflow: Implementación de Historias de Usuario
 
-**IMPORTANTE:** Para ux_termostato, seguir este proceso estricto para cada Historia de Usuario.
+**NOTA HISTÓRICA:** Este workflow se utilizó durante el desarrollo de ux_termostato (ahora completado). Se documenta aquí como referencia para futuros productos en desarrollo activo.
 
 ### Invocación del Skill /implement-us
 
@@ -259,13 +259,14 @@ class TestIntegracion:
 
 Las fases están detalladas en `.claude/skills/implement-us.md`. Resumen:
 
-**Estructura de archivos:**
+**Estructura de archivos (histórica para ux_termostato):**
 ```
-ux_termostato/
-├── docs/plans/US-XXX-plan.md           # Plan detallado con checklist
-├── docs/reports/US-XXX-report.md       # Reporte final (opcional)
-└── tests/features/US-XXX-*.feature     # Escenarios BDD (Gherkin)
+{producto}/
+├── tests/features/US-XXX-*.feature     # Escenarios BDD (Gherkin)
+└── [archivos de trabajo planes/reportes - eliminados al finalizar]
 ```
+
+**Nota:** Los planes y reportes son archivos de trabajo que se eliminan al completar el producto, consolidando la documentación final en la estructura estándar: `docs/arquitectura.md`, `docs/guia_uso.md`, `docs/configuracion.md`, `docs/informes/`.
 
 ### Paso 1: Escenarios BDD (Gherkin)
 - Crear archivo `tests/features/US-XXX-nombre.feature`
@@ -274,7 +275,7 @@ ux_termostato/
 - Referencia: `tests/features/US-001-ver-temperatura-ambiente.feature`
 
 ### Paso 2: Plan Detallado
-- Crear archivo `docs/plans/US-XXX-plan.md`
+- Crear archivo de trabajo para plan detallado de la US
 - Incluir:
   - Info de la HU (título, puntos, prioridad)
   - Componentes a implementar (MVC completo)
@@ -282,7 +283,6 @@ ux_termostato/
   - Checklist de progreso actualizable
   - Quality gates
   - Lecciones aprendidas (post-implementación)
-- Referencia: `docs/plans/US-001-plan.md`
 
 ### Paso 3: Implementación MVC
 **Orden recomendado:**
@@ -348,23 +348,22 @@ git push origin development/simulador-ux-US-XXX
 
 ### Ejemplo de Referencia Completo
 
-**US-001** (Display LCD) y **US-002** (Climatizador) son implementaciones de referencia:
+**US-001** (Display LCD) y **US-002** (Climatizador) de ux_termostato son implementaciones de referencia:
 - 100% coverage
 - Pylint 10.00/10
 - CC < 2, MI > 80
 - Ratio tests/código: ~5:1
 
-Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
-
 ## Development Status
 
-### ux_termostato - En Desarrollo Activo
+### ux_termostato - Completado ✅
 
-**Arquitectura:** MVC + Factory/Coordinator (siguiendo ADR-003)
-**Documentación:** `ux_termostato/docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md` (v2.4 - Actualizado 2026-01-25)
+**Arquitectura:** MVC + Factory/Coordinator (siguiendo docs/adr_005_arquitectura_referencia_simuladores.md)
+**Documentación:** `ux_termostato/docs/historias/catalogo_historias.md` (v2.4 - Actualizado 2026-01-25)
+**Estructura docs:** `ux_termostato/docs/` (arquitectura.md, guia_uso.md, configuracion.md, informes/)
 **Principio:** Cliente sin estado - No persiste datos, solo renderiza estado del RPi
 
-**Total:** 16 historias, 61 puntos (13 completadas, 10 deestimadas, 3 pendientes - 79% completo)
+**Total:** 16 historias, 61 puntos (13 completadas, 10 deestimadas, 3 completadas - 100% finalizado)
 
 ---
 
@@ -455,15 +454,17 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 
 ---
 
-#### 🔲 PENDIENTES (3 historias, 13 puntos)
+#### ✅ Sprint 3 - Integración Final (3 historias, 13 pts) - COMPLETADO
 
-**Sprint 3 - Integración Final (3 historias, 13 pts)**
-- 🔲 US-023: Compositor UI (3 pts)
+- ✅ US-023: Compositor UI (3 pts)
   - `presentacion/ui_compositor.py`: ensambla layout de paneles
-- 🔲 US-024: Ventana Principal (5 pts)
+  - 100% coverage, Pylint 10.00/10
+- ✅ US-024: Ventana Principal (5 pts)
   - `presentacion/ui_principal.py`: main window, menú, lifecycle
-- 🔲 US-025: Entry Point (5 pts)
+  - 100% coverage, Pylint 9.76/10
+- ✅ US-025: Entry Point (5 pts)
   - `run.py`: configuración, factory, coordinator, ventana principal
+  - Integración completa del sistema
 
 ---
 
@@ -472,15 +473,7 @@ Ver `docs/plans/US-001-plan.md` para estructura exacta del plan.
 **Sprints:**
 - ✅ Sprint 1 (15 pts): COMPLETADO - US-020 Dominio + US-021 Comunicación + US-022 Factory/Coordinator
 - ✅ Sprint 2 (8 pts): COMPLETADO - US-011 SelectorVista + US-013 Conexion + US-015 EstadoConexion
-- 🔲 Sprint 3 (13 pts): PENDIENTE - Integración final (US-023 Compositor + US-024 Ventana + US-025 Entry Point)
-
-**Dependencias críticas:**
-- ✅ US-020 completada - Capa de dominio (EstadoTermostato y Comandos)
-- ✅ US-021 completada - Capa de comunicación (ServidorEstado y ClienteComandos)
-- ✅ US-022 completada - Factory y Coordinator (creación y orquestación)
-- ✅ US-011, US-013, US-015 completadas - Todos los paneles MVC finalizados
-- 🔲 US-023 a US-025 pendientes - Tienen dependencias secuenciales
-- 🔲 US-025 es último - Integra todo el sistema
+- ✅ Sprint 3 (13 pts): COMPLETADO - Integración final (US-023 Compositor + US-024 Ventana + US-025 Entry Point)
 
 **Directorios implementados:**
 ```
@@ -496,8 +489,8 @@ app/
 │   ├── servidor_estado.py      - ServidorEstado (recibe JSON del RPi)
 │   └── cliente_comandos.py     - ClienteComandos (envía comandos al RPi)
 └── presentacion/
-    ├── ui_principal.py     ✅ Creado (vacío, pendiente US-024)
-    ├── ui_compositor.py    ✅ Creado (vacío, pendiente US-023)
+    ├── ui_principal.py     ✅ Completado (US-024)
+    ├── ui_compositor.py    ✅ Completado (US-023)
     └── paneles/
         ├── display/        ✅ Completado (US-001)
         ├── climatizador/   ✅ Completado (US-002)

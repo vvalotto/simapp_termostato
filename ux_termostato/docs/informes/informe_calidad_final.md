@@ -676,7 +676,7 @@ El sistema está listo para:
 
 - [ADR-003: Arquitectura de Referencia para Simuladores](../../docs/ADR-003-arquitectura-referencia-simuladores.md)
 - [CLAUDE.md: Guía de Desarrollo](../../CLAUDE.md)
-- [Historias de Usuario](HISTORIAS-USUARIO-UX-TERMOSTATO.md)
+- [Historias de Usuario](../historias/catalogo_historias.md)
 
 ---
 

@@ -1,12 +1,5 @@
 # Estructura de Issues para Jira - Proyecto Simuladores Termostato
 
-**Proyecto:** Simuladores Termostato (ST)
-**Fecha de creación:** 2025-12-29
-**Última actualización:** 2026-01-12
-**Formato:** Historias de Usuario
-
----
-
 ## EPIC 1: Setup y Configuración del Proyecto (ST-1)
 
 **Descripción:** Configurar la estructura base del proyecto, dependencias, archivos de configuración y herramientas de calidad.
@@ -165,20 +158,29 @@
 
 ## Dependencias entre Epics
 
-```
-EPIC 1 (Setup y Configuración)
-    │
-    ▼
-EPIC 2 (Componentes Compartidos)
-    │
-    ├──► EPIC 3 (Simulador Temperatura)
-    │
-    ├──► EPIC 4 (Simulador Batería)
-    │
-    └──► EPIC 5 (UX Termostato)
-              │
-              ▼
-         EPIC 6 (Integración)
+```mermaid
+graph TD
+    A[EPIC 1<br/>Setup y Configuración]
+    B[EPIC 2<br/>Componentes Compartidos]
+    C[EPIC 3<br/>Simulador Temperatura]
+    D[EPIC 4<br/>Simulador Batería]
+    E[EPIC 5<br/>UX Termostato]
+    F[EPIC 6<br/>Integración]
+    
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+    C --> F
+    D --> F
+    E --> F
+
+    style A fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    style B fill:#fff9c4,stroke:#fbc02d,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style D fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style E fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style F fill:#ffebee,stroke:#f44336,stroke-width:2px
 ```
 
 - EPIC 1 debe completarse primero (setup del proyecto)
