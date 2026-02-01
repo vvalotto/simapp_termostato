@@ -3,10 +3,14 @@ name: Sincronizar Wiki
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'README.md'
       - 'docs/**'
+      - 'compartido/docs/**'
+      - 'simulador_temperatura/docs/**'
+      - 'simulador_bateria/docs/**'
+      - 'ux_termostato/docs/**'
   # Habilitamos ejecución manual para probar desde la web de GitHub
   workflow_dispatch:
 
