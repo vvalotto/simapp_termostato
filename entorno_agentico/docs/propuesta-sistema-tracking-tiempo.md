@@ -1050,7 +1050,7 @@ Claude:
 
 ━━━ Fase 0: Validación de Contexto ━━━
 
-✅ Historia encontrada en docs/HISTORIAS-USUARIO-UX-TERMOSTATO.md
+✅ Historia encontrada en ux_termostato/docs/historias/catalogo_historias.md
 ✅ Arquitectura de referencia: ADR-003
 ✅ Estándares: CLAUDE.md
 ✅ Tests configurados: conftest.py
