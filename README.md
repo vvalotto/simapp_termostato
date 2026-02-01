@@ -89,9 +89,92 @@ Cada producto mantiene estándares de calidad:
 - Índice de Mantenibilidad > 20
 - Pylint Score ≥ 8.0
 
+## Documentación
+
+Toda la documentación técnica está disponible en la [Wiki del proyecto](../../wiki).
+
+### 📚 Índice de Documentación
+
+#### 📋 Documentación de Proyecto
+
+**Architecture Decision Records (ADR):**
+- [ADR-005: Arquitectura Referencia Simuladores](../../wiki/ADR-005-Arquitectura-Referencia-Simuladores)
+
+**Especificaciones Técnicas:**
+- [Especificación de Comunicaciones](../../wiki/Especificacion-Comunicaciones)
+
+**Documentos de Diseño:**
+- [Diseño de Simuladores](../../wiki/Diseno-Simuladores)
+
+**Guías:**
+- [Guía de Estructura Jira](../../wiki/Guia-Estructura-Jira)
+
+---
+
+#### 🔧 Módulo Compartido
+
+**Arquitectura:**
+- [Arquitectura del Módulo Compartido](../../wiki/Compartido-Arquitectura)
+
+**Architecture Decision Records:**
+- [ADR-001: Separación de Socket Clients](../../wiki/ADR-001-Separacion-Socket-Clients)
+- [ADR-002: Refactorización Socket Server](../../wiki/ADR-002-Refactorizacion-Socket-Server)
+- [ADR-003: Arquitectura Widgets Compartidos](../../wiki/ADR-003-Arquitectura-Widgets-Compartidos)
+
+**Informes de Calidad:**
+- [Informe de Calidad Final](../../wiki/Compartido-Informe-Calidad)
+- [Informe de Diseño](../../wiki/Compartido-Informe-Diseno)
+
+---
+
+#### 🌡️ Simulador de Temperatura
+
+**Documentación General:**
+- [README del Simulador](../../wiki/Temperatura-README)
+
+**Arquitectura:**
+- [Arquitectura del Simulador](../../wiki/Temperatura-Arquitectura)
+
+**Architecture Decision Records:**
+- [ADR-001: Arquitectura de Presentación](../../wiki/Temperatura-ADR-001-Arquitectura-Presentacion)
+
+**Informes de Calidad:**
+- [Informe de Calidad Final](../../wiki/Temperatura-Informe-Calidad)
+- [Hallazgos de Desarrollo](../../wiki/Temperatura-Hallazgos)
+
+---
+
+#### 🔋 Simulador de Batería
+
+**Documentación General:**
+- [README del Simulador](../../wiki/Bateria-README)
+
+**Arquitectura:**
+- [Arquitectura del Simulador](../../wiki/Bateria-Arquitectura)
+
+**Informes de Calidad:**
+- [Informe de Calidad Final](../../wiki/Bateria-Informe-Calidad)
+- [Informe de Diseño](../../wiki/Bateria-Informe-Diseno)
+
+---
+
+#### 🖥️ UX Termostato
+
+**Arquitectura:**
+- [Arquitectura del UX Termostato](../../wiki/UX-Arquitectura)
+
+**Historias de Usuario:**
+- [Catálogo de Historias de Usuario](../../wiki/UX-Historias-Usuario)
+
+**Informes de Calidad:**
+- [Informe de Calidad Final](../../wiki/UX-Informe-Calidad)
+- [Hallazgos de Desarrollo](../../wiki/UX-Hallazgos)
+
+---
+
 ## Autor
 
-Victor Valotto - Diciembre 2025
+Victor Valotto - Enero 2016
 
 ## Licencia
 
