@@ -11,12 +11,12 @@ El Simulador de Temperatura es parte del sistema HIL (Hardware-in-the-Loop) ISSE
 - Visualización en tiempo real con gráfico
 - Conexión TCP al puerto 12000 del termostato
 
-```
-┌─────────────────────────────┐         ┌─────────────────────┐
-│  Simulador de Temperatura   │  TCP    │  ISSE_Termostato    │
-│  (PyQt6 Desktop)            │────────▶│  (Raspberry Pi)     │
-│                             │ :12000  │                     │
-└─────────────────────────────┘         └─────────────────────┘
+```mermaid
+graph LR
+    A[Simulador de Temperatura<br/>PyQt6 Desktop] -->|TCP :12000| B[ISSE_Termostato<br/>Raspberry Pi]
+
+    style A fill:#2d3748,stroke:#4a5568,color:#fff
+    style B fill:#2d3748,stroke:#4a5568,color:#fff
 ```
 
 ## Requisitos

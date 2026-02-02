@@ -11,12 +11,12 @@ El Simulador de Batería es parte del sistema HIL (Hardware-in-the-Loop) ISSE_Si
 - Monitoreo de envíos exitosos y fallidos
 - Conexión TCP al puerto 11000 del termostato
 
-```
-┌─────────────────────────────┐         ┌─────────────────────┐
-│  Simulador de Batería       │  TCP    │  ISSE_Termostato    │
-│  (PyQt6 Desktop)            │────────▶│  (Raspberry Pi)     │
-│                             │ :11000  │                     │
-└─────────────────────────────┘         └─────────────────────┘
+```mermaid
+graph LR
+    A[Simulador de Batería<br/>PyQt6 Desktop] -->|TCP :11000| B[ISSE_Termostato<br/>Raspberry Pi]
+
+    style A fill:#2d3748,stroke:#4a5568,color:#fff
+    style B fill:#2d3748,stroke:#4a5568,color:#fff
 ```
 
 ## Requisitos
