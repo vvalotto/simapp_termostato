@@ -18,12 +18,6 @@ Desktop (Mac/PC)                         Raspberry Pi
 
 ## Commands
 
-### Skills Personalizados
-
-**`/implement-us US-XXX`** - Implementar Historia de Usuario
-- Proceso completo en `.claude/skills/implement-us.md`
-- Incluye: BDD → Plan → MVC → Tests → Quality → Docs
-
 ```bash
 # Setup (Python 3.12+)
 python -m venv .venv && source .venv/bin/activate  # Windows: .venv\Scripts\activate
@@ -223,24 +217,15 @@ class TestIntegracion: # flujo completo modelo → controlador → vista
 
 5. **Observer**: PyQt signals/slots para desacoplamiento
 
-## Workflow: Implementación de Historias de Usuario
-
-**Invocación:** `/implement-us US-XXX` → Lee `.claude/skills/implement-us.md` y ejecuta 9 fases:
-BDD (Gherkin) → Plan detallado → MVC (modelo, vista, controlador) → Tests unitarios → Tests integración → Steps BDD → Quality gates → Git workflow → Finalización
-
-**Referencia de implementación:** US-001 (Display LCD) y US-002 (Climatizador) de ux_termostato muestran el patrón completo: 100% coverage, Pylint 10/10, CC < 2, MI > 80.
-
-**Tracking de tiempo:** Se gestiona automáticamente al invocar `/implement-us`. Ver `.claude/tracking/` para datos raw y `docs/reports/` para reportes.
-
 ## Development Status
 
 Los tres productos están completos:
 
 - **simulador_temperatura** ✅ - Coverage ~95%+, quality gates OK
 - **simulador_bateria** ✅ - Coverage 96%, quality gates OK
-- **ux_termostato** ✅ - 16 historias (13 completadas + 10 desestimadas + 3 sprint integración), 100% coverage en paneles principales, Pylint 10/10
+- **ux_termostato** ✅ - Coverage ~96%, Pylint 9.91/10
 
-Documentación detallada de cada producto: `{producto}/docs/historias/` y `{producto}/docs/informes/`.
+Documentación detallada de cada producto: `{producto}/docs/`.
 
 ## Important Notes
 
