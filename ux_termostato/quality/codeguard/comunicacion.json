@@ -1,0 +1,138 @@
+{
+  "summary": {
+    "total_files": 3,
+    "checks_executed": 6,
+    "elapsed_seconds": 2.15,
+    "timestamp": "2026-03-07T11:35:46.393614",
+    "total_issues": 9,
+    "errors": 0,
+    "warnings": 2,
+    "infos": 7
+  },
+  "results": [
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/comunicacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/comunicacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/comunicacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "warning",
+      "message": "Security [B104]: Possible binding to all interfaces.",
+      "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+      "line": 59
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 'json' imported but unused",
+      "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+      "line": 7
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+      "line": null
+    }
+  ],
+  "by_severity": {
+    "errors": [],
+    "warnings": [
+      {
+        "check": "Security",
+        "message": "Security [B104]: Possible binding to all interfaces.",
+        "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+        "line": 59
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 'json' imported but unused",
+        "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+        "line": 7
+      }
+    ],
+    "infos": [
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/comunicacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/comunicacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/comunicacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+        "line": null
+      }
+    ]
+  }
+}

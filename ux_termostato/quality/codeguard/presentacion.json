@@ -1,0 +1,1607 @@
+{
+  "summary": {
+    "total_files": 35,
+    "checks_executed": 6,
+    "elapsed_seconds": 24.71,
+    "timestamp": "2026-03-07T11:36:16.587378",
+    "total_issues": 122,
+    "errors": 0,
+    "warnings": 24,
+    "infos": 98
+  },
+  "results": [
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E402 module level import not at top of file",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": 17
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E402 module level import not at top of file",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": 18
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E402 module level import not at top of file",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": 20
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 '..coordinator.UXCoordinator' imported but unused",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": 24
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E402 module level import not at top of file",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": 26
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F811 redefinition of unused 'UXCoordinator' from line 24",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": 169
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/ui_principal.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 'PyQt6.QtCore.QSize' imported but unused",
+      "file": "ux_termostato/app/presentacion/ui_compositor.py",
+      "line": 10
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/power/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/power/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/power/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/power/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/power/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/power/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/power/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/power/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/power/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/power/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/power/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/power/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 86
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 87
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 88
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 98
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F841 local variable 'comando' is assigned to but never used",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 107
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E501 line too long (117 > 100 characters)",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 110
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 134
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 135
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 136
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 146
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E501 line too long (118 > 100 characters)",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": 155
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/control_temp/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/climatizador/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 'PyQt6.QtWidgets.QHBoxLayout' imported but unused",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+      "line": 4
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+      "line": 196
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/indicadores/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 'PyQt6.QtCore.Qt' imported but unused",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/vista.py",
+      "line": 4
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/selector_vista/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/display/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/display/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/display/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+      "line": 133
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+      "line": 145
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/display/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: E128 continuation line under-indented for visual indent",
+      "file": "ux_termostato/app/presentacion/paneles/display/vista.py",
+      "line": 144
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/display/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/display/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/display/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/display/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "ux_termostato/app/presentacion/paneles/estado_conexion/__init__.py",
+      "line": null
+    }
+  ],
+  "by_severity": {
+    "errors": [],
+    "warnings": [
+      {
+        "check": "PEP8",
+        "message": "PEP8: E402 module level import not at top of file",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": 17
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E402 module level import not at top of file",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": 18
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E402 module level import not at top of file",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": 20
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 '..coordinator.UXCoordinator' imported but unused",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": 24
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E402 module level import not at top of file",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": 26
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F811 redefinition of unused 'UXCoordinator' from line 24",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": 169
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 'PyQt6.QtCore.QSize' imported but unused",
+        "file": "ux_termostato/app/presentacion/ui_compositor.py",
+        "line": 10
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 86
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 87
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 88
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 98
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F841 local variable 'comando' is assigned to but never used",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 107
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E501 line too long (117 > 100 characters)",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 110
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 134
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 135
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 136
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 146
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E501 line too long (118 > 100 characters)",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": 155
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 'PyQt6.QtWidgets.QHBoxLayout' imported but unused",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+        "line": 4
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+        "line": 196
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 'PyQt6.QtCore.Qt' imported but unused",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/vista.py",
+        "line": 4
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+        "line": 133
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+        "line": 145
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: E128 continuation line under-indented for visual indent",
+        "file": "ux_termostato/app/presentacion/paneles/display/vista.py",
+        "line": 144
+      }
+    ],
+    "infos": [
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/ui_principal.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/power/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/power/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/power/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/power/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/power/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/power/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/power/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/power/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/power/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/power/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/power/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/power/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/control_temp/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/climatizador/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/indicadores/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/selector_vista/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/display/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/display/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/display/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/display/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/display/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/display/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/display/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/display/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/display/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "ux_termostato/app/presentacion/paneles/estado_conexion/__init__.py",
+        "line": null
+      }
+    ]
+  }
+}

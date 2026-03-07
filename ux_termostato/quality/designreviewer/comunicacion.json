@@ -1,0 +1,207 @@
+{
+  "summary": {
+    "total_files": 3,
+    "analyzers_executed": 12,
+    "elapsed_seconds": 0.03,
+    "timestamp": "2026-03-07T11:35:46.663206",
+    "total_issues": 7,
+    "blocking_issues": 0,
+    "warnings": 7,
+    "infos": 0,
+    "should_block": false,
+    "estimated_effort_hours": {
+      "blocking": 0,
+      "total": 13.3
+    }
+  },
+  "results": [
+    {
+      "analyzer": "LCOMAnalyzer",
+      "severity": "warning",
+      "message": "Clase 'ServidorEstado' tiene LCOM=6 (umbral: 1): 6 grupos de métodos sin atributos compartidos.",
+      "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+      "class": "ServidorEstado",
+      "current_value": 6,
+      "threshold": 1,
+      "estimated_effort_hours": 7.5,
+      "solid_principle": null,
+      "smell_type": null,
+      "suggestion": "Dividir 'ServidorEstado' en 6 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ServidorEstado.__init__' tiene 26 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+      "class": "ServidorEstado",
+      "current_value": 26,
+      "threshold": 20,
+      "estimated_effort_hours": 0.3,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 6 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ServidorEstado.iniciar' tiene 21 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+      "class": "ServidorEstado",
+      "current_value": 21,
+      "threshold": 20,
+      "estimated_effort_hours": 0.1,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 1 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ServidorEstado._procesar_mensaje' tiene 50 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+      "class": "ServidorEstado",
+      "current_value": 50,
+      "threshold": 20,
+      "estimated_effort_hours": 1.5,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 30 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ClienteComandos.__init__' tiene 27 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+      "class": "ClienteComandos",
+      "current_value": 27,
+      "threshold": 20,
+      "estimated_effort_hours": 0.3,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 7 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ClienteComandos.enviar_comando' tiene 74 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+      "class": "ClienteComandos",
+      "current_value": 74,
+      "threshold": 20,
+      "estimated_effort_hours": 2.7,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 54 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ClienteComandos._adaptar_comando_a_texto' tiene 39 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+      "class": "ClienteComandos",
+      "current_value": 39,
+      "threshold": 20,
+      "estimated_effort_hours": 0.9,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 19 línea(s) en métodos auxiliares con nombres descriptivos."
+    }
+  ],
+  "by_severity": {
+    "critical": [],
+    "warning": [
+      {
+        "analyzer": "LCOMAnalyzer",
+        "severity": "warning",
+        "message": "Clase 'ServidorEstado' tiene LCOM=6 (umbral: 1): 6 grupos de métodos sin atributos compartidos.",
+        "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+        "class": "ServidorEstado",
+        "current_value": 6,
+        "threshold": 1,
+        "estimated_effort_hours": 7.5,
+        "solid_principle": null,
+        "smell_type": null,
+        "suggestion": "Dividir 'ServidorEstado' en 6 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ServidorEstado.__init__' tiene 26 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+        "class": "ServidorEstado",
+        "current_value": 26,
+        "threshold": 20,
+        "estimated_effort_hours": 0.3,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 6 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ServidorEstado.iniciar' tiene 21 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+        "class": "ServidorEstado",
+        "current_value": 21,
+        "threshold": 20,
+        "estimated_effort_hours": 0.1,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 1 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ServidorEstado._procesar_mensaje' tiene 50 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/comunicacion/servidor_estado.py",
+        "class": "ServidorEstado",
+        "current_value": 50,
+        "threshold": 20,
+        "estimated_effort_hours": 1.5,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 30 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ClienteComandos.__init__' tiene 27 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+        "class": "ClienteComandos",
+        "current_value": 27,
+        "threshold": 20,
+        "estimated_effort_hours": 0.3,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 7 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ClienteComandos.enviar_comando' tiene 74 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+        "class": "ClienteComandos",
+        "current_value": 74,
+        "threshold": 20,
+        "estimated_effort_hours": 2.7,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 54 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ClienteComandos._adaptar_comando_a_texto' tiene 39 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/comunicacion/cliente_comandos.py",
+        "class": "ClienteComandos",
+        "current_value": 39,
+        "threshold": 20,
+        "estimated_effort_hours": 0.9,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 19 línea(s) en métodos auxiliares con nombres descriptivos."
+      }
+    ],
+    "info": []
+  }
+}

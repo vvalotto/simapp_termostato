@@ -1,0 +1,155 @@
+{
+  "summary": {
+    "total_files": 3,
+    "analyzers_executed": 12,
+    "elapsed_seconds": 0.04,
+    "timestamp": "2026-03-07T11:21:35.876451",
+    "total_issues": 5,
+    "blocking_issues": 0,
+    "warnings": 5,
+    "infos": 0,
+    "should_block": false,
+    "estimated_effort_hours": {
+      "blocking": 0,
+      "total": 5.0
+    }
+  },
+  "results": [
+    {
+      "analyzer": "LCOMAnalyzer",
+      "severity": "warning",
+      "message": "Clase 'ClienteBateria' tiene LCOM=3 (umbral: 1): 3 grupos de métodos sin atributos compartidos.",
+      "file": "simulador_bateria/app/comunicacion/cliente_bateria.py",
+      "class": "ClienteBateria",
+      "current_value": 3,
+      "threshold": 1,
+      "estimated_effort_hours": 3.0,
+      "solid_principle": null,
+      "smell_type": null,
+      "suggestion": "Dividir 'ClienteBateria' en 3 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ClienteBateria.__init__' tiene 27 líneas (umbral: 20). Método demasiado largo.",
+      "file": "simulador_bateria/app/comunicacion/cliente_bateria.py",
+      "class": "ClienteBateria",
+      "current_value": 27,
+      "threshold": 20,
+      "estimated_effort_hours": 0.3,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 7 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ClienteBateria.enviar_voltaje' tiene 22 líneas (umbral: 20). Método demasiado largo.",
+      "file": "simulador_bateria/app/comunicacion/cliente_bateria.py",
+      "class": "ClienteBateria",
+      "current_value": 22,
+      "threshold": 20,
+      "estimated_effort_hours": 0.1,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 2 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LCOMAnalyzer",
+      "severity": "warning",
+      "message": "Clase 'ServicioEnvioBateria' tiene LCOM=2 (umbral: 1): 2 grupos de métodos sin atributos compartidos.",
+      "file": "simulador_bateria/app/comunicacion/servicio_envio.py",
+      "class": "ServicioEnvioBateria",
+      "current_value": 2,
+      "threshold": 1,
+      "estimated_effort_hours": 1.5,
+      "solid_principle": null,
+      "smell_type": null,
+      "suggestion": "Dividir 'ServicioEnvioBateria' en 2 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ServicioEnvioBateria.__init__' tiene 22 líneas (umbral: 20). Método demasiado largo.",
+      "file": "simulador_bateria/app/comunicacion/servicio_envio.py",
+      "class": "ServicioEnvioBateria",
+      "current_value": 22,
+      "threshold": 20,
+      "estimated_effort_hours": 0.1,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 2 línea(s) en métodos auxiliares con nombres descriptivos."
+    }
+  ],
+  "by_severity": {
+    "critical": [],
+    "warning": [
+      {
+        "analyzer": "LCOMAnalyzer",
+        "severity": "warning",
+        "message": "Clase 'ClienteBateria' tiene LCOM=3 (umbral: 1): 3 grupos de métodos sin atributos compartidos.",
+        "file": "simulador_bateria/app/comunicacion/cliente_bateria.py",
+        "class": "ClienteBateria",
+        "current_value": 3,
+        "threshold": 1,
+        "estimated_effort_hours": 3.0,
+        "solid_principle": null,
+        "smell_type": null,
+        "suggestion": "Dividir 'ClienteBateria' en 3 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ClienteBateria.__init__' tiene 27 líneas (umbral: 20). Método demasiado largo.",
+        "file": "simulador_bateria/app/comunicacion/cliente_bateria.py",
+        "class": "ClienteBateria",
+        "current_value": 27,
+        "threshold": 20,
+        "estimated_effort_hours": 0.3,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 7 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ClienteBateria.enviar_voltaje' tiene 22 líneas (umbral: 20). Método demasiado largo.",
+        "file": "simulador_bateria/app/comunicacion/cliente_bateria.py",
+        "class": "ClienteBateria",
+        "current_value": 22,
+        "threshold": 20,
+        "estimated_effort_hours": 0.1,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 2 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LCOMAnalyzer",
+        "severity": "warning",
+        "message": "Clase 'ServicioEnvioBateria' tiene LCOM=2 (umbral: 1): 2 grupos de métodos sin atributos compartidos.",
+        "file": "simulador_bateria/app/comunicacion/servicio_envio.py",
+        "class": "ServicioEnvioBateria",
+        "current_value": 2,
+        "threshold": 1,
+        "estimated_effort_hours": 1.5,
+        "solid_principle": null,
+        "smell_type": null,
+        "suggestion": "Dividir 'ServicioEnvioBateria' en 2 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ServicioEnvioBateria.__init__' tiene 22 líneas (umbral: 20). Método demasiado largo.",
+        "file": "simulador_bateria/app/comunicacion/servicio_envio.py",
+        "class": "ServicioEnvioBateria",
+        "current_value": 22,
+        "threshold": 20,
+        "estimated_effort_hours": 0.1,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 2 línea(s) en métodos auxiliares con nombres descriptivos."
+      }
+    ],
+    "info": []
+  }
+}

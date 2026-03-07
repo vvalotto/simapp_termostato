@@ -1,0 +1,644 @@
+{
+  "summary": {
+    "total_files": 16,
+    "checks_executed": 6,
+    "elapsed_seconds": 11.41,
+    "timestamp": "2026-03-07T11:20:45.051205",
+    "total_issues": 48,
+    "errors": 0,
+    "warnings": 0,
+    "infos": 48
+  },
+  "results": [
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_bateria/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_bateria/app/presentacion/paneles/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/base.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/base.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/base.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_bateria/app/presentacion/paneles/estado/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_bateria/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/control/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/control/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/control/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/control/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/control/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/control/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/control/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/control/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_bateria/app/presentacion/paneles/control/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_bateria/app/presentacion/paneles/control/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_bateria/app/presentacion/paneles/control/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_bateria/app/presentacion/paneles/control/__init__.py",
+      "line": null
+    }
+  ],
+  "by_severity": {
+    "errors": [],
+    "warnings": [],
+    "infos": [
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_bateria/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_bateria/app/presentacion/paneles/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/base.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/base.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/base.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_bateria/app/presentacion/paneles/estado/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_bateria/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/control/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/control/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/control/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/control/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/control/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/control/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/control/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/control/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_bateria/app/presentacion/paneles/control/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_bateria/app/presentacion/paneles/control/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_bateria/app/presentacion/paneles/control/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_bateria/app/presentacion/paneles/control/__init__.py",
+        "line": null
+      }
+    ]
+  }
+}

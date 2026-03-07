@@ -1,0 +1,931 @@
+{
+  "summary": {
+    "total_files": 23,
+    "checks_executed": 6,
+    "elapsed_seconds": 19.16,
+    "timestamp": "2026-03-07T11:30:39.167677",
+    "total_issues": 70,
+    "errors": 0,
+    "warnings": 6,
+    "infos": 64
+  },
+  "results": [
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/grafico_temperatura.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/grafico_temperatura.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/grafico_temperatura.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_temperatura/app/presentacion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/ui_principal.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/ui_principal.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/ui_principal.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/control_temperatura.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/control_temperatura.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/control_temperatura.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/ui_compositor.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/base.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/base.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/base.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/estado/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 '.vista.ConfigPanelConexionVista' imported but unused",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/controlador.py",
+      "line": 13
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 '.modelo.EstadoConexion' imported but unused",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/vista.py",
+      "line": 14
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/conexion/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 '.modelo.ModoOperacion' imported but unused",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/controlador.py",
+      "line": 12
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 'dataclasses.dataclass' imported but unused",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+      "line": 6
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F401 '.modelo.ModoOperacion' imported but unused",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+      "line": 22
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/modelo.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/modelo.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/controlador.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "warning",
+      "message": "PEP8: F841 local variable 'tiempo_relativo' is assigned to but never used",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/controlador.py",
+      "line": 65
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/controlador.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/vista.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/vista.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ All functions below complexity threshold (≤10)",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/vista.py",
+      "line": null
+    },
+    {
+      "check": "Security",
+      "severity": "info",
+      "message": "✓ No security issues detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/__init__.py",
+      "line": null
+    },
+    {
+      "check": "PEP8",
+      "severity": "info",
+      "message": "✓ PEP8 compliant",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/__init__.py",
+      "line": null
+    },
+    {
+      "check": "Complexity",
+      "severity": "info",
+      "message": "✓ No complex functions detected",
+      "file": "simulador_temperatura/app/presentacion/paneles/grafico/__init__.py",
+      "line": null
+    }
+  ],
+  "by_severity": {
+    "errors": [],
+    "warnings": [
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 '.vista.ConfigPanelConexionVista' imported but unused",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/controlador.py",
+        "line": 13
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 '.modelo.EstadoConexion' imported but unused",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/vista.py",
+        "line": 14
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 '.modelo.ModoOperacion' imported but unused",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/controlador.py",
+        "line": 12
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 'dataclasses.dataclass' imported but unused",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+        "line": 6
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F401 '.modelo.ModoOperacion' imported but unused",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+        "line": 22
+      },
+      {
+        "check": "PEP8",
+        "message": "PEP8: F841 local variable 'tiempo_relativo' is assigned to but never used",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/controlador.py",
+        "line": 65
+      }
+    ],
+    "infos": [
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/grafico_temperatura.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/grafico_temperatura.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/grafico_temperatura.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_temperatura/app/presentacion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/ui_principal.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/ui_principal.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/ui_principal.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/control_temperatura.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/control_temperatura.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/control_temperatura.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/ui_compositor.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/base.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/base.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/base.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/controlador.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/estado/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/conexion/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/control_temperatura/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/modelo.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/modelo.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/controlador.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/vista.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/vista.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ All functions below complexity threshold (≤10)",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/vista.py",
+        "line": null
+      },
+      {
+        "check": "Security",
+        "message": "✓ No security issues detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/__init__.py",
+        "line": null
+      },
+      {
+        "check": "PEP8",
+        "message": "✓ PEP8 compliant",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/__init__.py",
+        "line": null
+      },
+      {
+        "check": "Complexity",
+        "message": "✓ No complex functions detected",
+        "file": "simulador_temperatura/app/presentacion/paneles/grafico/__init__.py",
+        "line": null
+      }
+    ]
+  }
+}

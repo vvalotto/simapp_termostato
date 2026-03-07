@@ -1,0 +1,51 @@
+{
+  "summary": {
+    "total_files": 3,
+    "analyzers_executed": 12,
+    "elapsed_seconds": 0.02,
+    "timestamp": "2026-03-07T11:21:36.374828",
+    "total_issues": 1,
+    "blocking_issues": 0,
+    "warnings": 1,
+    "infos": 0,
+    "should_block": false,
+    "estimated_effort_hours": {
+      "blocking": 0,
+      "total": 1.5
+    }
+  },
+  "results": [
+    {
+      "analyzer": "LCOMAnalyzer",
+      "severity": "warning",
+      "message": "Clase 'GeneradorBateria' tiene LCOM=2 (umbral: 1): 2 grupos de métodos sin atributos compartidos.",
+      "file": "simulador_bateria/app/dominio/generador_bateria.py",
+      "class": "GeneradorBateria",
+      "current_value": 2,
+      "threshold": 1,
+      "estimated_effort_hours": 1.5,
+      "solid_principle": null,
+      "smell_type": null,
+      "suggestion": "Dividir 'GeneradorBateria' en 2 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+    }
+  ],
+  "by_severity": {
+    "critical": [],
+    "warning": [
+      {
+        "analyzer": "LCOMAnalyzer",
+        "severity": "warning",
+        "message": "Clase 'GeneradorBateria' tiene LCOM=2 (umbral: 1): 2 grupos de métodos sin atributos compartidos.",
+        "file": "simulador_bateria/app/dominio/generador_bateria.py",
+        "class": "GeneradorBateria",
+        "current_value": 2,
+        "threshold": 1,
+        "estimated_effort_hours": 1.5,
+        "solid_principle": null,
+        "smell_type": null,
+        "suggestion": "Dividir 'GeneradorBateria' en 2 clases con responsabilidades bien definidas, una por cada grupo cohesivo de métodos."
+      }
+    ],
+    "info": []
+  }
+}
