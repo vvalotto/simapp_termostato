@@ -1,0 +1,77 @@
+{
+  "summary": {
+    "total_files": 2,
+    "analyzers_executed": 12,
+    "elapsed_seconds": 0.03,
+    "timestamp": "2026-03-07T11:35:48.986562",
+    "total_issues": 2,
+    "blocking_issues": 0,
+    "warnings": 2,
+    "infos": 0,
+    "should_block": false,
+    "estimated_effort_hours": {
+      "blocking": 0,
+      "total": 1.6
+    }
+  },
+  "results": [
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ConfigUX.__post_init__' tiene 40 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/configuracion/config.py",
+      "class": "ConfigUX",
+      "current_value": 40,
+      "threshold": 20,
+      "estimated_effort_hours": 1.0,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 20 línea(s) en métodos auxiliares con nombres descriptivos."
+    },
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ConfigUX.from_dict' tiene 32 líneas (umbral: 20). Método demasiado largo.",
+      "file": "ux_termostato/app/configuracion/config.py",
+      "class": "ConfigUX",
+      "current_value": 32,
+      "threshold": 20,
+      "estimated_effort_hours": 0.6,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 12 línea(s) en métodos auxiliares con nombres descriptivos."
+    }
+  ],
+  "by_severity": {
+    "critical": [],
+    "warning": [
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ConfigUX.__post_init__' tiene 40 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/configuracion/config.py",
+        "class": "ConfigUX",
+        "current_value": 40,
+        "threshold": 20,
+        "estimated_effort_hours": 1.0,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 20 línea(s) en métodos auxiliares con nombres descriptivos."
+      },
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ConfigUX.from_dict' tiene 32 líneas (umbral: 20). Método demasiado largo.",
+        "file": "ux_termostato/app/configuracion/config.py",
+        "class": "ConfigUX",
+        "current_value": 32,
+        "threshold": 20,
+        "estimated_effort_hours": 0.6,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 12 línea(s) en métodos auxiliares con nombres descriptivos."
+      }
+    ],
+    "info": []
+  }
+}
