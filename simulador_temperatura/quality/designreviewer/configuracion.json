@@ -1,0 +1,51 @@
+{
+  "summary": {
+    "total_files": 3,
+    "analyzers_executed": 12,
+    "elapsed_seconds": 0.03,
+    "timestamp": "2026-03-07T11:30:47.934946",
+    "total_issues": 1,
+    "blocking_issues": 0,
+    "warnings": 1,
+    "infos": 0,
+    "should_block": false,
+    "estimated_effort_hours": {
+      "blocking": 0,
+      "total": 0.1
+    }
+  },
+  "results": [
+    {
+      "analyzer": "LongMethodAnalyzer",
+      "severity": "warning",
+      "message": "Método 'ConfigManager._cargar_desde_archivo' tiene 23 líneas (umbral: 20). Método demasiado largo.",
+      "file": "simulador_temperatura/app/configuracion/config.py",
+      "class": "ConfigManager",
+      "current_value": 23,
+      "threshold": 20,
+      "estimated_effort_hours": 0.1,
+      "solid_principle": "S",
+      "smell_type": "LongMethod",
+      "suggestion": "Extraer 3 línea(s) en métodos auxiliares con nombres descriptivos."
+    }
+  ],
+  "by_severity": {
+    "critical": [],
+    "warning": [
+      {
+        "analyzer": "LongMethodAnalyzer",
+        "severity": "warning",
+        "message": "Método 'ConfigManager._cargar_desde_archivo' tiene 23 líneas (umbral: 20). Método demasiado largo.",
+        "file": "simulador_temperatura/app/configuracion/config.py",
+        "class": "ConfigManager",
+        "current_value": 23,
+        "threshold": 20,
+        "estimated_effort_hours": 0.1,
+        "solid_principle": "S",
+        "smell_type": "LongMethod",
+        "suggestion": "Extraer 3 línea(s) en métodos auxiliares con nombres descriptivos."
+      }
+    ],
+    "info": []
+  }
+}
