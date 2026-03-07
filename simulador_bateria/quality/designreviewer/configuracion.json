@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "total_files": 3,
+    "analyzers_executed": 12,
+    "elapsed_seconds": 0.03,
+    "timestamp": "2026-03-07T11:21:36.127920",
+    "total_issues": 0,
+    "blocking_issues": 0,
+    "warnings": 0,
+    "infos": 0,
+    "should_block": false,
+    "estimated_effort_hours": {
+      "blocking": 0,
+      "total": 0
+    }
+  },
+  "results": [],
+  "by_severity": {
+    "critical": [],
+    "warning": [],
+    "info": []
+  }
+}
