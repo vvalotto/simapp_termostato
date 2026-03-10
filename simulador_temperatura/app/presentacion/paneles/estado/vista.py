@@ -58,6 +58,12 @@ class PanelEstadoVista(QFrame):
 
     def _setup_ui(self) -> None:
         """Configura la interfaz del panel."""
+        self._configurar_estilos()
+        self._crear_widgets()
+        self._ensamblar_layout()
+
+    def _configurar_estilos(self) -> None:
+        """Aplica frame style y stylesheet al panel."""
         self.setFrameStyle(QFrame.Shape.StyledPanel | QFrame.Shadow.Raised)
         self.setStyleSheet(f"""
             QFrame {{
@@ -70,37 +76,37 @@ class PanelEstadoVista(QFrame):
             }}
         """)
 
-        layout = QVBoxLayout(self)
+    def _crear_widgets(self) -> None:
+        """Crea y configura los widgets del panel."""
+        self._titulo = QLabel(self._config.titulo)
+        self._titulo.setFont(QFont("Arial", 12, QFont.Weight.Bold))
+        self._titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # Título
-        titulo = QLabel(self._config.titulo)
-        titulo.setFont(QFont("Arial", 12, QFont.Weight.Bold))
-        titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(titulo)
-
-        # Temperatura actual
         self._label_temperatura = QLabel(self._config.texto_sin_datos)
         self._label_temperatura.setFont(QFont("Arial", 24, QFont.Weight.Bold))
         self._label_temperatura.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._label_temperatura.setStyleSheet(
             f"color: {self._config.color_temperatura};"
         )
-        layout.addWidget(self._label_temperatura)
 
-        # Estado conexión
         self._label_conexion = QLabel(self._config.texto_desconectado)
         self._label_conexion.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._label_conexion.setStyleSheet(
             f"color: {self._config.color_desconectado};"
         )
-        layout.addWidget(self._label_conexion)
 
-        # Contador de envíos
         self._label_contador = QLabel("Envíos: 0 ✓  0 ✗")
         self._label_contador.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._label_contador.setStyleSheet(
             f"color: {self._config.color_texto};"
         )
+
+    def _ensamblar_layout(self) -> None:
+        """Ensambla los widgets en el layout principal."""
+        layout = QVBoxLayout(self)
+        layout.addWidget(self._titulo)
+        layout.addWidget(self._label_temperatura)
+        layout.addWidget(self._label_conexion)
         layout.addWidget(self._label_contador)
 
     def actualizar(self, modelo: ModeloBase) -> None:

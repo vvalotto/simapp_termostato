@@ -122,22 +122,18 @@ class ControlTemperaturaVista(QWidget):
         self._conectar_signals()
 
     def _setup_ui(self) -> None:
-        layout = QVBoxLayout(self)
+        self._crear_selector_modo()
+        self._crear_panel_automatico()
+        self._crear_panel_manual()
+        self._ensamblar_layout()
 
-        # Selector de modo
-        modo_layout = QHBoxLayout()
-        modo_label = QLabel("Modo:")
+    def _crear_selector_modo(self) -> None:
+        """Crea el combo selector de modo."""
         self._modo_combo = QComboBox()
         self._modo_combo.addItems(["Automático", "Manual"])
-        modo_layout.addWidget(modo_label)
-        modo_layout.addWidget(self._modo_combo, stretch=1)
-        layout.addLayout(modo_layout)
 
-        # Stack para paneles
-        self._stack = QStackedWidget()
-        layout.addWidget(self._stack)
-
-        # Panel automático (parámetros senoidales)
+    def _crear_panel_automatico(self) -> None:
+        """Crea el panel de parámetros senoidales (modo automático)."""
         self._panel_auto = QGroupBox("Parámetros de Variación Senoidal")
         panel_auto_layout = QVBoxLayout(self._panel_auto)
 
@@ -177,9 +173,8 @@ class ControlTemperaturaVista(QWidget):
         )
         panel_auto_layout.addWidget(self._slider_periodo)
 
-        self._stack.addWidget(self._panel_auto)
-
-        # Panel manual
+    def _crear_panel_manual(self) -> None:
+        """Crea el panel de temperatura manual."""
         self._panel_manual = QGroupBox("Temperatura Manual")
         panel_manual_layout = QVBoxLayout(self._panel_manual)
 
@@ -195,7 +190,20 @@ class ControlTemperaturaVista(QWidget):
         )
         panel_manual_layout.addWidget(self._slider_manual)
 
+    def _ensamblar_layout(self) -> None:
+        """Ensambla el layout principal con el selector y los paneles."""
+        layout = QVBoxLayout(self)
+
+        modo_layout = QHBoxLayout()
+        modo_label = QLabel("Modo:")
+        modo_layout.addWidget(modo_label)
+        modo_layout.addWidget(self._modo_combo, stretch=1)
+        layout.addLayout(modo_layout)
+
+        self._stack = QStackedWidget()
+        self._stack.addWidget(self._panel_auto)
         self._stack.addWidget(self._panel_manual)
+        layout.addWidget(self._stack)
 
     def _conectar_signals(self) -> None:
         self._modo_combo.currentIndexChanged.connect(self._on_modo_changed)
