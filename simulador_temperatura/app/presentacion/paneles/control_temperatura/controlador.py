@@ -9,7 +9,7 @@ from typing import Optional
 from PyQt6.QtCore import QObject, pyqtSignal
 
 from ..base import ControladorBase
-from .modelo import ParametrosControl, ParametrosSenoidal, ModoOperacion, RangosControl
+from .modelo import ParametrosControl, ParametrosSenoidal, RangosControl
 from .vista import ControlTemperaturaVista
 
 
