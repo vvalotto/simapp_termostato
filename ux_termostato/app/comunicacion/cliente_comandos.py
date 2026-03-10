@@ -4,7 +4,6 @@ Cliente TCP para enviar comandos al termostato en el Raspberry Pi.
 Este cliente usa el patrón efímero (conectar → enviar → cerrar) para enviar
 comandos JSON al termostato. Cada comando se envía en una conexión nueva.
 """
-import json
 import logging
 from typing import Optional
 
