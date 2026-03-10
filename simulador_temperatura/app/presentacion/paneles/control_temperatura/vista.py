@@ -3,6 +3,7 @@
 Responsable de la presentación de los controles de simulación.
 """
 
+from dataclasses import dataclass
 from typing import Optional
 
 from PyQt6.QtCore import pyqtSignal, Qt
@@ -21,6 +22,16 @@ from ..base import ModeloBase
 from .modelo import ParametrosControl, RangosControl
 
 
+@dataclass(frozen=True)
+class ConfigSlider:
+    """Configuración de un SliderConValor."""
+
+    label: str
+    min_val: float
+    max_val: float
+    valor_inicial: float
+
+
 class SliderConValor(QWidget):
     """Slider con label que muestra el valor actual."""
 
@@ -28,10 +39,7 @@ class SliderConValor(QWidget):
 
     def __init__(
         self,
-        label: str,
-        min_val: float,
-        max_val: float,
-        valor_inicial: float,
+        config: ConfigSlider,
         sufijo: str = "",
         decimales: int = 1,
         parent: Optional[QWidget] = None,
@@ -40,29 +48,27 @@ class SliderConValor(QWidget):
         self._sufijo = sufijo
         self._decimales = decimales
         self._factor = 10 ** decimales
-        self._setup_ui(label, min_val, max_val, valor_inicial)
+        self._setup_ui(config)
 
-    def _setup_ui(
-        self, label: str, min_val: float, max_val: float, valor_inicial: float
-    ) -> None:
+    def _setup_ui(self, config: ConfigSlider) -> None:
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
 
-        self._label = QLabel(label)
+        self._label = QLabel(config.label)
         self._label.setMinimumWidth(100)
         layout.addWidget(self._label)
 
         self._slider = QSlider(Qt.Orientation.Horizontal)
-        self._slider.setMinimum(int(min_val * self._factor))
-        self._slider.setMaximum(int(max_val * self._factor))
-        self._slider.setValue(int(valor_inicial * self._factor))
+        self._slider.setMinimum(int(config.min_val * self._factor))
+        self._slider.setMaximum(int(config.max_val * self._factor))
+        self._slider.setValue(int(config.valor_inicial * self._factor))
         self._slider.valueChanged.connect(self._on_slider_changed)
         layout.addWidget(self._slider, stretch=1)
 
         self._valor_label = QLabel()
         self._valor_label.setMinimumWidth(60)
         self._valor_label.setAlignment(Qt.AlignmentFlag.AlignRight)
-        self._actualizar_valor_label(valor_inicial)
+        self._actualizar_valor_label(config.valor_inicial)
         layout.addWidget(self._valor_label)
 
     def _on_slider_changed(self, valor_int: int) -> None:
@@ -136,30 +142,36 @@ class ControlTemperaturaVista(QWidget):
         panel_auto_layout = QVBoxLayout(self._panel_auto)
 
         self._slider_temp_base = SliderConValor(
-            label="Temp. Base:",
-            min_val=self._rangos.temp_min,
-            max_val=self._rangos.temp_max,
-            valor_inicial=22.0,
+            config=ConfigSlider(
+                label="Temp. Base:",
+                min_val=self._rangos.temp_min,
+                max_val=self._rangos.temp_max,
+                valor_inicial=22.0,
+            ),
             sufijo="°C",
             decimales=1,
         )
         panel_auto_layout.addWidget(self._slider_temp_base)
 
         self._slider_amplitud = SliderConValor(
-            label="Amplitud:",
-            min_val=self._rangos.amplitud_min,
-            max_val=self._rangos.amplitud_max,
-            valor_inicial=5.0,
+            config=ConfigSlider(
+                label="Amplitud:",
+                min_val=self._rangos.amplitud_min,
+                max_val=self._rangos.amplitud_max,
+                valor_inicial=5.0,
+            ),
             sufijo="°C",
             decimales=1,
         )
         panel_auto_layout.addWidget(self._slider_amplitud)
 
         self._slider_periodo = SliderConValor(
-            label="Periodo:",
-            min_val=self._rangos.periodo_min,
-            max_val=self._rangos.periodo_max,
-            valor_inicial=60.0,
+            config=ConfigSlider(
+                label="Periodo:",
+                min_val=self._rangos.periodo_min,
+                max_val=self._rangos.periodo_max,
+                valor_inicial=60.0,
+            ),
             sufijo="s",
             decimales=0,
         )
@@ -172,10 +184,12 @@ class ControlTemperaturaVista(QWidget):
         panel_manual_layout = QVBoxLayout(self._panel_manual)
 
         self._slider_manual = SliderConValor(
-            label="Temperatura:",
-            min_val=self._rangos.temp_min,
-            max_val=self._rangos.temp_max,
-            valor_inicial=22.0,
+            config=ConfigSlider(
+                label="Temperatura:",
+                min_val=self._rangos.temp_min,
+                max_val=self._rangos.temp_max,
+                valor_inicial=22.0,
+            ),
             sufijo="°C",
             decimales=1,
         )

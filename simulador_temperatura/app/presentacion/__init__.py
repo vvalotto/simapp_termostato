@@ -9,6 +9,7 @@ Contiene los widgets y ventanas de la interfaz grafica:
 """
 from .control_temperatura import (
     ControlTemperatura,
+    ConfigSlider,
     SliderConValor,
     PanelParametrosSenoidal,
     PanelTemperaturaManual,
@@ -28,6 +29,7 @@ from .ui_compositor import UIPrincipalCompositor, ConfigVentanaCompositor
 
 __all__ = [
     "ControlTemperatura",
+    "ConfigSlider",
     "SliderConValor",
     "PanelParametrosSenoidal",
     "PanelTemperaturaManual",
