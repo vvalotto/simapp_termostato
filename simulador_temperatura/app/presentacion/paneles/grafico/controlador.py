@@ -62,7 +62,7 @@ class GraficoControlador(ControladorBase[DatosGrafico, GraficoTemperaturaVista])
         if timestamp is None:
             timestamp = time.time()
 
-        tiempo_relativo = self._modelo.agregar_punto(temperatura, timestamp)
+        self._modelo.agregar_punto(temperatura, timestamp)
         self._actualizar_vista()
         self.punto_agregado.emit(timestamp, temperatura)
         self.modelo_cambiado.emit(self._modelo)

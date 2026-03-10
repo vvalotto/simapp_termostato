@@ -10,7 +10,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 
 from ..base import ControladorBase
 from .modelo import ConfiguracionConexion, EstadoConexion
-from .vista import PanelConexionVista, ConfigPanelConexionVista
+from .vista import PanelConexionVista
 
 
 class PanelConexionControlador(

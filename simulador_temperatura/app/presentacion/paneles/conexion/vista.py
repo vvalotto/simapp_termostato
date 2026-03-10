@@ -11,7 +11,7 @@ from PyQt6.QtCore import pyqtSignal
 
 from compartido.widgets.config_panel import ConfigPanel, ConfigPanelLabels
 from ..base import ModeloBase
-from .modelo import ConfiguracionConexion, EstadoConexion
+from .modelo import ConfiguracionConexion
 
 
 @dataclass(frozen=True)

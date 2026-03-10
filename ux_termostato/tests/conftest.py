@@ -4,6 +4,13 @@ Configuración de fixtures para tests de ux_termostato.
 Este módulo contiene fixtures compartidas para todos los tests,
 incluyendo configuración de PyQt6 y componentes del panel Display.
 """
+import sys
+from pathlib import Path
+
+# Agregar el directorio raíz del producto al PYTHONPATH
+_root = Path(__file__).parent.parent
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
 
 import pytest
 from PyQt6.QtWidgets import QApplication

@@ -56,7 +56,7 @@ class ServidorEstado(BaseSocketServer):
 
     def __init__(
         self,
-        host: str = "0.0.0.0",
+        host: str = "0.0.0.0",  # noqa: B104 — binding intencional, ver nota abajo
         port: int = 14001,
         parent: Optional[QObject] = None
     ):
@@ -64,7 +64,12 @@ class ServidorEstado(BaseSocketServer):
         Inicializa el servidor de estado.
 
         Args:
-            host: Dirección IP donde escuchar (default: "0.0.0.0" para todas).
+            host: Dirección IP donde escuchar (default: "0.0.0.0" para todas
+                las interfaces). El binding a 0.0.0.0 es intencional en el
+                entorno HIL de laboratorio: el Raspberry Pi se conecta desde
+                una IP variable (según red local) y necesita alcanzar el
+                servidor independientemente de la interfaz de red activa en
+                el Desktop. Este servidor NO se expone a redes públicas.
             port: Puerto TCP donde escuchar (default: 14001).
             parent: Objeto padre Qt opcional.
         """

@@ -7,7 +7,6 @@ Toda la lógica de negocio está en los controladores MVC.
 
 import logging
 
-from PyQt6.QtCore import QSize
 from PyQt6.QtWidgets import (
     QWidget,
     QVBoxLayout,

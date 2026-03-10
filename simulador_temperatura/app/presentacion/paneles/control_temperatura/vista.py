@@ -3,7 +3,6 @@
 Responsable de la presentación de los controles de simulación.
 """
 
-from dataclasses import dataclass
 from typing import Optional
 
 from PyQt6.QtCore import pyqtSignal, Qt
@@ -19,7 +18,7 @@ from PyQt6.QtWidgets import (
 )
 
 from ..base import ModeloBase
-from .modelo import ParametrosControl, ModoOperacion, RangosControl
+from .modelo import ParametrosControl, RangosControl
 
 
 class SliderConValor(QWidget):
