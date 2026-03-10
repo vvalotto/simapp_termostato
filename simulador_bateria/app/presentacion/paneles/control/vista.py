@@ -56,6 +56,12 @@ class ControlPanelVista(QFrame):
 
     def _setup_ui(self) -> None:
         """Configura la interfaz del panel."""
+        self._configurar_estilos()
+        self._crear_widgets()
+        self._ensamblar_layout()
+
+    def _configurar_estilos(self) -> None:
+        """Aplica frame style y stylesheet al panel."""
         self.setFrameStyle(QFrame.Shape.StyledPanel | QFrame.Shadow.Raised)
         self.setStyleSheet(f"""
             QFrame {{
@@ -85,44 +91,42 @@ class ControlPanelVista(QFrame):
             }}
         """)
 
-        layout = QVBoxLayout(self)
+    def _crear_widgets(self) -> None:
+        """Crea y configura los widgets del panel."""
+        self._titulo = QLabel(self._config.titulo)
+        self._titulo.setFont(QFont("Arial", 12, QFont.Weight.Bold))
+        self._titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # Titulo
-        titulo = QLabel(self._config.titulo)
-        titulo.setFont(QFont("Arial", 12, QFont.Weight.Bold))
-        titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(titulo)
-
-        # Layout horizontal para slider y valor
-        slider_layout = QHBoxLayout()
-
-        # Etiqueta minimo
         self._label_min = QLabel("0.0V")
         self._label_min.setStyleSheet(f"color: {self._config.color_texto};")
-        slider_layout.addWidget(self._label_min)
 
-        # Slider
         self._slider = QSlider(Qt.Orientation.Horizontal)
         self._slider.setMinimum(0)
         self._slider.setMaximum(50)  # 0-5V con precision 0.1V
-        self._slider.setValue(42)   # 4.2V inicial
+        self._slider.setValue(42)    # 4.2V inicial
         self._slider.setTickPosition(QSlider.TickPosition.TicksBelow)
         self._slider.setTickInterval(10)  # Tick cada 1V
         self._slider.valueChanged.connect(self._on_slider_changed)
-        slider_layout.addWidget(self._slider, stretch=1)
 
-        # Etiqueta maximo
         self._label_max = QLabel("5.0V")
         self._label_max.setStyleSheet(f"color: {self._config.color_texto};")
-        slider_layout.addWidget(self._label_max)
 
-        layout.addLayout(slider_layout)
-
-        # Valor actual
         self._label_valor = QLabel("4.2V")
         self._label_valor.setFont(QFont("Arial", 18, QFont.Weight.Bold))
         self._label_valor.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._label_valor.setStyleSheet(f"color: {self._config.color_valor};")
+
+    def _ensamblar_layout(self) -> None:
+        """Ensambla los widgets en el layout principal."""
+        layout = QVBoxLayout(self)
+        layout.addWidget(self._titulo)
+
+        slider_layout = QHBoxLayout()
+        slider_layout.addWidget(self._label_min)
+        slider_layout.addWidget(self._slider, stretch=1)
+        slider_layout.addWidget(self._label_max)
+        layout.addLayout(slider_layout)
+
         layout.addWidget(self._label_valor)
 
     def _on_slider_changed(self, value: int) -> None:
