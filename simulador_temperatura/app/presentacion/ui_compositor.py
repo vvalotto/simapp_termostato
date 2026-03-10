@@ -70,10 +70,13 @@ class UIPrincipalCompositor(QMainWindow):
 
     def _setup_ui(self) -> None:
         """Configura la interfaz de la ventana."""
+        self._configurar_ventana()
+        self._ensamblar_layout()
+
+    def _configurar_ventana(self) -> None:
+        """Configura título, tamaño y estilos de la ventana."""
         self.setWindowTitle(self._config.titulo)
         self.resize(self._config.ancho, self._config.alto)
-
-        # Aplicar tema oscuro
         self.setStyleSheet(f"""
             QMainWindow {{
                 background-color: {self._config.color_fondo};
@@ -84,34 +87,25 @@ class UIPrincipalCompositor(QMainWindow):
             }}
         """)
 
-        # Widget central
+    def _ensamblar_layout(self) -> None:
+        """Ensambla el layout principal con todos los paneles."""
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        # Layout principal vertical (conexión arriba, contenido abajo)
         root_layout = QVBoxLayout(central_widget)
         root_layout.setContentsMargins(10, 10, 10, 10)
         root_layout.setSpacing(10)
 
-        # Panel de conexión arriba
         root_layout.addWidget(self._ctrl_conexion.vista)
 
-        # Layout horizontal para contenido principal
         content_layout = QHBoxLayout()
         content_layout.setSpacing(10)
 
-        # Panel izquierdo (controles)
         panel_izquierdo = QVBoxLayout()
-
-        # Vista del control de temperatura
         panel_izquierdo.addWidget(self._ctrl_control.vista)
-
-        # Vista del panel de estado
         panel_izquierdo.addWidget(self._ctrl_estado.vista)
-
         panel_izquierdo.addStretch()
 
-        # Panel derecho (gráfico)
         content_layout.addLayout(panel_izquierdo, stretch=1)
         content_layout.addWidget(self._ctrl_grafico.vista, stretch=2)
 

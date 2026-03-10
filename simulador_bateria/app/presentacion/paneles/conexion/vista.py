@@ -73,8 +73,18 @@ class ConexionPanelVista(QFrame):
 
     def _setup_ui(self) -> None:
         """Configura la interfaz del panel."""
+        self._configurar_estilos()
+        self._crear_widgets()
+        self._ensamblar_layout()
+
+    def _configurar_estilos(self) -> None:
+        """Aplica frame style y stylesheet al panel."""
         self.setFrameStyle(QFrame.Shape.StyledPanel | QFrame.Shadow.Raised)
-        self.setStyleSheet(f"""
+        self.setStyleSheet(self._generar_stylesheet())
+
+    def _generar_stylesheet(self) -> str:
+        """Genera el stylesheet CSS del panel."""
+        return f"""
             QFrame {{
                 background-color: {self._config.color_fondo};
                 border-radius: 8px;
@@ -111,17 +121,14 @@ class ConexionPanelVista(QFrame):
             QPushButton:pressed {{
                 background-color: #29b6f6;
             }}
-        """)
+        """
 
-        layout = QVBoxLayout(self)
+    def _crear_widgets(self) -> None:
+        """Crea y configura los widgets del panel."""
+        self._titulo = QLabel(self._config.titulo)
+        self._titulo.setFont(QFont("Arial", 12, QFont.Weight.Bold))
+        self._titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # Titulo
-        titulo = QLabel(self._config.titulo)
-        titulo.setFont(QFont("Arial", 12, QFont.Weight.Bold))
-        titulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(titulo)
-
-        # ConfigPanel compartido
         labels = ConfigPanelLabels(
             ip_label="IP:",
             port_label="Puerto:",
@@ -129,18 +136,19 @@ class ConexionPanelVista(QFrame):
             disconnect_text=self._config.texto_desconectar
         )
         status_indicator = LEDStatusIndicator(color=LEDColor.GREEN)
-
         self._config_panel = ConfigPanel(
             default_ip=self._default_ip,
             default_port=self._default_port,
             labels=labels,
             status_indicator=status_indicator
         )
-
-        # Conectar signals del ConfigPanel
         self._config_panel.connect_requested.connect(self._on_conectar)
         self._config_panel.disconnect_requested.connect(self._on_desconectar)
 
+    def _ensamblar_layout(self) -> None:
+        """Ensambla los widgets en el layout principal."""
+        layout = QVBoxLayout(self)
+        layout.addWidget(self._titulo)
         layout.addWidget(self._config_panel)
 
     def _on_conectar(self) -> None:

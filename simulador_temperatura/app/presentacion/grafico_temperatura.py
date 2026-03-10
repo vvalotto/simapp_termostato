@@ -63,29 +63,32 @@ class GraficoTemperatura(QWidget):
 
     def _setup_ui(self) -> None:
         """Configura la interfaz del widget."""
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
+        self._configurar_tema_grafico()
+        self._crear_plot_widget()
+        self._crear_curva_y_referencias()
+        self._ensamblar_layout()
 
-        # Configurar tema oscuro para pyqtgraph
+    def _configurar_tema_grafico(self) -> None:
+        """Configura el tema oscuro de pyqtgraph."""
         pg.setConfigOptions(
             background="#1e1e1e",
             foreground="#d4d4d4",
             antialias=True,
         )
 
-        # Crear widget de gráfico
+    def _crear_plot_widget(self) -> None:
+        """Crea y configura el widget de gráfico."""
         self._plot_widget = pg.PlotWidget()
         self._plot_widget.setLabel("left", "Temperatura", units="°C")
         self._plot_widget.setLabel("bottom", "Tiempo", units="s")
         self._plot_widget.showGrid(x=True, y=True, alpha=0.3)
-
-        # Configurar rango Y
         self._plot_widget.setYRange(
             self._config.temp_min_display,
             self._config.temp_max_display,
         )
 
-        # Curva de temperatura
+    def _crear_curva_y_referencias(self) -> None:
+        """Crea la curva de temperatura y las líneas de referencia."""
         self._curva = self._plot_widget.plot(
             pen=pg.mkPen(
                 color=self._config.color_linea,
@@ -93,7 +96,6 @@ class GraficoTemperatura(QWidget):
             )
         )
 
-        # Líneas de referencia
         self._linea_min: Optional[pg.InfiniteLine] = None
         self._linea_max: Optional[pg.InfiniteLine] = None
 
@@ -105,6 +107,10 @@ class GraficoTemperatura(QWidget):
             self._linea_max = self._crear_linea_referencia(self._temp_max_ref)
             self._plot_widget.addItem(self._linea_max)
 
+    def _ensamblar_layout(self) -> None:
+        """Ensambla el widget de gráfico en el layout."""
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(self._plot_widget)
 
     def _crear_linea_referencia(self, posicion: float) -> pg.InfiniteLine:

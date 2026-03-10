@@ -12,7 +12,7 @@ from .modelo import (
     RangosControl,
     ParametrosControl,
 )
-from .vista import SliderConValor, ControlTemperaturaVista
+from .vista import ConfigSlider, SliderConValor, ControlTemperaturaVista
 from .controlador import ControlTemperaturaControlador
 
 __all__ = [
@@ -20,6 +20,7 @@ __all__ = [
     "ParametrosSenoidal",
     "RangosControl",
     "ParametrosControl",
+    "ConfigSlider",
     "SliderConValor",
     "ControlTemperaturaVista",
     "ControlTemperaturaControlador",

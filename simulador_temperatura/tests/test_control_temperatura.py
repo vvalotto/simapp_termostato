@@ -3,6 +3,7 @@ import pytest
 
 from app.presentacion import (
     ControlTemperatura,
+    ConfigSlider,
     SliderConValor,
     PanelParametrosSenoidal,
     PanelTemperaturaManual,
@@ -58,10 +59,7 @@ class TestSliderConValorCreacion:
     def test_crear_slider(self, qtbot):
         """Verifica creación básica del slider."""
         slider = SliderConValor(
-            label="Test:",
-            min_val=0.0,
-            max_val=100.0,
-            valor_inicial=50.0,
+            config=ConfigSlider(label="Test:", min_val=0.0, max_val=100.0, valor_inicial=50.0),
         )
         qtbot.addWidget(slider)
 
@@ -71,10 +69,7 @@ class TestSliderConValorCreacion:
     def test_crear_slider_con_sufijo(self, qtbot):
         """Verifica creación con sufijo."""
         slider = SliderConValor(
-            label="Temp:",
-            min_val=-10.0,
-            max_val=50.0,
-            valor_inicial=20.0,
+            config=ConfigSlider(label="Temp:", min_val=-10.0, max_val=50.0, valor_inicial=20.0),
             sufijo="°C",
         )
         qtbot.addWidget(slider)
@@ -88,10 +83,7 @@ class TestSliderConValorInteraccion:
     def test_cambiar_valor_emite_signal(self, qtbot):
         """Verifica que cambiar el valor emite señal."""
         slider = SliderConValor(
-            label="Test:",
-            min_val=0.0,
-            max_val=100.0,
-            valor_inicial=50.0,
+            config=ConfigSlider(label="Test:", min_val=0.0, max_val=100.0, valor_inicial=50.0),
         )
         qtbot.addWidget(slider)
 
@@ -103,10 +95,7 @@ class TestSliderConValorInteraccion:
     def test_set_valor_no_emite_signal(self, qtbot):
         """Verifica que set_valor no emite señal."""
         slider = SliderConValor(
-            label="Test:",
-            min_val=0.0,
-            max_val=100.0,
-            valor_inicial=50.0,
+            config=ConfigSlider(label="Test:", min_val=0.0, max_val=100.0, valor_inicial=50.0),
         )
         qtbot.addWidget(slider)
 

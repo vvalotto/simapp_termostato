@@ -24,89 +24,41 @@ class ConexionVista(QWidget):
 
     def _inicializar_ui(self):
         """Inicializa la interfaz de usuario."""
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(10, 10, 10, 10)
+        self._crear_campo_ip()
+        self._crear_campos_puertos()
+        self._crear_boton_aplicar()
+        self._ensamblar_layout()
 
-        # GroupBox
-        group = QGroupBox("Configuración de Conexión")
-        group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                font-size: 14px;
-                color: #ffffff;
-                border: 2px solid #555555;
-                border-radius: 8px;
-                margin-top: 10px;
-                padding-top: 10px;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 5px;
-            }
-        """)
-        group_layout = QFormLayout()
-        group_layout.setSpacing(15)
-
-        # Campo IP
+    def _crear_campo_ip(self):
+        """Crea el input de IP y el label de validación."""
         self._input_ip = QLineEdit()
         self._input_ip.setPlaceholderText("192.168.1.50")
         self._input_ip.setMaxLength(15)
 
-        # Label de validación
         self._label_validacion = QLabel("")
         self._label_validacion.setStyleSheet("color: #dc3545; font-size: 11px;")
 
-        # Layout IP + validación
-        ip_layout = QVBoxLayout()
-        ip_layout.setSpacing(5)
-        ip_layout.addWidget(self._input_ip)
-        ip_layout.addWidget(self._label_validacion)
-
-        # Puerto recv (read-only)
+    def _crear_campos_puertos(self):
+        """Crea los inputs de puerto de recepción y envío (read-only)."""
+        estilo_readonly = """
+            QLineEdit {
+                background-color: #1a1a1a;
+                color: #888888;
+                border: 1px solid #444444;
+                border-radius: 5px;
+                padding: 8px;
+            }
+        """
         self._input_puerto_recv = QLineEdit()
         self._input_puerto_recv.setReadOnly(True)
-        self._input_puerto_recv.setStyleSheet("""
-            QLineEdit {
-                background-color: #1a1a1a;
-                color: #888888;
-                border: 1px solid #444444;
-                border-radius: 5px;
-                padding: 8px;
-            }
-        """)
+        self._input_puerto_recv.setStyleSheet(estilo_readonly)
 
-        # Puerto send (read-only)
         self._input_puerto_send = QLineEdit()
         self._input_puerto_send.setReadOnly(True)
-        self._input_puerto_send.setStyleSheet("""
-            QLineEdit {
-                background-color: #1a1a1a;
-                color: #888888;
-                border: 1px solid #444444;
-                border-radius: 5px;
-                padding: 8px;
-            }
-        """)
+        self._input_puerto_send.setStyleSheet(estilo_readonly)
 
-        # Form layout
-        label_ip = QLabel("IP Raspberry Pi:")
-        label_ip.setStyleSheet("color: #cccccc; font-size: 13px;")
-
-        label_recv = QLabel("Puerto Recepción:")
-        label_recv.setStyleSheet("color: #cccccc; font-size: 13px;")
-
-        label_send = QLabel("Puerto Envío:")
-        label_send.setStyleSheet("color: #cccccc; font-size: 13px;")
-
-        group_layout.addRow(label_ip, ip_layout)
-        group_layout.addRow(label_recv, self._input_puerto_recv)
-        group_layout.addRow(label_send, self._input_puerto_send)
-
-        group.setLayout(group_layout)
-        layout.addWidget(group)
-
-        # Botón aplicar
+    def _crear_boton_aplicar(self):
+        """Crea el botón de aplicar configuración."""
         self._btn_aplicar = QPushButton("✓ Aplicar Configuración")
         self._btn_aplicar.setStyleSheet("""
             QPushButton {
@@ -130,12 +82,55 @@ class ConexionVista(QWidget):
                 color: #888888;
             }
         """)
-        layout.addWidget(self._btn_aplicar)
 
-        # Stretch
+    def _ensamblar_layout(self):
+        """Ensambla el layout principal con el grupo y el botón."""
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(10, 10, 10, 10)
+
+        group = QGroupBox("Configuración de Conexión")
+        group.setStyleSheet("""
+            QGroupBox {
+                font-weight: bold;
+                font-size: 14px;
+                color: #ffffff;
+                border: 2px solid #555555;
+                border-radius: 8px;
+                margin-top: 10px;
+                padding-top: 10px;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 5px;
+            }
+        """)
+        group_layout = QFormLayout()
+        group_layout.setSpacing(15)
+
+        label_ip = QLabel("IP Raspberry Pi:")
+        label_ip.setStyleSheet("color: #cccccc; font-size: 13px;")
+
+        label_recv = QLabel("Puerto Recepción:")
+        label_recv.setStyleSheet("color: #cccccc; font-size: 13px;")
+
+        label_send = QLabel("Puerto Envío:")
+        label_send.setStyleSheet("color: #cccccc; font-size: 13px;")
+
+        ip_layout = QVBoxLayout()
+        ip_layout.setSpacing(5)
+        ip_layout.addWidget(self._input_ip)
+        ip_layout.addWidget(self._label_validacion)
+
+        group_layout.addRow(label_ip, ip_layout)
+        group_layout.addRow(label_recv, self._input_puerto_recv)
+        group_layout.addRow(label_send, self._input_puerto_send)
+
+        group.setLayout(group_layout)
+        layout.addWidget(group)
+        layout.addWidget(self._btn_aplicar)
         layout.addStretch()
 
-        # Estilos del input IP (estado inicial)
         self._aplicar_estilos_ip_normal()
 
     def _aplicar_estilos_ip_normal(self):

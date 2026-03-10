@@ -7,6 +7,7 @@ from app.presentacion.paneles.control_temperatura import (
     ParametrosSenoidal,
     RangosControl,
     ParametrosControl,
+    ConfigSlider,
     SliderConValor,
     ControlTemperaturaVista,
     ControlTemperaturaControlador,
@@ -130,10 +131,7 @@ class TestSliderConValor:
     def test_crear_slider(self, qtbot):
         """Crear slider con parámetros."""
         slider = SliderConValor(
-            label="Test:",
-            min_val=0.0,
-            max_val=100.0,
-            valor_inicial=50.0,
+            config=ConfigSlider(label="Test:", min_val=0.0, max_val=100.0, valor_inicial=50.0),
             sufijo="°C",
             decimales=1
         )
@@ -144,10 +142,7 @@ class TestSliderConValor:
     def test_set_valor(self, qtbot):
         """set_valor actualiza el slider."""
         slider = SliderConValor(
-            label="Test:",
-            min_val=0.0,
-            max_val=100.0,
-            valor_inicial=50.0
+            config=ConfigSlider(label="Test:", min_val=0.0, max_val=100.0, valor_inicial=50.0),
         )
         qtbot.addWidget(slider)
 
@@ -158,10 +153,7 @@ class TestSliderConValor:
     def test_valor_cambiado_signal(self, qtbot):
         """Emite signal cuando cambia valor."""
         slider = SliderConValor(
-            label="Test:",
-            min_val=0.0,
-            max_val=100.0,
-            valor_inicial=50.0,
+            config=ConfigSlider(label="Test:", min_val=0.0, max_val=100.0, valor_inicial=50.0),
             decimales=0
         )
         qtbot.addWidget(slider)

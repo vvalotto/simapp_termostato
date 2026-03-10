@@ -95,50 +95,11 @@ class ClienteComandos(QObject):
             >>> exito = cliente.enviar_comando(cmd)
         """
         try:
-            # 1. Serializar comando a JSON (formato interno)
-            datos_json = cmd.to_json()
-            tipo_comando = datos_json.get("comando", "desconocido")
-
-            # 2. Adaptar a protocolo texto plano de ISSE_Termostato
-            mensaje_texto, puerto = self._adaptar_comando_a_texto(datos_json)
-
-            if mensaje_texto is None:
-                logger.warning(
-                    "Comando '%s' no soportado por protocolo texto plano",
-                    tipo_comando
-                )
+            resultado = self._preparar_envio(cmd)
+            if resultado is None:
                 return False
-
-            logger.debug(
-                "Enviando comando '%s' a %s:%d (texto: '%s')",
-                tipo_comando,
-                self._host,
-                puerto,
-                mensaje_texto.strip()
-            )
-
-            # 3. Crear cliente efímero con puerto correcto
-            cliente = EphemeralSocketClient(self._host, puerto, self)
-
-            # 4. Enviar texto plano (conectar → enviar → cerrar)
-            exito = cliente.send(mensaje_texto)
-
-            if exito:
-                logger.info(
-                    "Comando '%s' enviado exitosamente a %s:%d",
-                    tipo_comando,
-                    self._host,
-                    puerto
-                )
-            else:
-                logger.error(
-                    "Error al enviar comando '%s' a %s:%d",
-                    tipo_comando,
-                    self._host,
-                    puerto
-                )
-
-            return exito
+            tipo_comando, mensaje_texto, puerto = resultado
+            return self._realizar_envio(mensaje_texto, tipo_comando, puerto)
 
         except Exception as e:  # pylint: disable=broad-except
             # Catch-all: nunca lanzar excepciones al usuario
@@ -148,6 +109,61 @@ class ClienteComandos(QObject):
                 exc_info=True
             )
             return False
+
+    def _preparar_envio(
+        self, cmd: ComandoTermostato
+    ) -> Optional[tuple[str, str, int]]:
+        """Serializa el comando y lo adapta al protocolo texto plano.
+
+        Returns:
+            Tupla (tipo_comando, mensaje_texto, puerto) o None si no soportado.
+        """
+        datos_json = cmd.to_json()
+        tipo_comando = datos_json.get("comando", "desconocido")
+        mensaje_texto, puerto = self._adaptar_comando_a_texto(datos_json)
+
+        if mensaje_texto is None:
+            logger.warning(
+                "Comando '%s' no soportado por protocolo texto plano",
+                tipo_comando
+            )
+            return None
+
+        logger.debug(
+            "Enviando comando '%s' a %s:%d (texto: '%s')",
+            tipo_comando,
+            self._host,
+            puerto,
+            mensaje_texto.strip()
+        )
+        return (tipo_comando, mensaje_texto, puerto)
+
+    def _realizar_envio(
+        self, mensaje_texto: str, tipo_comando: str, puerto: int
+    ) -> bool:
+        """Crea cliente efímero, envía el texto y registra el resultado.
+
+        Returns:
+            True si el envío fue exitoso.
+        """
+        cliente = EphemeralSocketClient(self._host, puerto, self)
+        exito = cliente.send(mensaje_texto)
+
+        if exito:
+            logger.info(
+                "Comando '%s' enviado exitosamente a %s:%d",
+                tipo_comando,
+                self._host,
+                puerto
+            )
+        else:
+            logger.error(
+                "Error al enviar comando '%s' a %s:%d",
+                tipo_comando,
+                self._host,
+                puerto
+            )
+        return exito
 
     def _adaptar_comando_a_texto(self, datos_json: dict) -> tuple[Optional[str], int]:
         """
