@@ -209,7 +209,10 @@ class TestUI:
         ventana = VentanaPrincipalUX(factory_ux)
 
         central = ventana.centralWidget()
-        assert central.layout() is not None
+        # El central widget es un QScrollArea; el contenido se accede via .widget()
+        from PyQt6.QtWidgets import QScrollArea
+        assert isinstance(central, QScrollArea)
+        assert central.widget() is not None
 
 
 class TestCicloDeVida:

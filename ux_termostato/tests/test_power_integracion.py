@@ -352,13 +352,13 @@ class TestIntegracionSignals:
         spy_power.assert_called_once_with(True)
         spy_comando.assert_called_once()
 
-    def test_actualizar_modelo_solo_emite_power_cambiado(self, qapp):
+    def test_actualizar_modelo_NO_emite_power_cambiado_ni_comando(self, qapp):
         """
-        Test: actualizar_modelo solo emite power_cambiado (no comando).
+        Test: actualizar_modelo NO emite power_cambiado ni comando_enviado.
 
         Given: Panel power con listeners
-        When: Se llama a actualizar_modelo
-        Then: Solo se emite power_cambiado (viene del exterior)
+        When: Se llama a actualizar_modelo (sincronización desde RPi)
+        Then: Ninguna señal se emite (evita loop de comandos)
         """
         modelo = PowerModelo(encendido=False)
         vista = PowerVista()
@@ -371,7 +371,7 @@ class TestIntegracionSignals:
 
         controlador.actualizar_modelo(True)
 
-        spy_power.assert_called_once_with(True)
+        spy_power.assert_not_called()   # NO debe emitirse (viene del exterior)
         spy_comando.assert_not_called()  # NO debe emitirse
 
 

@@ -111,13 +111,14 @@ class TestIntegracionConServidor:
 
         # Simular estado recibido del servidor
         estado_servidor = Mock()
-        estado_servidor.temp_actual = 24.5
-        estado_servidor.temp_deseada = 26.0
+        estado_servidor.temperatura_actual = 24.5
+        estado_servidor.temperatura_deseada = 26.0
         estado_servidor.falla_sensor = False
+        estado_servidor.encendido = True
 
         controlador.actualizar_desde_estado(estado_servidor)
 
-        # En modo ambiente, debe mostrar temp_actual
+        # En modo ambiente, debe mostrar temperatura_actual
         assert controlador.modelo.temperatura == 24.5
         assert vista.label_temp.text() == "24.5"
 
@@ -125,7 +126,7 @@ class TestIntegracionConServidor:
         """
         Test: Cambiar modo vista afecta qué temperatura se muestra del servidor.
 
-        Given: Estado del servidor con temp_actual y temp_deseada diferentes
+        Given: Estado del servidor con temperatura_actual y temperatura_deseada diferentes
         When: Se cambia entre modo ambiente y deseada
         Then: Se muestra la temperatura correspondiente
         """
@@ -135,11 +136,12 @@ class TestIntegracionConServidor:
         controlador = DisplayControlador(modelo, vista)
 
         estado = Mock()
-        estado.temp_actual = 22.0
-        estado.temp_deseada = 25.0
+        estado.temperatura_actual = 22.0
+        estado.temperatura_deseada = 25.0
         estado.falla_sensor = False
+        estado.encendido = True
 
-        # Modo ambiente: muestra temp_actual
+        # Modo ambiente: muestra temperatura_actual
         controlador.actualizar_desde_estado(estado)
         assert vista.label_temp.text() == "22.0"
 
@@ -165,9 +167,10 @@ class TestIntegracionConServidor:
 
         # Estado normal
         estado_normal = Mock()
-        estado_normal.temp_actual = 22.0
-        estado_normal.temp_deseada = 25.0
+        estado_normal.temperatura_actual = 22.0
+        estado_normal.temperatura_deseada = 25.0
         estado_normal.falla_sensor = False
+        estado_normal.encendido = True
 
         controlador.actualizar_desde_estado(estado_normal)
         assert vista.label_temp.isVisible()
@@ -175,9 +178,10 @@ class TestIntegracionConServidor:
 
         # Falla de sensor
         estado_error = Mock()
-        estado_error.temp_actual = 0.0  # Temperatura inválida
-        estado_error.temp_deseada = 25.0
+        estado_error.temperatura_actual = 0.0
+        estado_error.temperatura_deseada = 25.0
         estado_error.falla_sensor = True
+        estado_error.encendido = True
 
         controlador.actualizar_desde_estado(estado_error)
         assert not vista.label_temp.isVisible()

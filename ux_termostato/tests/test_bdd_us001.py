@@ -166,9 +166,10 @@ def recibe_temperatura(contexto, temperatura):
 
     # Simular recepción desde servidor
     estado_servidor = Mock()
-    estado_servidor.temp_actual = temp_valor
-    estado_servidor.temp_deseada = temp_valor
+    estado_servidor.temperatura_actual = temp_valor
+    estado_servidor.temperatura_deseada = temp_valor
     estado_servidor.falla_sensor = False
+    estado_servidor.encendido = True
 
     contexto['controlador'].actualizar_desde_estado(estado_servidor)
 

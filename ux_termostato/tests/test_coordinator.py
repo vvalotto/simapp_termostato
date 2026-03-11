@@ -9,7 +9,8 @@ import pytest
 from PyQt6.QtCore import pyqtSignal, QObject
 
 from app.coordinator import UXCoordinator
-from app.dominio import EstadoTermostato, ComandoPower, ComandoSetTemp
+from app.dominio import EstadoTermostato, ComandoPower
+from app.dominio.comandos import ComandoAumentar
 from datetime import datetime
 
 
@@ -35,6 +36,7 @@ class MockControlador(QObject):
 
     power_cambiado = pyqtSignal(bool)
     temperatura_cambiada = pyqtSignal(float)
+    accion_temperatura = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -222,19 +224,28 @@ class TestConexionPower:
 class TestConexionControlTemp:
     """Tests de conexión de señales del panel ControlTemp."""
 
-    def test_temperatura_cambiada_envia_comando(self, coordinator, mock_cliente, mock_paneles):
-        """temperatura_cambiada debe enviar ComandoSetTemp al cliente."""
+    def test_accion_temperatura_envia_comando_aumentar(self, coordinator, mock_cliente, mock_paneles):
+        """accion_temperatura('aumentar') debe enviar ComandoAumentar al cliente."""
         ctrl_control_temp = mock_paneles["control_temp"][2]
 
-        # Emitir señal de temperatura cambiada
-        ctrl_control_temp.temperatura_cambiada.emit(23.5)
+        # Emitir señal con acción "aumentar"
+        ctrl_control_temp.accion_temperatura.emit("aumentar")
 
-        # Verificar que se llamó enviar_comando
+        # Verificar que se llamó enviar_comando con ComandoAumentar
         assert mock_cliente.enviar_comando.called
-        # Verificar que el argumento es ComandoSetTemp
         args = mock_cliente.enviar_comando.call_args[0]
-        assert isinstance(args[0], ComandoSetTemp)
-        assert args[0].valor == 23.5
+        assert isinstance(args[0], ComandoAumentar)
+
+    def test_accion_temperatura_envia_comando_disminuir(self, coordinator, mock_cliente, mock_paneles):
+        """accion_temperatura('disminuir') debe enviar ComandoDisminuir al cliente."""
+        from app.dominio.comandos import ComandoDisminuir
+        ctrl_control_temp = mock_paneles["control_temp"][2]
+
+        ctrl_control_temp.accion_temperatura.emit("disminuir")
+
+        assert mock_cliente.enviar_comando.called
+        args = mock_cliente.enviar_comando.call_args[0]
+        assert isinstance(args[0], ComandoDisminuir)
 
 
 class TestManejadorConexion:
@@ -292,17 +303,15 @@ class TestEnvioComandos:
         assert isinstance(cmd, ComandoPower)
         assert cmd.estado is False
 
-    def test_comando_set_temp_se_envia(self, coordinator, mock_cliente, mock_paneles):
-        """Comando de seteo de temperatura debe enviarse correctamente."""
+    def test_comando_aumentar_se_envia(self, coordinator, mock_cliente, mock_paneles):
+        """Acción 'aumentar' debe enviar ComandoAumentar correctamente."""
         ctrl_control_temp = mock_paneles["control_temp"][2]
 
-        ctrl_control_temp.temperatura_cambiada.emit(25.5)
+        ctrl_control_temp.accion_temperatura.emit("aumentar")
 
-        # Verificar que se envió ComandoSetTemp con valor correcto
         args = mock_cliente.enviar_comando.call_args[0]
         cmd = args[0]
-        assert isinstance(cmd, ComandoSetTemp)
-        assert cmd.valor == 25.5
+        assert isinstance(cmd, ComandoAumentar)
 
 
 class TestDistribucionEstado:

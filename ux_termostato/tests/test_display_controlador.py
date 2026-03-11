@@ -344,9 +344,10 @@ class TestActualizarDesdeEstado:
 
         # Mock de EstadoTermostato
         estado = Mock()
-        estado.temp_actual = 23.0
-        estado.temp_deseada = 25.0
+        estado.temperatura_actual = 23.0
+        estado.temperatura_deseada = 25.0
         estado.falla_sensor = False
+        estado.encendido = True
 
         controlador.actualizar_desde_estado(estado)
 
@@ -367,9 +368,10 @@ class TestActualizarDesdeEstado:
         controlador = DisplayControlador(modelo, vista)
 
         estado = Mock()
-        estado.temp_actual = 23.0
-        estado.temp_deseada = 25.0
+        estado.temperatura_actual = 23.0
+        estado.temperatura_deseada = 25.0
         estado.falla_sensor = False
+        estado.encendido = True
 
         controlador.actualizar_desde_estado(estado)
 
@@ -390,9 +392,10 @@ class TestActualizarDesdeEstado:
         controlador = DisplayControlador(modelo, vista)
 
         estado = Mock()
-        estado.temp_actual = 23.0
-        estado.temp_deseada = 25.0
+        estado.temperatura_actual = 23.0
+        estado.temperatura_deseada = 25.0
         estado.falla_sensor = True
+        estado.encendido = True
 
         controlador.actualizar_desde_estado(estado)
 

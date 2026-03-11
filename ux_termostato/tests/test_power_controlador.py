@@ -247,22 +247,25 @@ class TestSignals:
         # Verificar que la señal se emitió con un dict
         assert isinstance(blocker.args[0], dict)
 
-    def test_actualizar_modelo_emite_power_cambiado(self, qapp, qtbot):
+    def test_actualizar_modelo_NO_emite_power_cambiado(self, qapp, qtbot):
         """
-        Test: actualizar_modelo emite señal power_cambiado.
+        Test: actualizar_modelo NO emite power_cambiado (evita loop de comandos).
 
         Given: Controlador con estado apagado
-        When: Se llama a actualizar_modelo(True)
-        Then: La señal power_cambiado se emite con True
+        When: Se llama a actualizar_modelo(True) para sincronizar desde RPi
+        Then: La señal power_cambiado NO se emite (viene del exterior)
         """
         modelo = PowerModelo(encendido=False)
         vista = PowerVista()
         controlador = PowerControlador(modelo, vista)
 
-        with qtbot.waitSignal(controlador.power_cambiado, timeout=1000) as blocker:
-            controlador.actualizar_modelo(True)
+        emitido = []
+        controlador.power_cambiado.connect(lambda v: emitido.append(v))
 
-        assert blocker.args == [True]
+        controlador.actualizar_modelo(True)
+
+        assert len(emitido) == 0
+        assert controlador.modelo.encendido is True
 
     def test_actualizar_modelo_no_emite_comando_enviado(self, qapp, qtbot):
         """

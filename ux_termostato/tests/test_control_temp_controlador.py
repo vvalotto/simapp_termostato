@@ -231,36 +231,31 @@ class TestSignals:
         assert len(spy) == 1
         assert spy[0][0] == 21.5
 
-    def test_aumentar_emite_comando_enviado(self, qapp, qtbot):
-        """Test que aumentar_temperatura emite señal comando_enviado."""
+    def test_aumentar_emite_accion_temperatura(self, qapp, qtbot):
+        """Test que aumentar_temperatura emite señal accion_temperatura('aumentar')."""
         modelo = ControlTempModelo(temperatura_deseada=22.0, habilitado=True)
         vista = ControlTempVista()
         controlador = ControlTempControlador(modelo, vista)
 
-        spy = QSignalSpy(controlador.comando_enviado)
+        spy = QSignalSpy(controlador.accion_temperatura)
 
         controlador.aumentar_temperatura()
 
         assert len(spy) == 1
-        comando = spy[0][0]
-        assert isinstance(comando, dict)
-        assert comando["comando"] == "set_temp_deseada"
-        assert comando["valor"] == 22.5
+        assert spy[0][0] == "aumentar"
 
-    def test_disminuir_emite_comando_enviado(self, qapp, qtbot):
-        """Test que disminuir_temperatura emite señal comando_enviado."""
+    def test_disminuir_emite_accion_temperatura(self, qapp, qtbot):
+        """Test que disminuir_temperatura emite señal accion_temperatura('disminuir')."""
         modelo = ControlTempModelo(temperatura_deseada=22.0, habilitado=True)
         vista = ControlTempVista()
         controlador = ControlTempControlador(modelo, vista)
 
-        spy = QSignalSpy(controlador.comando_enviado)
+        spy = QSignalSpy(controlador.accion_temperatura)
 
         controlador.disminuir_temperatura()
 
         assert len(spy) == 1
-        comando = spy[0][0]
-        assert comando["comando"] == "set_temp_deseada"
-        assert comando["valor"] == 21.5
+        assert spy[0][0] == "disminuir"
 
     def test_no_emite_senales_cuando_deshabilitado(self, qapp, qtbot):
         """Test que no se emiten señales cuando está deshabilitado."""
@@ -269,82 +264,13 @@ class TestSignals:
         controlador = ControlTempControlador(modelo, vista)
 
         spy_temp = QSignalSpy(controlador.temperatura_cambiada)
-        spy_cmd = QSignalSpy(controlador.comando_enviado)
+        spy_accion = QSignalSpy(controlador.accion_temperatura)
 
         controlador.aumentar_temperatura()
         controlador.disminuir_temperatura()
 
         assert len(spy_temp) == 0
-        assert len(spy_cmd) == 0
-
-
-class TestComandoJSON:
-    """Tests de generación de comando JSON."""
-
-    def test_comando_json_estructura_basica(self, qapp):
-        """Test que el comando JSON tiene la estructura correcta."""
-        modelo = ControlTempModelo(temperatura_deseada=22.0, habilitado=True)
-        vista = ControlTempVista()
-        controlador = ControlTempControlador(modelo, vista)
-
-        spy = QSignalSpy(controlador.comando_enviado)
-        controlador.aumentar_temperatura()
-
-        comando = spy[0][0]
-
-        assert "comando" in comando
-        assert "valor" in comando
-        assert "timestamp" in comando
-
-    def test_comando_json_valor_redondeado(self, qapp):
-        """Test que el valor en el comando JSON está redondeado a 1 decimal."""
-        modelo = ControlTempModelo(temperatura_deseada=22.0, habilitado=True)
-        vista = ControlTempVista()
-        controlador = ControlTempControlador(modelo, vista)
-
-        spy = QSignalSpy(controlador.comando_enviado)
-        controlador.aumentar_temperatura()
-
-        comando = spy[0][0]
-
-        # El valor debe ser float con 1 decimal
-        assert comando["valor"] == 22.5
-        assert isinstance(comando["valor"], (int, float))
-
-    def test_comando_json_timestamp_formato_iso(self, qapp):
-        """Test que el timestamp está en formato ISO 8601."""
-        modelo = ControlTempModelo(temperatura_deseada=22.0, habilitado=True)
-        vista = ControlTempVista()
-        controlador = ControlTempControlador(modelo, vista)
-
-        spy = QSignalSpy(controlador.comando_enviado)
-        controlador.aumentar_temperatura()
-
-        comando = spy[0][0]
-        timestamp_str = comando["timestamp"]
-
-        # Verificar que se puede parsear como datetime ISO
-        timestamp = datetime.fromisoformat(timestamp_str)
-        assert isinstance(timestamp, datetime)
-
-    def test_comando_json_timestamp_reciente(self, qapp):
-        """Test que el timestamp es reciente (menos de 1 segundo)."""
-        from datetime import timedelta
-
-        modelo = ControlTempModelo(temperatura_deseada=22.0, habilitado=True)
-        vista = ControlTempVista()
-        controlador = ControlTempControlador(modelo, vista)
-
-        antes = datetime.now()
-        spy = QSignalSpy(controlador.comando_enviado)
-        controlador.aumentar_temperatura()
-        despues = datetime.now()
-
-        comando = spy[0][0]
-        timestamp = datetime.fromisoformat(comando["timestamp"])
-
-        # El timestamp debe estar entre antes y después
-        assert antes <= timestamp <= despues + timedelta(seconds=1)
+        assert len(spy_accion) == 0
 
 
 class TestSetHabilitado:
