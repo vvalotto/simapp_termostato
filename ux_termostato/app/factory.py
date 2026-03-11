@@ -10,6 +10,7 @@ from typing import Optional
 
 from .configuracion import ConfigUX
 from .comunicacion import ServidorEstado, ClienteComandos
+from .comunicacion.interfaces import IServidorEstado, IClienteComandos
 from .presentacion.paneles.display import DisplayModelo, DisplayVista, DisplayControlador
 from .presentacion.paneles.climatizador import (
     ClimatizadorModelo,
@@ -75,7 +76,7 @@ class ComponenteFactoryUX:
 
     def crear_servidor_estado(
         self, host: str = "0.0.0.0", parent: Optional[object] = None
-    ) -> ServidorEstado:
+    ) -> IServidorEstado:
         """
         Crea el servidor TCP que recibe estado del RPi.
 
@@ -96,7 +97,7 @@ class ComponenteFactoryUX:
 
     def crear_cliente_comandos(
         self, host: Optional[str] = None, parent: Optional[object] = None
-    ) -> ClienteComandos:
+    ) -> IClienteComandos:
         """
         Crea el cliente TCP para enviar comandos al RPi.
 

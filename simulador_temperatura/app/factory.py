@@ -9,6 +9,7 @@ from typing import Dict, Optional
 from .configuracion.config import ConfigSimuladorTemperatura
 from .dominio.generador_temperatura import GeneradorTemperatura
 from .comunicacion.cliente_temperatura import ClienteTemperatura
+from .comunicacion.interfaces import IClienteTemperatura
 from .comunicacion.servicio_envio import ServicioEnvioTemperatura
 from .presentacion.paneles.estado import PanelEstadoControlador
 from .presentacion.paneles.control_temperatura import (
@@ -57,7 +58,7 @@ class ComponenteFactory:
         self,
         host: Optional[str] = None,
         port: Optional[int] = None
-    ) -> ClienteTemperatura:
+    ) -> IClienteTemperatura:
         """Crea un cliente TCP para envío de temperatura.
 
         Args:

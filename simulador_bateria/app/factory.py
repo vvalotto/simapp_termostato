@@ -8,6 +8,7 @@ from typing import Dict, Optional
 from app.configuracion.config import ConfigSimuladorBateria
 from app.dominio.generador_bateria import GeneradorBateria
 from app.comunicacion.cliente_bateria import ClienteBateria
+from app.comunicacion.interfaces import IClienteBateria
 from app.comunicacion.servicio_envio import ServicioEnvioBateria
 
 
@@ -41,7 +42,7 @@ class ComponenteFactory:
         self,
         host: Optional[str] = None,
         port: Optional[int] = None
-    ) -> ClienteBateria:
+    ) -> IClienteBateria:
         """Crea una instancia de ClienteBateria.
 
         Args:
