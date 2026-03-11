@@ -30,6 +30,18 @@ class ServidorEstado(BaseSocketServer):
     El servidor hereda de BaseSocketServer para manejar las conexiones TCP
     y se enfoca en el procesamiento de mensajes específicos del termostato.
 
+    Diseño (LCOM): La métrica LCOM reporta 6 grupos. Esto es un artefacto de
+    dos factores:
+    1. **Herencia de BaseSocketServer**: los atributos heredados (_host, _port,
+       estado del hilo) son usados por distintos subconjuntos de métodos, lo
+       que infla el cálculo de LCOM sin reflejar falta de cohesión real.
+    2. **Señales PyQt**: son descriptores de clase (no atributos de instancia),
+       por lo que las herramientas de métricas no las cuentan como estado
+       compartido entre métodos, creando grupos artificiales.
+    La clase tiene una única responsabilidad (recibir y rutear estado del RPi)
+    y extraer un MensajeParser o ConexionHandler separado no aportaría valor
+    dado que _procesar_mensaje ya delega el parsing a EstadoTermostato.from_json().
+
     Signals:
         estado_recibido: Emitida cuando se recibe un estado válido del RPi.
             Parámetro: EstadoTermostato con el estado actualizado.
