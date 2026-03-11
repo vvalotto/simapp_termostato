@@ -11,7 +11,9 @@ from PyQt6.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
+    QScrollArea,
 )
+from PyQt6.QtCore import Qt
 
 logger = logging.getLogger(__name__)
 
@@ -171,6 +173,49 @@ class UICompositor:
 
         logger.info("Layout completo creado: %d paneles ensamblados", len(self.PANELES_REQUERIDOS))
         return widget_central
+
+    def crear_scroll_layout(self) -> QScrollArea:
+        """Crea y retorna el layout completo envuelto en un QScrollArea.
+
+        Llama a crear_layout() y envuelve el resultado en un QScrollArea
+        con scroll vertical y sin scroll horizontal.
+
+        Returns:
+            QScrollArea listo para usar como widget central.
+        """
+        widget_central = self.crear_layout()
+
+        scroll_area = QScrollArea()
+        scroll_area.setWidget(widget_central)
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll_area.setFrameShape(QScrollArea.Shape.NoFrame)
+        scroll_area.setStyleSheet("""
+            QScrollArea {
+                background: transparent;
+                border: none;
+            }
+            QScrollBar:vertical {
+                background: #1e293b;
+                width: 12px;
+                border-radius: 6px;
+            }
+            QScrollBar::handle:vertical {
+                background: #475569;
+                border-radius: 6px;
+                min-height: 20px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: #64748b;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height: 0px;
+            }
+        """)
+
+        logger.debug("Layout con scroll creado")
+        return scroll_area
 
     def _crear_header(self) -> QHBoxLayout:
         """Crea el header horizontal con EstadoConexion e Indicadores.
