@@ -1,0 +1,4 @@
+[tool.designreviewer]
+max_cbo = 10           # vistas PyQt acoplan widgets inevitablemente
+max_method_lines = 50  # _setup_ui es proceduralmente largo por naturaleza
+max_lcom = 3           # clases MVC tienen grupos de métodos naturalmente separados
