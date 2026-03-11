@@ -23,6 +23,13 @@ class ClienteBateria(QObject):
     El cliente usa el patrón efímero: cada envío crea una conexión nueva,
     envía el dato y cierra inmediatamente.
 
+    Diseño (LCOM): La métrica LCOM reporta 3 grupos por la separación entre
+    (a) host/port properties, (b) métodos de envío y (c) callbacks de logging.
+    Esta separación es intencional: host/port son parte de la interfaz pública
+    del cliente (usada por factory y tests), mientras que los callbacks manejan
+    las señales del EphemeralSocketClient interno. Separar en clases distintas
+    introduciría acoplamiento innecesario para una clase de 150 líneas.
+
     Signals:
         dato_enviado: Emitida cuando un valor se envía exitosamente.
             Parámetro: float con el voltaje enviado.
