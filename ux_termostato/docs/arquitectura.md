@@ -68,11 +68,12 @@ ux_termostato/
 │   │   └── comandos.py             # ComandoPower, ComandoSetTemp, etc.
 │   │
 │   ├── comunicacion/               # Capa de comunicación TCP bidireccional
+│   │   ├── interfaces.py           # IServidorEstado, IClienteComandos (typing.Protocol)
 │   │   ├── servidor_estado.py      # ServidorEstado (recibe JSON del RPi :14001)
 │   │   └── cliente_comandos.py     # ClienteComandos (envía comandos :13000/:14000)
 │   │
 │   └── presentacion/               # Capa de presentación (UI)
-│       ├── ui_principal.py         # Ventana principal con menú y lifecycle
+│       ├── ui_principal.py         # Ventana principal (~100 líneas): facade de lifecycle puro
 │       ├── ui_compositor.py        # UICompositor (ensambla layout)
 │       │
 │       └── paneles/                # Arquitectura MVC (8 paneles)
@@ -380,6 +381,21 @@ classDiagram
 - **Cliente multi-puerto**: Un EphemeralSocketClient por puerto (13000, 14000)
 - **Protocolo JSON**: ServidorEstado parsea JSON a EstadoTermostato
 
+### Interfaces de comunicación (`interfaces.py`)
+
+Define contratos estructurales usando `typing.Protocol` con `@runtime_checkable`.
+Se usa `Protocol` (no ABC) para evitar conflictos de metaclase con `QObject`.
+
+- `IServidorEstado` — contrato para el servidor de estado TCP
+  - `iniciar() -> bool`
+  - `detener() -> None`
+  - `esta_activo() -> bool`
+- `IClienteComandos` — contrato para el cliente de comandos TCP
+  - `enviar_comando(cmd: ComandoTermostato) -> bool`
+
+`ComponenteFactoryUX.crear_servidor_estado()` y `crear_cliente_comandos()`
+retornan estos tipos, permitiendo sustitución por mocks en tests.
+
 ---
 
 ## Diagrama de Clases: Capa de Presentación (8 Paneles MVC)
@@ -452,6 +468,10 @@ classDiagram
 - **Panel 6:** Selector Vista (toggle ambiente/deseada)
 - **Panel 7:** Estado Conexión (LED conectado/desconectado)
 - **Panel 8:** Conexión (configuración IP/puerto)
+
+> **Nota:** El panel `power` está incluido en los componentes pero **no se renderiza**
+> en el layout (comentado en `UICompositor.crear_layout()`), ya que
+> ISSE_Termostato no expone endpoint de encendido/apagado en la versión actual.
 
 **Diferencias con simuladores:**
 - **8 paneles** (vs 3-4 en simuladores): Mayor complejidad UI
@@ -709,6 +729,26 @@ graph TB
 | **Calidad Diseño** | 9.4/10 | - | ✅ Excelente |
 
 **Conclusión:** UX Termostato cumple y supera todos los quality gates del proyecto. Métricas superiores a los simuladores en promedio (CC más bajo, MI más alto, cobertura 99%).
+
+---
+
+## Configuración de calidad (`pyproject.toml`)
+
+Umbrales calibrados para DesignReviewer:
+
+```toml
+[tool.designreviewer]
+max_cbo = 10           # vistas PyQt acoplan widgets inevitablemente
+max_method_lines = 50  # _setup_ui es proceduralmente largo por naturaleza
+max_lcom = 3           # clases MVC tienen grupos de métodos naturalmente separados
+```
+
+Justificación de valores:
+- **CBO ≤ 10**: Las vistas PyQt heredan de QWidget y usan múltiples widgets hijos.
+- **method_lines ≤ 50**: Los métodos `_setup_ui` y `_ensamblar_layout` son
+  proceduralmente largos por diseño (construcción declarativa de UI).
+- **LCOM ≤ 3**: Las clases MVC separan naturalmente grupos de métodos
+  (modelo, vista, señales). La herencia PyQt infla el LCOM.
 
 ---
 

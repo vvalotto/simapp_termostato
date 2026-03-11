@@ -58,6 +58,7 @@ simulador_bateria/
 │   │   └── generador_bateria.py    # Generador de valores (modo manual)
 │   │
 │   ├── comunicacion/               # Capa de comunicación TCP
+│   │   ├── interfaces.py           # IClienteBateria (typing.Protocol)
 │   │   ├── cliente_bateria.py      # Cliente TCP
 │   │   └── servicio_envio.py       # Integración gen+cliente
 │   │
@@ -336,6 +337,17 @@ classDiagram
 ```
 
 **Protocolo:** Puerto 11000, formato `"<voltaje>"` (ej: `"4.20"`), patrón efímero.
+
+### Interfaz de comunicación (`interfaces.py`)
+
+Define `IClienteBateria` como `typing.Protocol` con `@runtime_checkable`:
+
+- `enviar_voltaje(voltaje: float) -> bool`
+- `enviar_estado(estado: EstadoBateria) -> bool`
+
+`ComponenteFactory.crear_cliente()` retorna `IClienteBateria`, permitiendo
+sustitución transparente en tests sin herencia explícita (`ClienteBateria`
+cumple el protocolo por duck typing).
 
 ---
 
@@ -653,6 +665,21 @@ graph TB
     style Comunicacion fill:#fff4e1,stroke:#333
     style Compartido fill:#e8e8e8,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
 ```
+
+---
+
+## Configuración de calidad (`pyproject.toml`)
+
+```toml
+[tool.designreviewer]
+max_cbo = 10
+max_method_lines = 50
+max_lcom = 3
+```
+
+Justificación idéntica a `ux_termostato`: vistas PyQt, métodos `_setup_ui` procedurales,
+y LCOM inflado por herencia. `LCOM=3` en `ClienteBateria` es intencional: agrupa métodos
+por protocolo (envío de voltaje vs. envío de estado).
 
 ---
 

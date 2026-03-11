@@ -663,6 +663,60 @@ El sistema está listo para:
 
 ---
 
+## 11. REFACTORING POST-SPRINT 3 (Fases 3 y 4)
+
+### ISS-10: VentanaPrincipalUX — Reducción a facade de lifecycle
+
+**Problema:** God Object de 307 líneas con responsabilidades mezcladas
+(creación de componentes, coordinación de señales, composición de UI, lifecycle).
+
+**Solución:** Delegación total:
+- Creación → `ComponenteFactoryUX`
+- Coordinación → `UXCoordinator`
+- Composición → `UICompositor`
+- `VentanaPrincipalUX` retiene solo: `__init__`, `iniciar()`, `cerrar()`, `closeEvent()`
+
+**Resultado:** 307 → ~100 líneas. LCOM reducido a 1 (una sola responsabilidad).
+
+---
+
+### Fix: IndicadoresVista — comportamiento LED correcto
+
+**Bug:** La vista mostraba LED verde cuando el sensor estaba OK (incorrecto).
+El diseño original especifica: LED apagado (gris) = OK, LED rojo/amarillo = alerta.
+
+**Fix en `actualizar()`:**
+```python
+# Antes (incorrecto):
+self.alert_sensor.led.set_color(LEDColor.GREEN)
+self.alert_sensor.set_estado(activo=True, pulsar=False)
+
+# Después (correcto):
+self.alert_sensor.set_estado(activo=False, pulsar=False)
+```
+
+---
+
+### ISS-16: Interfaces de comunicación (typing.Protocol)
+
+Implementadas como `typing.Protocol` (no ABC) para compatibilidad con PyQt6:
+- `IServidorEstado`: contratos `iniciar()`, `detener()`, `esta_activo()`
+- `IClienteComandos`: contrato `enviar_comando(cmd) -> bool`
+
+Ver sección de arquitectura para detalles completos.
+
+---
+
+### Métricas post-refactoring
+
+| Componente | Antes | Después |
+|------------|-------|---------|
+| `VentanaPrincipalUX` líneas | 307 | ~100 |
+| Tests pasando | 679 (56 failures) | 735 (0 failures) |
+| Pylint | 9.87/10 | 9.91/10 |
+
+---
+
 ## APÉNDICES
 
 ### A. Glosario de Métricas

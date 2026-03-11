@@ -540,6 +540,36 @@ pylint app/
 
 ---
 
+---
+
+## 11. DECISIONES DE CALIDAD POST-FASE 3/4
+
+### ISS-11: ClienteBateria — LCOM=3 (decisión de diseño documentada)
+
+`ClienteBateria` presenta LCOM=3 por agrupación intencional de métodos:
+- Grupo 1: envío de voltaje raw (`enviar_voltaje`)
+- Grupo 2: envío de estado completo (`enviar_estado`)
+- Grupo 3: configuración de conexión (compartida)
+
+**Decisión:** No refactorizar. La separación refleja dos protocolos distintos
+de envío. Documentado en docstring de la clase. (ISS-11)
+
+### ISS-16: IClienteBateria (typing.Protocol)
+
+Interfaz `IClienteBateria` implementada como `typing.Protocol` con `@runtime_checkable`:
+- `enviar_voltaje(voltaje: float) -> bool`
+- `enviar_estado(estado: EstadoBateria) -> bool`
+
+`ComponenteFactory.crear_cliente()` retorna `IClienteBateria`.
+Permite sustitución transparente en tests sin herencia explícita.
+
+### ISS-13/14/15: pyproject.toml con umbrales calibrados
+
+Umbrales ajustados para contexto PyQt6 (ver `pyproject.toml`):
+- `max_cbo = 10`, `max_method_lines = 50`, `max_lcom = 3`
+
+---
+
 **Informe generado automáticamente el 2026-01-16 por Claude Code**
 **Versión del informe:** 1.0
 **Próxima revisión:** v1.1.0 (cuando sea necesaria)

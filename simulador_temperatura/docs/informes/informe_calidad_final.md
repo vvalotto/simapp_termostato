@@ -218,4 +218,22 @@ La arquitectura actual es mantenible, extensible y testeable. Las áreas de mejo
 
 ---
 
+## Decisiones de calidad post-Fase 4
+
+### ISS-16: IClienteTemperatura (typing.Protocol)
+
+Interfaz `IClienteTemperatura` implementada como `typing.Protocol` con `@runtime_checkable`:
+- `enviar_temperatura(temperatura: float) -> bool`
+- `enviar_estado(estado: EstadoTemperatura) -> bool`
+
+`ComponenteFactory.crear_cliente()` retorna `IClienteTemperatura`.
+Permite sustitución transparente en tests sin herencia explícita.
+
+### ISS-13/14/15: pyproject.toml con umbrales calibrados
+
+Umbrales ajustados para contexto PyQt6 (ver `pyproject.toml`):
+- `max_cbo = 10`, `max_method_lines = 50`, `max_lcom = 3`
+
+---
+
 *Informe generado el 2026-01-10*

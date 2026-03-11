@@ -1204,6 +1204,23 @@ graph LR
 
 ---
 
+## Estrategia de interfaces
+
+Cada producto define sus propias interfaces en `app/comunicacion/interfaces.py`
+usando `typing.Protocol`. Se usa `Protocol` (no ABC) para evitar conflictos de
+metaclase entre `ABCMeta` y la metaclase interna de `QObject` (PyQt6).
+
+Las interfaces no viven en `compartido/` porque son específicas al dominio
+de cada producto (voltaje de batería ≠ temperatura ≠ comandos UX).
+
+| Producto | Interfaz | Métodos principales |
+|---------|---------|---------------------|
+| `simulador_temperatura` | `IClienteTemperatura` | `enviar_temperatura`, `enviar_estado` |
+| `simulador_bateria` | `IClienteBateria` | `enviar_voltaje`, `enviar_estado` |
+| `ux_termostato` | `IServidorEstado`, `IClienteComandos` | `iniciar/detener/esta_activo`, `enviar_comando` |
+
+---
+
 ## Referencias
 
 - [Reporte de Calidad de Diseño](informes/informe_diseno.md) - Análisis SOLID y patrones

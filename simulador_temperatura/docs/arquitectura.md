@@ -60,6 +60,7 @@ simulador_temperatura/
 │   │   └── generador_temperatura.py # Generador de valores
 │   │
 │   ├── comunicacion/               # Capa de comunicación TCP
+│   │   ├── interfaces.py           # IClienteTemperatura (typing.Protocol)
 │   │   ├── cliente_temperatura.py  # Cliente TCP
 │   │   └── servicio_envio.py       # Integración gen+cliente
 │   │
@@ -358,6 +359,17 @@ classDiagram
     note for ServicioEnvioTemperatura "Integra generador + cliente\nEscucha valor_generado y envía"
 ```
 
+### Interfaz de comunicación (`interfaces.py`)
+
+Define `IClienteTemperatura` como `typing.Protocol` con `@runtime_checkable`:
+
+- `enviar_temperatura(temperatura: float) -> bool`
+- `enviar_estado(estado: EstadoTemperatura) -> bool`
+
+`ComponenteFactory.crear_cliente()` retorna `IClienteTemperatura`, permitiendo
+sustitución transparente en tests sin herencia explícita (`ClienteTemperatura`
+cumple el protocolo por duck typing).
+
 ---
 
 ## Diagrama de Clases: Capa de Presentación (MVC)
@@ -644,6 +656,20 @@ graph TB
     style Comunicacion fill:#fff4e1,stroke:#333
     style Compartido fill:#e8e8e8,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
 ```
+
+---
+
+## Configuración de calidad (`pyproject.toml`)
+
+```toml
+[tool.designreviewer]
+max_cbo = 10
+max_method_lines = 50
+max_lcom = 3
+```
+
+Justificación idéntica a `ux_termostato`: vistas PyQt, métodos `_setup_ui` procedurales,
+y LCOM inflado por herencia PyQt. Ver `simulador_bateria` para detalles adicionales.
 
 ---
 
