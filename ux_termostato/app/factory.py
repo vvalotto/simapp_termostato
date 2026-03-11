@@ -303,6 +303,38 @@ class ComponenteFactoryUX:
         logger.debug("Panel Conexion creado correctamente")
         return (modelo, vista, controlador)
 
+    # -- Coordinator --
+
+    def crear_coordinator(
+        self,
+        paneles: dict[str, tuple],
+        servidor_estado: "ServidorEstado",
+        cliente_comandos: "ClienteComandos",
+        parent: Optional[object] = None,
+    ) -> "UXCoordinator":
+        """
+        Crea el coordinator que conecta todas las señales PyQt.
+
+        Args:
+            paneles: Diccionario con paneles MVC creados por la factory
+            servidor_estado: Servidor TCP que recibe estado del RPi
+            cliente_comandos: Cliente TCP que envía comandos al RPi
+            parent: Objeto padre Qt opcional
+
+        Returns:
+            Nueva instancia de UXCoordinator con señales conectadas
+        """
+        from .coordinator import UXCoordinator  # pylint: disable=import-outside-toplevel
+
+        coordinator = UXCoordinator(
+            paneles=paneles,
+            servidor_estado=servidor_estado,
+            cliente_comandos=cliente_comandos,
+            parent=parent,
+        )
+        logger.info("UXCoordinator creado y señales conectadas (%d paneles)", len(paneles))
+        return coordinator
+
     # -- Método Auxiliar --
 
     def crear_todos_paneles(self) -> dict[str, tuple]:
